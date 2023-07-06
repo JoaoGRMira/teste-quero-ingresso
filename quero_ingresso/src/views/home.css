@@ -1,30 +1,59 @@
 .corpo {
     display: grid;
-    grid-template-columns: 1fr 1fr 3fr; /* Divide a largura em 1/5, 1/5 e 3/5 */
-    grid-template-rows: 12vh 25vh auto; /* Define a altura do menu superior e o restante para o conteúdo */
-    height: 100vh; /* Define a altura total para ocupar a tela inteira */
+    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-rows: 12vh 25vh auto;
+    height: 100vh;
   }
   
   .menu-superior {
-    grid-column: 1 / span 3; /* Ocupa todas as 3 colunas */
-    grid-row: 1 / 3; /* Ocupa a primeira linha */
+    grid-column: 1 / span 3;
+    grid-row: 1 / 3;
     background-color: gray;
   }
   
   .menu-lateral {
-    grid-column: 1 / 2; /* Ocupa a primeira coluna */
-    grid-row: 2 / span 2; /* Ocupa 2 linhas abaixo da primeira */
+    grid-column: 1 / 2;
+    grid-row: 2 / span 2;
     background-color: lightgray;
   }
   
   .area-informacoes {
-    grid-column: 2 / span 2; /* Ocupa a segunda coluna */
-    grid-row: 2 / 3; /* Ocupa a segunda linha */
-    background-color: lightblue;
+    grid-column: 2 / span 2;
+    grid-row: 2 / 3;
+    background-color: var(--body-background);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    border-top: 1px solid var(--grey-shadow);
+    border-bottom: 1px solid var(--grey-shadow);
+  }
+  
+  .evento {
+    flex-basis: 50%;
+  }
+  
+  .botoes {
+    display: flex;
+    gap: 10px;
   }
   
   .conteudo {
-    grid-column: 2 / span 2; /* Ocupa 2 colunas a partir da segunda coluna */
-    grid-row: 3 / 4; /* Ocupa a terceira linha */
+    grid-column: 2 / span 2;
+    grid-row: 3 / 4;
     background-color: beige;
   }
+  
+  .evento-header {
+    color: var(--blue);
+    font-weight: bold;
+    margin-bottom: 2vh;
+  }
+
+.evento-nome {
+    font-weight: bold;
+}
+
+.evento-detalhe {
+    color: var(--grey);
+}
