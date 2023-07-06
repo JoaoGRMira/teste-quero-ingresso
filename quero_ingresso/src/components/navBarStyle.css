@@ -1,0 +1,14 @@
+.navbar {
+    background-color: #fff;
+    position: fixed;
+    height: 70px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}

@@ -1,0 +1,23 @@
+.conteiner {
+    height: 100vh;
+    margin: 0px;
+    display: grid;
+    grid-template-rows: 5vh 25vh 1fr 2fr;
+    grid-template-areas: "navTop" "informacoes" "navSide" "conteudo";
+}
+
+.navTop {
+    grid-area: navTop;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.navSide {
+    grid-area: navSide;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
