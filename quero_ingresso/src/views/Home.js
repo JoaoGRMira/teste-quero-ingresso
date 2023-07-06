@@ -1,7 +1,8 @@
 import NavigationTopBar from "../components/NavigationTopBar/NavigationTopBar";
 import NavigationSideBar from "../components/NavigationSideBar/NavigationSideBar";
 import "./home.css";
-import FilterButtons from "../components/Buttons/FilterButtons";
+import DownloadButton from "../components/Buttons/DownloadButton";
+import FilterButton from "../components/Buttons/FilterButton";
 
 export default function Home() {
     return (
@@ -25,8 +26,8 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="botoes">
-                    <FilterButtons />
-                    <FilterButtons />
+                    <FilterButton />
+                    <DownloadButton/>
                 </div>
             </div>
             <div className="conteudo">Conteúdo</div>
