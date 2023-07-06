@@ -1,7 +1,8 @@
 .navbar {
     background-color: #fff;
     position: fixed;
-    height: 70px;
+    height: 12vh;
+    width: 100%;
 }
 
 .navbar-brand {
@@ -11,4 +12,5 @@
 
 .navbar-brand img {
     margin-right: 10px;
+    height: 12vh;
 }
