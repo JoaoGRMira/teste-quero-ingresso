@@ -11,18 +11,6 @@ body {
   font-family: "Fira Sans", sans-serif;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label,
-span {
-  font-weight: 500;
-  font-family: "Fira Sans", sans-serif;
-}
-
 body,
 html,
 .App,
@@ -30,11 +18,6 @@ html,
 .auth-wrapper {
   width: 100%;
   height: 100%;
-}
-
-.navbar-light {
-  background-color: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 }
 
 .auth-wrapper {
@@ -59,13 +42,6 @@ html,
   box-shadow: none;
 }
 
-.auth-wrapper h3 {
-  text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
-}
-
 .custom-control-label {
   font-weight: 400;
   
@@ -78,6 +54,7 @@ html,
   padding-top: 10px;
   color: #7f7d7d;
   margin: 0;
+  text-decoration: none;
 }
 
 .forgot-password a {
@@ -86,4 +63,5 @@ html,
 
 .logo img {
   height: 200px;
+  margin-left: 8%;
 }
