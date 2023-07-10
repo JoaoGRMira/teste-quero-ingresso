@@ -33,6 +33,18 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import PeopleIcon from '@mui/icons-material/People';
 import HistoryIcon from '@mui/icons-material/History';
+import Accordion from '../components/MUI/Accordion';
+import Container2 from '../components/MUI/Container';
+import DonutChart from '../components/Charts/DonutChart';
+import BarChartHorizontal from '../components/Charts/BarChartHorizontal';
+import { Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import LoteChart from '../components/Charts/LoteChart';
+import VpTChart from '../components/Charts/VpTChart';
+import PeriodicChart from '../components/Charts/PeriodicChart';
+import TimeChart from '../components/Charts/TimeChart';
+import Ranking from '../components/Charts/Ranking';
+import CustomizedTables from '../components/Charts/Table';
+
 
 function Copyright(props) {
   return (
@@ -50,6 +62,40 @@ function Copyright(props) {
 const drawerWidth = 240;
 
 const usuario = 'Usuário'
+
+const dataTabela = [
+  { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
+  { tipo: 'Venda', qtde: 30, porcentagem: 60 },
+  { tipo: 'Total', qtde: 40, porcentagem: 80 },
+];
+
+const dataVendas = [
+  { tipo: 'Vendas', quantidade: 100 },
+  { tipo: 'Cortesias', quantidade: 50 },
+];
+
+const dataPeriodic = [
+  { periodo: '4', quantidade: 100 },
+  { periodo: '3', quantidade: 50 },
+  { periodo: '2', quantidade: 25 },
+  { periodo: '1', quantidade: 65 },
+];
+
+const dataTime = [
+  { horario: '12:00', quantidade: 100 },
+  { horario: '13:00', quantidade: 50 },
+  { horario: '14:00', quantidade: 25 },
+  { horario: '15:00', quantidade: 65 },
+];
+
+const tipoIngressos = [
+  { tipo: 'Camarote', quantidade: 100 },
+  { tipo: 'Pista', quantidade: 50 },
+];
+
+const lote = [
+  { tipo: '1° Lote', quantidade: 100 },
+];
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -98,7 +144,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function Home() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -214,7 +260,7 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               {/* Evento Atual */}
               <Grid item xs={12} md={8} lg={9}>
@@ -235,8 +281,8 @@ export default function Dashboard() {
               </Grid>
               {/* Cards */}
               <Grid item xs={12} md={4} lg={3}>
+                  {/* Card 1 */}
                 <Paper sx={{ height: 250, position: 'relative' }}>
-                  {/* Conteúdo do card */}
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <EventIcon />
                     Situação do Evento
@@ -250,7 +296,7 @@ export default function Dashboard() {
                   <Typography variant="body1" align="center" sx={{ pb: 2 }} fontWeight="bold" color='var(--grey)'>
                     (Iniciado há 61 dias)
                   </Typography>
-                  {/* Rodapé fixo */}
+                  {/* Rodapé */}
                   <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
                     <Typography variant="body1" sx={{ backgroundColor: 'var(--grey-shadow)', pt: 1, mt: 2 }} align='center' fontWeight="bold">
                       Dias restantes para o evento
@@ -262,6 +308,7 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
+                {/* Card 2 */}
                 <Paper sx={{ height: 250, position: 'relative' }}>
                   {/* Conteúdo do card */}
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
@@ -301,8 +348,8 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
+                {/* Card 3 */}
                 <Paper sx={{ height: 250, position: 'relative' }}>
-                  {/* Conteúdo do card */}
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <CreditCardIcon />
                     Faturamentos
@@ -326,40 +373,149 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
+                {/* Card 4 */}
                 <Paper sx={{ height: 100 }}>
-                <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <PeopleIcon />
                     Ticket Médio
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ p: 1 }}>
-                    R$ 00,00
+                    R$ 0,00
                   </Typography>
                 </Paper>
                 <Box sx={{ my: 2 }}>
+                  {/* Card 5 */}
                   <Paper sx={{ height: 133 }}>
-                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <HistoryIcon />
+                    <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                      <HistoryIcon />
                       Média Diária
                     </Typography>
                     <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--grey)'>
-                    <div align='center'>
-                      <table>
-                        <tbody>
-                          <tr>
-                            <th>Qtde</th>
-                            <td align='center'>0</td>
-                          </tr>
-                          <tr>
-                            <th>Valor</th>
-                            <td align='center'>R$00,00</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </ Typography>
+                      <div align='center'>
+                        <table>
+                          <tbody>
+                            <tr>
+                              <th>Qtde</th>
+                              <td align='center'>0</td>
+                            </tr>
+                            <tr>
+                              <th>Valor</th>
+                              <td align='center'>R$00,00</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </ Typography>
                   </Paper>
                 </Box>
               </Grid>
+              <Grid item xs={12}>
+                <Accordion>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={4} lg={3}>
+                      <Paper sx={{ height: 133 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                          Qtde de Caixas
+                        </Typography>
+                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--grey)' fontWeight="bold">
+                          0 caixas
+                        </ Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4} lg={3}>
+                      <Paper sx={{ height: 133 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                          Itens Vendidos
+                        </Typography>
+                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--blue)' fontWeight="bold">
+                          0
+                        </ Typography>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4} lg={3}>
+                      <Paper sx={{ height: 133 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                          Faturamento Bar
+                        </Typography>
+                        <Typography variant="body1" align="center" sx={{ p: 1 }} color='green' fontWeight="bold">
+                          R$ 0,00
+                        </Typography>
+                      </Paper>
+                      <Box sx={{ my: 2 }}>
+                        <Paper sx={{ height: 133 }}>
+                          <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'green', color: 'white', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                            Faturamento (Ing. + Bar)
+                          </Typography>
+                          <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='green' fontWeight="bold">
+                            R$ 0,00
+                          </ Typography>
+                        </Paper>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4} lg={3}>
+                      <Paper sx={{ height: 133 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                          <PeopleIcon />
+                          Ticket Médio Bar
+                        </Typography>
+                        <Typography variant="body1" align="center" sx={{ p: 1 }} fontWeight="bold">
+                          R$ 0,00
+                        </Typography>
+                      </Paper>
+                      <Box sx={{ my: 2 }}>
+                        <Paper sx={{ height: 133 }}>
+                          <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: '#FCA503', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                            Ticket Médio (Ing. + Bar)
+                          </Typography>
+                          <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='#FCA503' fontWeight="bold">
+                            R$ 0,00
+                          </ Typography>
+                        </Paper>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Accordion>
+              </Grid>
+              <Container2
+                button1Content={
+                  <Grid container spacing={3}>
+                    {/* Chart 1 */ }
+                    <Grid item xs={6} md={6} lg={6}>
+                      <DonutChart data={dataVendas} />
+                      <CustomizedTables />
+                    </Grid>
+                    {/* Chart 2 */ }
+                    <Grid item xs={6} md={6} lg={6}>
+                      <BarChartHorizontal data={tipoIngressos} />
+                      <CustomizedTables />
+                    </Grid>
+                    {/* Chart 3 */ }
+                    <Grid item xs={12} md={12} lg={12}>
+                      <LoteChart data={lote}/>
+                      <CustomizedTables />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                      <VpTChart data={dataVendas} />
+                      <CustomizedTables />
+                    </Grid>
+                    <Grid xs={12}>
+                      <Ranking />
+                      </Grid>
+                    <Grid xs={12}>
+                      <PeriodicChart data={dataPeriodic}/>
+                      </Grid>
+                      <Grid xs={12}>
+                      <TimeChart data={dataTime}/>
+                      </Grid>
+                  </Grid>
+                }
+                button2Content={
+                  <div>
+                    <h1>Título</h1>
+                    <p>Conteúdo</p>
+                  </div>
+                }
+              />
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
