@@ -8,7 +8,7 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate('/home');
+    navigate('/eventos');
   };
 
   return (

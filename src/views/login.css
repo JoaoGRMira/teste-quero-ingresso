@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   background: #f9f9f9 !important;
   min-height: 100vh;
@@ -44,7 +45,6 @@ html,
   font-weight: 400;
   margin-left: 5px;
 }
-
 
 .custom-control.custom-checkbox.d-flex.align-items-center {
   justify-content: center;
