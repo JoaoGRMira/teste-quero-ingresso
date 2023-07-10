@@ -178,7 +178,7 @@ export default function Home() {
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
                 component={Link}
-                href="/"
+                href="/home"
               >
                 <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                   Home

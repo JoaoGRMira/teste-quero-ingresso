@@ -170,7 +170,7 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: '1 1 100%', mt: 10 }}
           variant="h6"
           id="tableTitle"
           component="div"
