@@ -16,7 +16,6 @@ export default function NavigationTopBar() {
         <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <a className="nav-link active" aria-current="page" href="/home">Home</a>
-            <a className="nav-link" href="#">Saldo PDV</a>
           </div>
           <div className="navbar-nav">
             <a className="nav-link" href="#">{username}</a>

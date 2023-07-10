@@ -54,8 +54,8 @@ const Table = () => {
         <div className="col-md-6">
           <form>
             <select id="dropdown" className="dropdown">
-              <option>Eventos correntes</option>
-              <option>Eventos passados</option>
+              <option>Eventos ativos</option>
+              <option>Eventos encerrados</option>
             </select>
           </form>
         </div>
@@ -76,7 +76,7 @@ const Table = () => {
         </div>
       </div>
 
-      <div className="table-responsive">
+      <div className="table-responsive-sm">
         <table className="table table-bordered table-hover">
           <thead role="rowgroup">
             <tr role="row">
