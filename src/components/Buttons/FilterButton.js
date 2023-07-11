@@ -5,7 +5,7 @@ import "./buttonStyle.css"
 
 const FilterButton = () => {
     return (
-        <button className='button button-blue button-cube bold align-center flex' style={{height:'3.5vw'}}>
+        <button className='button button-blue button-cube bold align-center flex' style={{height:'50px'}}>
             Filtro por data <img src={caretDown} alt='filtro por data' style={{width: '1vw', height: '1vw', marginLeft:'7px'}}/>
         </button>
     )

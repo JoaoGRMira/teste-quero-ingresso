@@ -1,16 +1,17 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 const DonutChart = ({ data }) => {
   const COLORS = ['#8884d8', 'var(--blue)'];
 
   return (
-    <div>
+    <React.Fragment>
       <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
       Tipos de Ingresso
       </Typography>
-      <PieChart width={500} height={250}>
+      <ResponsiveContainer width="100%" height={250}>
+      <PieChart>
         <Pie
           data={data}
           dataKey="quantidade"
@@ -28,7 +29,8 @@ const DonutChart = ({ data }) => {
         <Legend verticalAlign="bottom" />
         <Tooltip />
       </PieChart>
-    </div>
+      </ResponsiveContainer>
+    </React.Fragment>
   );
 };
 

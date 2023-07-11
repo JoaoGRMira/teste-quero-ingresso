@@ -19,22 +19,22 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../components/MUI/listItems';
-import Chart from '../components/MUI/Chart';
-import Deposits from '../components/MUI/Deposits';
-import Orders from '../components/MUI/Orders';
-import Title from '../components/MUI/Title';
+import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../components/NavigationSideBar/SideBar';
+import Chart from '../components/Outros/Chart';
+import Deposits from '../components/Outros/Deposits';
+import Orders from '../components/Outros/Orders';
+import Title from '../components/Outros/Title';
 import DownloadButton from '../components/Buttons/DownloadButton';
 import FilterButton from '../components/Buttons/FilterButton';
-import EventoAtual from '../components/MUI/EventoAtual';
+import EventoAtual from '../components/Outros/EventoAtual';
 import EventIcon from '@mui/icons-material/Event';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import PeopleIcon from '@mui/icons-material/People';
 import HistoryIcon from '@mui/icons-material/History';
-import Accordion from '../components/MUI/Accordion';
-import Container2 from '../components/MUI/Container';
+import Accordion from '../components/Buttons/Accordion';
+import ContainerCharts from '../components/Charts/ContainerCharts';
 import DonutChart from '../components/Charts/DonutChart';
 import BarChartHorizontal from '../components/Charts/BarChartHorizontal';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
@@ -44,7 +44,7 @@ import PeriodicChart from '../components/Charts/PeriodicChart';
 import TimeChart from '../components/Charts/TimeChart';
 import Ranking from '../components/Charts/Ranking';
 import CustomizedTables from '../components/Charts/Table';
-
+import './home.css'
 
 function Copyright(props) {
   return (
@@ -154,7 +154,7 @@ export default function Home() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white' }} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height:72}} elevation={0}>
           <Toolbar
             sx={{
               pr: '24px', // mantém o padding direito quando o drawer é fechado
@@ -173,7 +173,7 @@ export default function Home() {
               <MenuIcon />
             </IconButton>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <img src={logo} alt="Logo" style={{ height: '9.8vh' }} />
+              <img src={logo} alt="Logo" style={{ height: '71px' }} />
               <IconButton
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
@@ -476,16 +476,16 @@ export default function Home() {
                   </Grid>
                 </Accordion>
               </Grid>
-              <Container2
+              <ContainerCharts
                 button1Content={
                   <Grid container spacing={3}>
                     {/* Chart 1 */ }
-                    <Grid item xs={6} md={6} lg={6}>
+                    <Grid item xs={12} md={6} lg={6}>
                       <DonutChart data={dataVendas} />
                       <CustomizedTables />
                     </Grid>
                     {/* Chart 2 */ }
-                    <Grid item xs={6} md={6} lg={6}>
+                    <Grid item xs={12} md={6} lg={6}>
                       <BarChartHorizontal data={tipoIngressos} />
                       <CustomizedTables />
                     </Grid>

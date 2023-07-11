@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 
-const Container = ({ button1Content, button2Content }) => {
+const ContainerCharts = ({ button1Content, button2Content }) => {
     const [activeButton, setActiveButton] = useState(1);
 
     const handleButtonClick = (buttonNumber) => {
@@ -51,4 +51,4 @@ const Container = ({ button1Content, button2Content }) => {
     );
 };
 
-export default Container;
+export default ContainerCharts;
