@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from '../views/Login';
-import Eventos from '../views/Eventos';
-import Home from '../views/Home';
+import Login from '../views/Login/Login';
+import Eventos from '../views/Eventos/Eventos';
+import Home from '../views/Home/Home';
 
 function Router() {
     return (
