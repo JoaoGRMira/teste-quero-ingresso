@@ -26,7 +26,7 @@ const DonutChart = ({ data }) => {
             <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Legend verticalAlign="bottom" />
+        <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: 17 }}/>
         <Tooltip />
       </PieChart>
       </ResponsiveContainer>

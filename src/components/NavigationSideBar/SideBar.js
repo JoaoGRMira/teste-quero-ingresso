@@ -17,13 +17,14 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SellIcon from '@mui/icons-material/Sell';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
       Mais utilizados
     </ListSubheader>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/home" sx={{ color: 'white' }}>
       <ListItemIcon>
         <DashboardIcon sx={{ color: 'white' }} />
       </ListItemIcon>
@@ -35,7 +36,7 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/classes" sx={{ color: 'white' }}>
       <ListItemIcon>
         <LocalActivityIcon sx={{ color: 'white' }} />
       </ListItemIcon>

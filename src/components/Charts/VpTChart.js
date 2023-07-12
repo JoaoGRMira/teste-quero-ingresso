@@ -15,7 +15,8 @@ const VpTChart = ({ data }) => {
                 <XAxis type="number" tick={{fontSize: 12}} />
                 <YAxis dataKey="tipo" type="category" tick={{fontSize: 12}} />
                 <Tooltip />
-                <Bar dataKey="quantidade" fill="pink" />
+                <Bar dataKey="Vendas" fill="#FA6384" />
+                <Bar dataKey="Cortesias" fill="#FA6384" />
             </BarChart>
             </ResponsiveContainer>
         </React.Fragment>

@@ -1,5 +1,5 @@
 import NavigationTopBar from "../../components/NavigationTopBar/NavigationTopBar";
-import Table from "../../components/Event/Table";
+import Table from "../../components/Tables/Event/Table";
 import "./eventos.css";
 
 export default function Evento() {

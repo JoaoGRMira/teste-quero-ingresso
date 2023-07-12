@@ -33,7 +33,7 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import PeopleIcon from '@mui/icons-material/People';
 import HistoryIcon from '@mui/icons-material/History';
-import Accordion from '../../components/Buttons/Accordion';
+import ExpandableButton from '../../components/Buttons/Accordion';
 import ContainerCharts from '../../components/Charts/ContainerCharts';
 import DonutChart from '../../components/Charts/DonutChart';
 import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
@@ -42,8 +42,8 @@ import LoteChart from '../../components/Charts/LoteChart';
 import VpTChart from '../../components/Charts/VpTChart';
 import PeriodicChart from '../../components/Charts/PeriodicChart';
 import TimeChart from '../../components/Charts/TimeChart';
-import Ranking from '../../components/Charts/Ranking';
-import CustomizedTables from '../../components/Charts/Table';
+import Ranking from '../../components/Tables/Charts/Ranking';
+import CustomizedTables from '../../components/Tables/Charts/Table';
 import './home.css'
 
 function Copyright(props) {
@@ -74,6 +74,11 @@ const dataVendas = [
   { tipo: 'Cortesias', quantidade: 50 },
 ];
 
+const dataVpT = [
+  { tipo: 'Vendas', Vendas: 50 },
+  { tipo: 'Cortesias', Cortesias: 0 },
+];
+
 const dataPeriodic = [
   { periodo: '4', quantidade: 100 },
   { periodo: '3', quantidade: 50 },
@@ -89,8 +94,8 @@ const dataTime = [
 ];
 
 const tipoIngressos = [
-  { tipo: 'Camarote', quantidade: 100 },
-  { tipo: 'Pista', quantidade: 50 },
+  { tipo: 'Camarote', Camarote: 100 },
+  { tipo: 'Pista', Pista: 50 },
 ];
 
 const lote = [
@@ -178,7 +183,7 @@ export default function Home() {
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
                 component={Link}
-                href="/home"
+                href="/eventos"
               >
                 <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                   Home
@@ -250,17 +255,14 @@ export default function Home() {
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+            backgroundColor: 'var(--body-background)',
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, backgroundColor: 'var(--body-background)' }}>
+          <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               {/* Evento Atual */}
               <Grid item xs={12} md={8} lg={9}>
@@ -410,7 +412,7 @@ export default function Home() {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                <Accordion>
+                <ExpandableButton title="Informações Gerais Bar">
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={4} lg={3}>
                       <Paper sx={{ height: 133 }}>
@@ -474,7 +476,7 @@ export default function Home() {
                       </Box>
                     </Grid>
                   </Grid>
-                </Accordion>
+                </ExpandableButton>
               </Grid>
               <ContainerCharts
                 button1Content={
@@ -495,7 +497,7 @@ export default function Home() {
                       <CustomizedTables />
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
-                      <VpTChart data={dataVendas} />
+                      <VpTChart data={dataVpT} />
                       <CustomizedTables />
                     </Grid>
                     <Grid xs={12}>

@@ -14,7 +14,9 @@ const BarChartHorizontal = ({ data }) => {
                     <XAxis type="number" tick={{ fontSize: 12 }} />
                     <YAxis dataKey="tipo" type="category" tick={{ fontSize: 12 }} />
                     <Tooltip />
-                    <Bar dataKey="quantidade" fill="#8884d8" />
+                    <Bar dataKey="Camarote" fill="var(--blue)" />
+                    <Bar dataKey="Pista" fill="#8884d8" />
+                    <Legend wrapperStyle={{ fontSize: 17 }} />
                 </BarChart>
             </ResponsiveContainer>
         </React.Fragment>

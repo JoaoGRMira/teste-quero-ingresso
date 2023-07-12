@@ -2,6 +2,9 @@ html,
 body {
   overflow: hidden;
   height: 100%;
+  background-color: var(--body-background);
+  margin: 0;
+  padding: 0;
 }
 
 /* .corpo {

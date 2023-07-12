@@ -18,20 +18,21 @@ function ExpandableButton(props) {
           <AddIcon />
         </Button>
         <Typography component='h2' variant="subtitle1" sx={{ p: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-          Informações Gerais Bar
+          {props.title}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Typography>
-        {props.children}
+          {props.children}
         </Typography>
       </AccordionDetails>
     </Accordion>
   );
 }
 
-Accordion.propTypes = {
-    children: PropTypes.node,
-  };
+ExpandableButton.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.node,
+};
 
 export default ExpandableButton;
