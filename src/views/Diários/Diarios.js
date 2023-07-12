@@ -10,44 +10,17 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
-import Chart from '../../components/Outros/Chart';
-import Deposits from '../../components/Outros/Deposits';
-import Orders from '../../components/Outros/Orders';
 import Title from '../../components/Outros/Title';
-import DownloadButton from '../../components/Buttons/DownloadButton';
-import FilterButton from '../../components/Buttons/FilterButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import EventIcon from '@mui/icons-material/Event';
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import PeopleIcon from '@mui/icons-material/People';
-import HistoryIcon from '@mui/icons-material/History';
-import Accordion from '../../components/Buttons/Accordion';
-import ContainerCharts from '../../components/Charts/ContainerCharts';
-import DonutChart from '../../components/Charts/DonutChart';
-import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
-import LoteChart from '../../components/Charts/LoteChart';
-import VpTChart from '../../components/Charts/VpTChart';
-import PeriodicChart from '../../components/Charts/PeriodicChart';
-import TimeChart from '../../components/Charts/TimeChart';
-import Ranking from '../../components/Tables/Charts/Ranking';
-import CustomizedTables from '../../components/Tables/Charts/Table';
-import SearchBar from '../../components/Outros/SearchBar';
-import TableClasses from '../../components/Tables/Classes/TableClasses';
-import ExpandableButton from '../../components/Buttons/Accordion';
+import ContainerDiarios from '../../components/Containers/ContainerDiarios';
+import TableClassesDiario from '../../components/Tables/Diários/TableClassesDiario';
+import TablePDVsDiario from '../../components/Tables/Diários/TablePDVsDiario';
 
 function Copyright(props) {
   return (
@@ -62,68 +35,9 @@ function Copyright(props) {
   );
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.white,
-      color: theme.palette.common.black,
-  },
-  [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-      border: 0,
-  },
-}));
-
 const drawerWidth = 240;
 
 const usuario = 'Usuário'
-
-const dataTabela = [
-  { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
-  { tipo: 'Venda', qtde: 30, porcentagem: 60 },
-  { tipo: 'Total', qtde: 40, porcentagem: 80 },
-];
-
-const dataVendas = [
-  { tipo: 'Vendas', quantidade: 100 },
-  { tipo: 'Cortesias', quantidade: 50 },
-];
-
-const dataVpT = [
-  { tipo: 'Vendas', Vendas: 50 },
-  { tipo: 'Cortesias', Cortesias: 0 },
-];
-
-const dataPeriodic = [
-  { periodo: '4', quantidade: 100 },
-  { periodo: '3', quantidade: 50 },
-  { periodo: '2', quantidade: 25 },
-  { periodo: '1', quantidade: 65 },
-];
-
-const dataTime = [
-  { horario: '12:00', quantidade: 100 },
-  { horario: '13:00', quantidade: 50 },
-  { horario: '14:00', quantidade: 25 },
-  { horario: '15:00', quantidade: 65 },
-];
-
-const tipoIngressos = [
-  { tipo: 'Camarote', Camarote: 100 },
-  { tipo: 'Pista', Pista: 50 },
-];
-
-const lote = [
-  { tipo: '1° Lote', quantidade: 100 },
-];
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -172,7 +86,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove
 const defaultTheme = createTheme();
 
-export default function Classes() {
+export default function Diarios() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -288,30 +202,15 @@ export default function Classes() {
           <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               {/* Evento Atual */}
-              <Grid item xs={12} md={4} lg={4}>
+              <Grid item xs={12} md={6} lg={6}>
                 <Title>Relatório Geral</Title>
                 <EventoAtual nomeEvento="Nome do Evento"
                   dataEvento="01 de janeiro de 2023"
                   localEvento="Local do Evento"
                   cidadeEvento="Cidade do Evento" />
               </Grid>
-              {/* Botões */}
-              <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <div>
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
-                    Total: 0
-                  </Typography>
-                  <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">
-                    Vendas: 0
-                  </Typography>
-                  <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">
-                    Cortesia: 0
-                  </Typography>
-                </div>
-              </Grid>
-              <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+
+              <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
                     R$ 0,00
@@ -328,18 +227,13 @@ export default function Classes() {
               </Grid>
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1 }}>
                 <Grid container spacing={3} sx={{ py: 2 }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <FilterButton />
-                    <DownloadButton />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <SearchBar />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TableClasses />
+                  <Grid item xs={12} md={12} lg={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <ContainerDiarios button1Content={
+                      <TableClassesDiario />
+                    }
+                      button2Content={
+                        <TablePDVsDiario />
+                      } />
                   </Grid>
                 </Grid>
               </Container>

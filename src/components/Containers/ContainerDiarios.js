@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 
-const ContainerCharts = ({ button1Content, button2Content }) => {
+const ContainerDiarios = ({ button1Content, button2Content }) => {
     const [activeButton, setActiveButton] = useState(1);
 
     const handleButtonClick = (buttonNumber) => {
@@ -15,18 +15,18 @@ const ContainerCharts = ({ button1Content, button2Content }) => {
         <Grid item xs={12}>
             <Box textAlign="center">
                 <Button onClick={() => handleButtonClick(1)} variant="contained" className={activeButton === 1 ? 'active' : ''} sx={{
-                    backgroundColor: 'var(--body-background)', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
+                    backgroundColor: 'white', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
-                    }, boxShadow: "none", borderRadius: 0, mb: -0.1
+                    }, boxShadow: "none", mb: 3, mt: 1
                 }}>
-                    Visão Geral
+                    Classes
                 </Button>
                 <Button onClick={() => handleButtonClick(2)} variant="contained" className={activeButton === 2 ? 'active' : ''} sx={{
-                    backgroundColor: 'var(--body-background)', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
+                    backgroundColor: 'white', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
-                    }, boxShadow: "none", borderRadius: 0, mb: -0.1
+                    }, boxShadow: "none", mb: 3, mt: 1
                 }}>
-                    Dados Demográficos
+                    PDVs
                 </Button>
                 <Box sx={{ backgroundColor: 'white', borderTop: '1px solid var(--grey-shadow)' }}>
                     <Typography variant="h6" component="div" mt={2} p={2}>
@@ -39,11 +39,8 @@ const ContainerCharts = ({ button1Content, button2Content }) => {
                 </Box>
                 <style jsx>{`
                     .active {
-                    background-color: white !important;
-                    border-top: 1px solid var(--grey-shadow);
-                    border-right: 1px solid var(--grey-shadow);
-                    border-left: 1px solid var(--grey-shadow);
-                    border-bottom: 1px solid var(white);
+                    background-color: var(--blue) !important;
+                    color: white
                     }
                 `}</style>
             </Box>
@@ -51,4 +48,4 @@ const ContainerCharts = ({ button1Content, button2Content }) => {
     );
 };
 
-export default ContainerCharts;
+export default ContainerDiarios;

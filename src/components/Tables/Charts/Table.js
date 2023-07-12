@@ -45,9 +45,9 @@ export default function CustomizedTables() {
         <TableHead>
           <TableRow>
             <StyledTableCell>Tipo</StyledTableCell>
-            <StyledTableCell align="left">Quantidade</StyledTableCell>
-            <StyledTableCell align="left">Valor</StyledTableCell>
-            <StyledTableCell align="left">%</StyledTableCell>
+            <StyledTableCell align="center">Quantidade</StyledTableCell>
+            <StyledTableCell align="center">Valor</StyledTableCell>
+            <StyledTableCell align="center">%</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -56,9 +56,9 @@ export default function CustomizedTables() {
               <StyledTableCell component="th" scope="row">
                 {row.tipo}
               </StyledTableCell>
-              <StyledTableCell align="left">{row.quantidade}</StyledTableCell>
-              <StyledTableCell align="left">{row.valor}</StyledTableCell>
-              <StyledTableCell align="left">{row.porcentagem}</StyledTableCell>
+              <StyledTableCell align="center">{row.quantidade}</StyledTableCell>
+              <StyledTableCell align="center">{row.valor}</StyledTableCell>
+              <StyledTableCell align="center">{row.porcentagem}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

@@ -60,7 +60,7 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/diarios" sx={{ color: 'white' }}>
       <ListItemIcon>
         <CalendarTodayIcon sx={{ color: 'white' }} />
       </ListItemIcon>

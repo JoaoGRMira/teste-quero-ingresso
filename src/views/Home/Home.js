@@ -10,26 +10,19 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
-import Chart from '../../components/Outros/Chart';
-import Deposits from '../../components/Outros/Deposits';
-import Orders from '../../components/Outros/Orders';
 import Title from '../../components/Outros/Title';
 import DownloadButton from '../../components/Buttons/DownloadButton';
 import FilterButton from '../../components/Buttons/FilterButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
 import EventIcon from '@mui/icons-material/Event';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import PeopleIcon from '@mui/icons-material/People';
 import HistoryIcon from '@mui/icons-material/History';
@@ -37,7 +30,6 @@ import ExpandableButton from '../../components/Buttons/Accordion';
 import ContainerCharts from '../../components/Charts/ContainerCharts';
 import DonutChart from '../../components/Charts/DonutChart';
 import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
-import { Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import LoteChart from '../../components/Charts/LoteChart';
 import VpTChart from '../../components/Charts/VpTChart';
 import PeriodicChart from '../../components/Charts/PeriodicChart';
@@ -62,12 +54,6 @@ function Copyright(props) {
 const drawerWidth = 240;
 
 const usuario = 'Usuário'
-
-const dataTabela = [
-  { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
-  { tipo: 'Venda', qtde: 30, porcentagem: 60 },
-  { tipo: 'Total', qtde: 40, porcentagem: 80 },
-];
 
 const dataVendas = [
   { tipo: 'Vendas', quantidade: 100 },
