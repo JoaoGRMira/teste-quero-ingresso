@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../images/quero_ingresso_logo.png';
+import logo from '../../images/quero_ingresso_logo.png';
 import "./login.css";
 
 export default function Login() {

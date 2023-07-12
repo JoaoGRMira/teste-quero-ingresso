@@ -7,7 +7,7 @@ export default function NavigationTopBar() {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/home">
+        <a className="navbar-brand" href="/eventos">
           <img src={logo} alt="Quero Ingressos"></img>
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,7 +15,7 @@ export default function NavigationTopBar() {
         </button>
         <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <a className="nav-link active" aria-current="page" href="/home">Home</a>
+            <a className="nav-link active" aria-current="page" href="/eventos">Home</a>
           </div>
           <div className="navbar-nav">
             <a className="nav-link" href="#">{username}</a>

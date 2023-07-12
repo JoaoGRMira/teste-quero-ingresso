@@ -1,0 +1,84 @@
+.dropdown {
+  border: 1px solid rgb(223, 223, 223);
+  border-radius: 5px;
+  padding: 10px;
+  height: auto;
+  width: auto;
+  min-width: 300px;
+  overflow: hidden;
+  transition: 0.2s all;
+  box-shadow: none;
+}
+
+.table {
+  height: auto;
+  width: auto;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table .title {
+  text-align: center;
+  vertical-align: middle;
+  color: var(--blue);
+}
+
+.table .sub-title {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table td {
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.table .nome {
+  color: var(--blue);
+  font-weight: bold;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.table .local {
+  color: gray;
+  vertical-align: middle;
+  text-transform: capitalize;
+}
+
+.table .data {
+  color: gray;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table .dias {
+  color: var(--blue);
+  vertical-align: middle;
+}
+
+.table .vendidos {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table .receita {
+  color: rgb(2, 161, 2);
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table .cortesias {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table .taxa {
+  text-align: center;
+  vertical-align: middle;
+}
