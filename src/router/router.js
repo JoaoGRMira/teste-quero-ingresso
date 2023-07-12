@@ -3,6 +3,7 @@ import Login from '../views/Login/Login';
 import Eventos from '../views/Eventos/Eventos';
 import Home from '../views/Home/Home';
 import Classes from '../views/Classes/Classes';
+import Pdv from '../views/PDV/Pdv';
 
 function Router() {
     return (
@@ -12,7 +13,7 @@ function Router() {
                 <Route path='/eventos' element={<Eventos />}/>
                 <Route path='/home' element={<Home />}/>
                 <Route path='/classes' element={<Classes />}/>
-                <Route />
+                <Route path='/pdv' element={<Pdv />}/>
                 <Route />
                 <Route />
                 <Route />

@@ -48,7 +48,7 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/pdv" sx={{ color: 'white' }}>
       <ListItemIcon>
         <ShoppingCartIcon sx={{ color: 'white' }} />
       </ListItemIcon>
