@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
 import ExpandableButton from '../../Buttons/Accordion';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -40,22 +41,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(classe, vendas, cortesia, qtde, valor) {
-    return { classe, vendas, cortesia, qtde, valor };
+function createData(pdv, qtdehoje, valorhoje, qtdetotal, valortotal, cortesia) {
+    return { pdv, qtdehoje, valorhoje, qtdetotal, valortotal, cortesia };
 }
 
 const rows = [
-    createData('CAMAROTE', 80, 0, 80, 'R$ 4.000,00'),
-    createData('PISTA', 168, 0, 168, 'R$ 5.040,00'),
+    createData('PONTO DE VENDA 1', 10, 100, 50, 'R$ 1.000,00', 0),
+    createData('PONTO DE VENDA 2', 20, 200, 60, 'R$ 2.000,00', 0),
 ];
 
 function dataTotal(classe, vendas, cortesia, qtde, valor) {
     return { classe, vendas, cortesia, qtde, valor };
 }
-
-const total = [
-    dataTotal('Total (Vendas + Cortesia)', 248, 0, 248, 'R$ 9.040,00'),
-];
 
 function dataCamarote(classe, valor, vendido, cortesia, total, valorTotal) {
     return { classe, valor, vendido, cortesia, total, valorTotal };
@@ -65,18 +62,20 @@ const camarote = [
     dataCamarote('CAMAROTE', 'R$ 50,00', 80, 0, 80, 'R$4.000,00'),
 ]
 
-export default function TableClasses() {
+export default function TablePdv() {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
                         <StyledTableCell></StyledTableCell>
-                        <StyledTableCell>Classe</StyledTableCell>
-                        <StyledTableCell align="left">Vendas (Qtde)</StyledTableCell>
-                        <StyledTableCell align="left">Cortesia (Qtde)</StyledTableCell>
-                        <StyledTableCell align="left">Total (Qtde)</StyledTableCell>
-                        <StyledTableCell align="left">Valor</StyledTableCell>
+                        <StyledTableCell><strong>Pdv</strong></StyledTableCell>
+                        <StyledTableCell align="left"><strong>Qtde (Hoje)</strong></StyledTableCell>
+                        <StyledTableCell align="left"><strong>Valor (Hoje)</strong></StyledTableCell>
+                        <StyledTableCell align="left"><strong>Qtde (Total)</strong></StyledTableCell>
+                        <StyledTableCell align="left"><strong>Valor (Total)</strong></StyledTableCell>
+                        <StyledTableCell align="left"><strong>Cortesia</strong></StyledTableCell>
+                        <StyledTableCell align="left"><strong>Total</strong></StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -85,12 +84,14 @@ export default function TableClasses() {
                             <StyledTableRow>
                                 <StyledTableCell component="th" scope="row"></StyledTableCell>
                                 <StyledTableCell component="th" scope="row">
-                                    {row.classe}
+                                    {row.pdv}
                                 </StyledTableCell>
-                                <StyledTableCell align="left">{row.vendas}</StyledTableCell>
+                                <StyledTableCell align="left">{row.qtdehoje}</StyledTableCell>
+                                <StyledTableCell align="left">{row.valorhoje}</StyledTableCell>
+                                <StyledTableCell align="left">{row.qtdetotal}</StyledTableCell>
+                                <StyledTableCell align="left">{row.valortotal}</StyledTableCell>
                                 <StyledTableCell align="left">{row.cortesia}</StyledTableCell>
-                                <StyledTableCell align="left">{row.qtde}</StyledTableCell>
-                                <StyledTableCell align="left">{row.valor}</StyledTableCell>
+                                <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
                             </StyledTableRow>
                             <StyledTableRow>
                                 <StyledTableCell colSpan={6}>
@@ -100,12 +101,13 @@ export default function TableClasses() {
                                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                                 <TableHead>
                                                     <TableRow>
-                                                        <StyledTableCell2>Classe</StyledTableCell2>
+                                                    <StyledTableCell2>Classe</StyledTableCell2>
                                                         <StyledTableCell2 align="left">Valor</StyledTableCell2>
                                                         <StyledTableCell2 align="left">Vendido</StyledTableCell2>
                                                         <StyledTableCell2 align="left">Cortesia</StyledTableCell2>
                                                         <StyledTableCell2 align="left">Total</StyledTableCell2>
                                                         <StyledTableCell2 align="left">Valor Total</StyledTableCell2>
+                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -119,6 +121,7 @@ export default function TableClasses() {
                                                             <StyledTableCell align="left">{camarote.cortesia}</StyledTableCell>
                                                             <StyledTableCell align="left">{camarote.total}</StyledTableCell>
                                                             <StyledTableCell align="left">{camarote.valorTotal}</StyledTableCell>
+                                                            <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>
@@ -128,16 +131,6 @@ export default function TableClasses() {
                                 </StyledTableCell>
                             </StyledTableRow>
                         </React.Fragment>
-                    ))}
-                    {total.map((total) => (
-                        <StyledTableRow>
-                            <StyledTableCell2 align="left"></StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.classe}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.vendas}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.cortesia}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.qtde}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.valor}</StyledTableCell2>
-                        </StyledTableRow>
                     ))}
                 </TableBody>
             </Table>

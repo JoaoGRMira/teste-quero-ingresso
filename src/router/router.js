@@ -4,6 +4,7 @@ import Eventos from '../views/Eventos/Eventos';
 import Home from '../views/Home/Home';
 import Classes from '../views/Classes/Classes';
 import Pdv from '../views/PDV/Pdv';
+import Site from '../views/Site/Site';
 
 function Router() {
     return (
@@ -14,7 +15,7 @@ function Router() {
                 <Route path='/home' element={<Home />}/>
                 <Route path='/classes' element={<Classes />}/>
                 <Route path='/pdv' element={<Pdv />}/>
-                <Route />
+                <Route path='/site' element={<Site />}/>
                 <Route />
                 <Route />
             </Routes>
