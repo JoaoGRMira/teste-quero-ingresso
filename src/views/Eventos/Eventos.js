@@ -41,18 +41,23 @@ export default function Pdv() {
               <img src={logo} alt="Logo" style={{ height: '71px' }} />
               <IconButton
                 color="inherit"
-                sx={{ marginLeft: '20px', borderRadius: '0' }}
-                component={Link}
-                href="/home"
-              >
-                <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
-                  Home
-                </Typography>
+                sx={{ marginLeft: '20px', borderRadius: '0' }}              >
+                <Link href='/eventos'
+                sx={{
+                  textDecoration: 'none',
+                  '&:visited': {
+                    color: 'inherit',
+                  },
+                }}>
+                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                    Home
+                  </Typography>
+                </Link>
               </IconButton>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link
-                href="/"
+                href="#"
                 sx={{
                   textDecoration: 'none',
                   '&:visited': {

@@ -183,7 +183,7 @@ export default function Classes() {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height: 72 }} elevation={0}>
-          <Toolbar
+        <Toolbar
             sx={{
               pr: '24px', // mantém o padding direito quando o drawer é fechado
             }}
@@ -205,16 +205,21 @@ export default function Classes() {
               <IconButton
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
-                component={Link}
-                href="/eventos"
               >
-                <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
-                  Home
-                </Typography>
+                <Link href='/eventos' sx={{
+                textDecoration: 'none',
+                '&:visited': {
+                  color: 'inherit',
+                },
+              }}>
+                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                    Home
+                    </Typography>
+                </Link>
               </IconButton>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
-              <Link href='/' sx={{
+              <Link href='#' sx={{
                 textDecoration: 'none',
                 '&:visited': {
                   color: 'inherit',
@@ -289,13 +294,13 @@ export default function Classes() {
             <Grid container spacing={3}>
               {/* Evento Atual */}
               <Grid item xs={12} md={4} lg={4}>
-                <Title>Relatório Geral</Title>
+                <Title>Relatório Classes</Title>
                 <EventoAtual nomeEvento="Nome do Evento"
                   dataEvento="01 de janeiro de 2023"
                   localEvento="Local do Evento"
                   cidadeEvento="Cidade do Evento" />
               </Grid>
-              {/* Botões */}
+              {/* Infos */}
               <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">

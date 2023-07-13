@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ExpandableButton from '../../Buttons/Accordion';
+import { Checkbox } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -39,14 +40,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(data, prazo, venda, cortesia, valor) {
-    return { data, prazo, venda, cortesia, valor };
+function createData(pdv, vendas, sangrias, saldo, total) {
+    return { pdv, vendas, sangrias, saldo, total };
 }
 
 const rows = [
-    createData('03/07/2023 - Segunda-feira', 5, 24, 0, 'R$ 800,00'),
-    createData('02/07/2023 - Domingo', 6, 27, 0, 'R$ 1.000,00'),
-    createData('01/07/2023 - Sábado', 7, 29, 0, 'R$ 1.250,00'),
+    createData('Loja1','R$ 800,00', 'R$ 0,00', 'R$ 800,00' ),
+    createData('Loja2','R$ 1000,00', 'R$ 0,00', 'R$ 1000,00' ),
 ];
 
 function createPDVs(pdv, ingresso, cortesia, total) {
@@ -59,32 +59,32 @@ const pdvs = [
     createPDVs('Loja 2', 3, 0, '100,00'),
 ];
 
-export default function TablePDVsDiario() {
+export default function TableSangria() {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
                         <StyledTableCell></StyledTableCell>
-                        <StyledTableCell>Data</StyledTableCell>
-                        <StyledTableCell align="center">Prazo p/ evento</StyledTableCell>
-                        <StyledTableCell align="center">Venda</StyledTableCell>
-                        <StyledTableCell align="center">Cortesia</StyledTableCell>
-                        <StyledTableCell align="center">Valor</StyledTableCell>
+                        <StyledTableCell>PDV</StyledTableCell>
+                        <StyledTableCell align="center">Vendas</StyledTableCell>
+                        <StyledTableCell align="center">Sangrias</StyledTableCell>
+                        <StyledTableCell align="center">Saldo</StyledTableCell>
+                        <StyledTableCell align="center">Total</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <React.Fragment key={row.tipo}>
+                        <React.Fragment key={row.pdv}>
                             <StyledTableRow>
                                 <StyledTableCell component="th" scope="row"></StyledTableCell>
                                 <StyledTableCell component="th" scope="row">
-                                    {row.data}
+                                    {row.pdv}
                                 </StyledTableCell>
-                                <StyledTableCell align="center">{row.prazo} dias</StyledTableCell>
-                                <StyledTableCell align="center">{row.venda}</StyledTableCell>
-                                <StyledTableCell align="center">{row.cortesia}</StyledTableCell>
-                                <StyledTableCell align="center">{row.valor}</StyledTableCell>
+                                <StyledTableCell align="center">{row.vendas}</StyledTableCell>
+                                <StyledTableCell align="center">{row.sangrias}</StyledTableCell>
+                                <StyledTableCell align="center">{row.saldo}</StyledTableCell>
+                                <StyledTableCell align="center">{<Checkbox />}</StyledTableCell>
                             </StyledTableRow>
                             <StyledTableRow>
                                 <StyledTableCell colSpan={6}>

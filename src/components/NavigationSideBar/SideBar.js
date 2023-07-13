@@ -79,7 +79,7 @@ export const mainListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Numerados
+            Numerados#
           </Typography>
         }
       />
@@ -91,7 +91,7 @@ export const mainListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Cancelados
+            Cancelados#
           </Typography>
         }
       />
@@ -111,7 +111,7 @@ export const secondaryListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Comissários
+            Comissários#
           </Typography>
         }
       />
@@ -135,7 +135,7 @@ export const secondaryListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Detalhados
+            Detalhados#
           </Typography>
         }
       />
@@ -155,7 +155,7 @@ export const tertiaryListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Visualização x <br/> Vendas Web
+            Visualização x <br/> Vendas Web#
           </Typography>
         }
       />
@@ -168,7 +168,7 @@ export const quaternaryListItems = (
     <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
       Sangrias
     </ListSubheader>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/sangria" sx={{ color: 'white' }}>
       <ListItemIcon>
         <CurrencyExchangeIcon sx={{ color: 'white' }} />
       </ListItemIcon>
@@ -187,7 +187,7 @@ export const quaternaryListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Sangrias <br/> Comprovantes
+            Sangrias <br/> Comprovantes#
           </Typography>
         }
       />
@@ -207,7 +207,7 @@ export const quinaryListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Gestão de Lotes
+            Gestão de Lotes#
           </Typography>
         }
       />

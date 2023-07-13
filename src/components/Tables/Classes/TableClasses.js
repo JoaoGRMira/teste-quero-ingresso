@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ExpandableButton from '../../Buttons/Accordion';
+import { Checkbox } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -77,6 +78,7 @@ export default function TableClasses() {
                         <StyledTableCell align="left">Cortesia (Qtde)</StyledTableCell>
                         <StyledTableCell align="left">Total (Qtde)</StyledTableCell>
                         <StyledTableCell align="left">Valor</StyledTableCell>
+                        <StyledTableCell align="left">Total</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -91,9 +93,10 @@ export default function TableClasses() {
                                 <StyledTableCell align="left">{row.cortesia}</StyledTableCell>
                                 <StyledTableCell align="left">{row.qtde}</StyledTableCell>
                                 <StyledTableCell align="left">{row.valor}</StyledTableCell>
+                                <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
                             </StyledTableRow>
                             <StyledTableRow>
-                                <StyledTableCell colSpan={6}>
+                                <StyledTableCell colSpan={12}>
                                     {/* Detalhes */}
                                     <ExpandableButton title='Mais Detalhes'>
                                         <TableContainer component={Paper}>
@@ -106,6 +109,7 @@ export default function TableClasses() {
                                                         <StyledTableCell2 align="left">Cortesia</StyledTableCell2>
                                                         <StyledTableCell2 align="left">Total</StyledTableCell2>
                                                         <StyledTableCell2 align="left">Valor Total</StyledTableCell2>
+                                                        <StyledTableCell2 align="left"><Checkbox /></StyledTableCell2>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -119,6 +123,7 @@ export default function TableClasses() {
                                                             <StyledTableCell align="left">{camarote.cortesia}</StyledTableCell>
                                                             <StyledTableCell align="left">{camarote.total}</StyledTableCell>
                                                             <StyledTableCell align="left">{camarote.valorTotal}</StyledTableCell>
+                                                            <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>

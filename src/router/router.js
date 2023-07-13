@@ -6,6 +6,7 @@ import Classes from '../views/Classes/Classes';
 import Pdv from '../views/PDV/Pdv';
 import Diarios from '../views/Diários/Diarios';
 import Site from '../views/Site/Site';
+import Sangria from '../views/Sangria/Sangria';
 
 function Router() {
     return (
@@ -18,8 +19,7 @@ function Router() {
                 <Route path='/pdv' element={<Pdv />}/>
                 <Route path='/diarios' element={<Diarios />}/>
                 <Route path='/site' element={<Site />}/>
-                <Route />
-                <Route />
+                <Route path='/sangria' element={<Sangria />}/>
             </Routes>
         </BrowserRouter>
     )

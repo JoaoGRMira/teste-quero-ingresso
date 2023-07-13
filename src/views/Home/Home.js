@@ -168,16 +168,21 @@ export default function Home() {
               <IconButton
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
-                component={Link}
-                href="/eventos"
               >
-                <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
-                  Home
-                </Typography>
+                <Link href='/eventos' sx={{
+                textDecoration: 'none',
+                '&:visited': {
+                  color: 'inherit',
+                },
+              }}>
+                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                    Home
+                    </Typography>
+                </Link>
               </IconButton>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
-              <Link href='/' sx={{
+              <Link href='#' sx={{
                 textDecoration: 'none',
                 '&:visited': {
                   color: 'inherit',

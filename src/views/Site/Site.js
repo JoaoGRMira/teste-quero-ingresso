@@ -185,7 +185,7 @@ export default function Site() {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height: 72 }} elevation={0}>
-          <Toolbar
+        <Toolbar
             sx={{
               pr: '24px', // mantém o padding direito quando o drawer é fechado
             }}
@@ -207,16 +207,21 @@ export default function Site() {
               <IconButton
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
-                component={Link}
-                href="/eventos"
               >
-                <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
-                  Home
-                </Typography>
+                <Link href='/eventos' sx={{
+                textDecoration: 'none',
+                '&:visited': {
+                  color: 'inherit',
+                },
+              }}>
+                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                    Home
+                    </Typography>
+                </Link>
               </IconButton>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
-              <Link href='/' sx={{
+              <Link href='#' sx={{
                 textDecoration: 'none',
                 '&:visited': {
                   color: 'inherit',
