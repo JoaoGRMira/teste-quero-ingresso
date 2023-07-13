@@ -5,6 +5,7 @@ import Home from '../views/Home/Home';
 import Classes from '../views/Classes/Classes';
 import Pdv from '../views/PDV/Pdv';
 import Diarios from '../views/Diários/Diarios';
+import Site from '../views/Site/Site';
 
 function Router() {
     return (
@@ -16,6 +17,7 @@ function Router() {
                 <Route path='/classes' element={<Classes />}/>
                 <Route path='/pdv' element={<Pdv />}/>
                 <Route path='/diarios' element={<Diarios />}/>
+                <Route path='/site' element={<Site />}/>
                 <Route />
                 <Route />
             </Routes>

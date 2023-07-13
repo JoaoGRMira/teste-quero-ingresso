@@ -116,7 +116,7 @@ export const secondaryListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/site" sx={{ color: 'white' }}>
       <ListItemIcon>
         <BarChartIcon sx={{ color: 'white' }} />
       </ListItemIcon>

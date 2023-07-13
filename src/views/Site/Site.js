@@ -46,8 +46,10 @@ import TimeChart from '../../components/Charts/TimeChart';
 import Ranking from '../../components/Tables/Charts/Ranking';
 import CustomizedTables from '../../components/Tables/Charts/Table';
 import SearchBar from '../../components/Outros/SearchBar';
-import TablePdv from '../../components/Tables/Pdv/TablePdv';
+import TableSite from '../../components/Tables/Site/TableSite';
 import ExpandableButton from '../../components/Buttons/Accordion';
+import FilterButtonStatus from '../../components/Buttons/FilterButtonStatus';
+import FilterButtonIngresso from '../../components/Buttons/FilterButtonIngresso';
 
 function Copyright(props) {
   return (
@@ -172,7 +174,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove
 const defaultTheme = createTheme();
 
-export default function Pdv() {
+export default function Site() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -289,7 +291,7 @@ export default function Pdv() {
             <Grid container spacing={3}>
               {/* Evento Atual */}
               <Grid item xs={12} md={4} lg={4}>
-                <Title>Relatório Pdv</Title>
+                <Title>Relatório Site Detalhado</Title>
                 <EventoAtual nomeEvento="Nome do Evento"
                   dataEvento="01 de janeiro de 2023"
                   localEvento="Local do Evento"
@@ -329,6 +331,8 @@ export default function Pdv() {
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1 }}>
                 <Grid container spacing={3} sx={{ py: 2 }}>
                   <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+                    <FilterButtonStatus />
+                    <FilterButtonIngresso />
                     <FilterButton />
                     <DownloadButton />
                   </Grid>
@@ -339,7 +343,7 @@ export default function Pdv() {
                     <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />
                   </Grid>
                   <Grid item xs={12}>
-                    <TablePdv />
+                    <TableSite />
                   </Grid>
                 </Grid>
               </Container>
