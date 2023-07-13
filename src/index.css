@@ -11,6 +11,10 @@
   --body-background: #F0F0F0;
 }
 
+.color {
+  background-color: #7e7e7e;
+}
+
 body {
   margin: 0;
   padding: 0;
