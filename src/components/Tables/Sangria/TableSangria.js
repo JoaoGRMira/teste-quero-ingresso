@@ -61,7 +61,7 @@ const pdvs = [
 
 export default function TableSangria() {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -90,7 +90,7 @@ export default function TableSangria() {
                                 <StyledTableCell colSpan={6}>
                                     {/* Detalhes */}
                                     <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer component={Paper}>
+                                        <TableContainer>
                                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                                 <TableHead>
                                                     <TableRow>
@@ -98,6 +98,7 @@ export default function TableSangria() {
                                                         <StyledTableCell2 align="center">Ingressos Vendidos</StyledTableCell2>
                                                         <StyledTableCell2 align="center">Cortesias Emitidas</StyledTableCell2>
                                                         <StyledTableCell2 align="center">Total Vendidas (R$)</StyledTableCell2>
+                                                        <StyledTableCell2 align="center">Total</StyledTableCell2>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -109,6 +110,7 @@ export default function TableSangria() {
                                                             <StyledTableCell align="center">{pdv.ingresso}</StyledTableCell>
                                                             <StyledTableCell align="center">{pdv.cortesia}</StyledTableCell>
                                                             <StyledTableCell align="center">{pdv.total}</StyledTableCell>
+                                                            <StyledTableCell align="center">{<Checkbox />}</StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>

@@ -68,7 +68,7 @@ const camarote = [
 
 export default function TableClasses() {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -99,7 +99,7 @@ export default function TableClasses() {
                                 <StyledTableCell colSpan={12}>
                                     {/* Detalhes */}
                                     <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer component={Paper}>
+                                        <TableContainer>
                                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                                 <TableHead>
                                                     <TableRow>

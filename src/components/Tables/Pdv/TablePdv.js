@@ -64,7 +64,7 @@ const camarote = [
 
 export default function TablePdv() {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -94,10 +94,10 @@ export default function TablePdv() {
                                 <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
                             </StyledTableRow>
                             <StyledTableRow>
-                                <StyledTableCell colSpan={6}>
+                                <StyledTableCell colSpan={12}>
                                     {/* Detalhes */}
                                     <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer component={Paper}>
+                                        <TableContainer>
                                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                                 <TableHead>
                                                     <TableRow>

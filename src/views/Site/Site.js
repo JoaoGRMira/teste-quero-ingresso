@@ -342,7 +342,7 @@ export default function Site() {
                     <DownloadButton />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <SearchBar />
+                  <SearchBar label="Buscar cliente" />
                   </Grid>
                   <Grid item xs={12}>
                     <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />

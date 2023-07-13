@@ -338,7 +338,7 @@ export default function Pdv() {
                     <DownloadButton />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <SearchBar />
+                  <SearchBar label="Buscar PDV ou POS" />
                   </Grid>
                   <Grid item xs={12}>
                     <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />

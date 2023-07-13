@@ -43,12 +43,12 @@ export default function Pdv() {
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}              >
                 <Link href='/eventos'
-                sx={{
-                  textDecoration: 'none',
-                  '&:visited': {
-                    color: 'inherit',
-                  },
-                }}>
+                  sx={{
+                    textDecoration: 'none',
+                    '&:visited': {
+                      color: 'inherit',
+                    },
+                  }}>
                   <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                     Home
                   </Typography>
@@ -106,7 +106,7 @@ export default function Pdv() {
                       <FilterEventos />
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                      <SearchBar />
+                      <SearchBar label="Buscar eventos" />
                     </Grid>
                     <Grid item xs={12}>
                       <TableEvento />

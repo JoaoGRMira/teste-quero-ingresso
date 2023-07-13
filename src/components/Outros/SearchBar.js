@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { TextField, Button } from '@mui/material';
 
-const SearchBar = ({ onSearch }) => {
+function SearchBar(props) {
   const [searchText, setSearchText] = useState('');
-
-  const handleSearch = () => {
-    onSearch(searchText);
-  };
 
   const handleChange = (event) => {
     setSearchText(event.target.value);
   };
 
+  const handleSearch = () => {
+  };
+
   return (
     <div>
       <TextField
-        label="Pesquisar"
+        label={props.label}
         variant="outlined"
         value={searchText}
         onChange={handleChange}
@@ -27,6 +25,6 @@ const SearchBar = ({ onSearch }) => {
       </Button>
     </div>
   );
-};
+}
 
 export default SearchBar;

@@ -61,7 +61,7 @@ const pdvs = [
 
 export default function TablePDVsDiario() {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -90,7 +90,7 @@ export default function TablePDVsDiario() {
                                 <StyledTableCell colSpan={6}>
                                     {/* Detalhes */}
                                     <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer component={Paper}>
+                                        <TableContainer>
                                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                                 <TableHead>
                                                     <TableRow>

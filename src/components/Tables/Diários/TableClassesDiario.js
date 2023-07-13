@@ -60,7 +60,7 @@ const classes = [
 
 export default function TableClassesDiario() {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -89,7 +89,7 @@ export default function TableClassesDiario() {
                                 <StyledTableCell colSpan={6}>
                                     {/* Detalhes */}
                                     <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer component={Paper}>
+                                        <TableContainer>
                                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                                 <TableHead>
                                                     <TableRow>
