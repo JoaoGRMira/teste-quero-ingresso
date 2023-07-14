@@ -1,7 +1,7 @@
 .offcanvas {
     margin-top: 12vh;
     width: 20vw !important;
-    background-color: var(--blue) !important;
+    background-color: #7e7e7e !important;
     position: fixed;
 }
 

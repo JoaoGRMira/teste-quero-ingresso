@@ -15,14 +15,14 @@ const ContainerCharts = ({ button1Content, button2Content }) => {
         <Grid item xs={12}>
             <Box textAlign="center">
                 <Button onClick={() => handleButtonClick(1)} variant="contained" className={activeButton === 1 ? 'active' : ''} sx={{
-                    backgroundColor: 'var(--body-background)', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
+                    backgroundColor: 'var(--body-background)', color: '#7e7e7e', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
                     }, boxShadow: "none", borderRadius: 0, mb: -0.1
                 }}>
                     Visão Geral
                 </Button>
                 <Button onClick={() => handleButtonClick(2)} variant="contained" className={activeButton === 2 ? 'active' : ''} sx={{
-                    backgroundColor: 'var(--body-background)', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
+                    backgroundColor: 'var(--body-background)', color: '#7e7e7e', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
                     }, boxShadow: "none", borderRadius: 0, mb: -0.1
                 }}>

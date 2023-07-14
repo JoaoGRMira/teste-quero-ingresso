@@ -175,7 +175,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 export default function Site() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -253,7 +253,7 @@ export default function Site() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
-              backgroundColor: 'var(--blue)',
+              backgroundColor: '#7e7e7e',
               border: 'none'
             }}
           >
@@ -266,7 +266,7 @@ export default function Site() {
               width: drawerWidth,
               height: '91vh',
               overflowY: 'auto',
-              backgroundColor: 'var(--blue)'
+              backgroundColor: '#7e7e7e'
             }}
           >
             <List component="nav">

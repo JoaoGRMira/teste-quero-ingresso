@@ -15,14 +15,14 @@ const ContainerDiarios = ({ button1Content, button2Content }) => {
         <Grid item xs={12}>
             <Box textAlign="center">
                 <Button onClick={() => handleButtonClick(1)} variant="contained" className={activeButton === 1 ? 'active' : ''} sx={{
-                    backgroundColor: 'white', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
+                    backgroundColor: 'white', color: '#7e7e7e', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
                     }, boxShadow: "none", mb: 3, mt: 1
                 }}>
                     Classes
                 </Button>
                 <Button onClick={() => handleButtonClick(2)} variant="contained" className={activeButton === 2 ? 'active' : ''} sx={{
-                    backgroundColor: 'white', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
+                    backgroundColor: 'white', color: '#7e7e7e', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
                     }, boxShadow: "none", mb: 3, mt: 1
                 }}>
@@ -39,7 +39,7 @@ const ContainerDiarios = ({ button1Content, button2Content }) => {
                 </Box>
                 <style jsx>{`
                     .active {
-                    background-color: var(--blue) !important;
+                    background-color: #7e7e7e !important;
                     color: white
                     }
                 `}</style>

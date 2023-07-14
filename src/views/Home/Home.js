@@ -136,7 +136,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 export default function Home() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -420,7 +420,7 @@ export default function Home() {
                         <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: '#7e7e7e', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" color='white' gutterBottom>
                           Itens Vendidos
                         </Typography>
-                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--blue)' fontWeight="bold">
+                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='#7e7e7e' fontWeight="bold">
                           0
                         </ Typography>
                       </Paper>
