@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif", fontWeight:'bold' }}>
       Mais utilizados
     </ListSubheader>
     <ListItemButton component={Link} to="/home" sx={{ color: 'white' }}>
@@ -101,7 +101,7 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif", fontWeight:'bold' }}>
       Rel. Analíticos
     </ListSubheader>
     <ListItemButton sx={{ color: 'white' }}>
@@ -145,7 +145,7 @@ export const secondaryListItems = (
 
 export const tertiaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif", fontWeight:'bold' }}>
       Analytics
     </ListSubheader>
     <ListItemButton sx={{ color: 'white' }}>
@@ -165,7 +165,7 @@ export const tertiaryListItems = (
 
 export const quaternaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif", fontWeight:'bold' }}>
       Sangrias
     </ListSubheader>
     <ListItemButton component={Link} to="/sangria" sx={{ color: 'white' }}>
@@ -197,7 +197,7 @@ export const quaternaryListItems = (
 
 export const quinaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+    <ListSubheader component="div" inset sx={{ fontSize: '1rem', position: 'relative', backgroundColor: 'var(--blue)', color: 'white', fontFamily: "'Century Gothic', Futura, sans-serif", fontWeight:'bold' }}>
       Administrativo
     </ListSubheader>
     <ListItemButton sx={{ color: 'white' }}>
