@@ -175,7 +175,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 export default function Site() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
