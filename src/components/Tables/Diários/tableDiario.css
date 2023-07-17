@@ -1,0 +1,60 @@
+.diario-tabela {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .diario-cabecalho {
+    border-bottom: 1px solid var(--grey-shadow);
+    border-top: 1px solid var(--grey-shadow);
+    padding: 10px;
+    text-align: center;
+    color: black
+  }
+
+  .diario-rodape {
+    border-bottom: 1px solid var(--grey-shadow);
+    border-top: 1px solid var(--grey-shadow);
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .diario-celula {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .diario-botao-expandir {
+    width: 30px;
+    height: 30px;
+    background-color: green;
+    color: white;
+    font-size: 20px;
+    margin-right: 150px;
+    border: none
+  }
+  
+  
+  .diario-conteudo-expandido {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .diario-linha-branca {
+    background-color: #ffffff;
+  }
+  
+  .diario-linha-cinza {
+    background-color: #f2f2f2;
+  }
+
+  .diario-linha-azul {
+    background-color: lightblue;
+    font-weight: bold;
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: center;
+    padding: 10px;
+  }
+  

@@ -28,8 +28,8 @@ const ContainerDiarios = ({ button1Content, button2Content }) => {
                 }}>
                     PDVs
                 </Button>
-                <Box sx={{ backgroundColor: 'white', borderTop: '1px solid var(--grey-shadow)' }}>
-                    <Typography variant="h6" component="div" mt={2} p={2}>
+                <Box sx={{ backgroundColor: 'white'}}>
+                    <Typography variant="body" component="div" mt={2} p={2}>
                         {activeButton === 1 ? (
                             <div>{button1Content}</div>
                         ) : (
