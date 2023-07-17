@@ -307,9 +307,6 @@ export default function Sangria() {
                   <SearchBar label="Buscar PDV" />
                   </Grid>
                   <Grid item xs={12}>
-                    <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />
-                  </Grid>
-                  <Grid item xs={12}>
                     <TableSangria />
                   </Grid>
                 </Grid>

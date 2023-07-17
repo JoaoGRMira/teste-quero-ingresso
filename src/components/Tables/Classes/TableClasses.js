@@ -1,151 +1,108 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ExpandableButton from '../../Buttons/Accordion';
-import { Checkbox } from '@mui/material';
+import React, { useState } from 'react';
+import './tableClasses.css';
+import Checkbox from '@mui/material/Checkbox';
+import { TableContainer } from '@mui/material';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.white,
-        color: theme.palette.common.black,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
+const TableClasses = () => {
+    const [tabelaData, setTabelaData] = useState([
+        { id: 1, classe: 'CAMAROTE', vendas: 10, cortesia: 0, qtde: 10, valor: 'R$500,00'},
+        { id: 2, classe: 'PISTA', vendas: 30, cortesia: 0, qtde: 30, valor: 'R$700,00'},
+    ]);
 
-const StyledTableCell2 = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: 'lightblue',
-        color: theme.palette.common.black,
-        fontWeight: 'bold',
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
+    const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+    const expandirLinha = (id) => {
+        setTabelaData((prevData) =>
+            prevData.map((item) => {
+                if (item.id === id) {
+                    return { ...item, expandir: !item.expandir };
+                }
+                return item;
+            })
+        );
 
-function createData(classe, vendas, cortesia, qtde, valor) {
-    return { classe, vendas, cortesia, qtde, valor };
-}
+        setLinhaSelecionada(id);
+    };
 
-const rows = [
-    createData('CAMAROTE', 80, 0, 80, 'R$ 4.000,00'),
-    createData('PISTA', 168, 0, 168, 'R$ 5.040,00'),
-];
-
-function dataTotal(classe, vendas, cortesia, qtde, valor) {
-    return { classe, vendas, cortesia, qtde, valor };
-}
-
-const total = [
-    dataTotal('Total (Vendas + Cortesia)', 248, 0, 248, 'R$ 9.040,00'),
-];
-
-function dataCamarote(classe, valor, vendido, cortesia, total, valorTotal) {
-    return { classe, valor, vendido, cortesia, total, valorTotal };
-}
-
-const camarote = [
-    dataCamarote('CAMAROTE', 'R$ 50,00', 80, 0, 80, 'R$4.000,00'),
-]
-
-export default function TableClasses() {
     return (
         <TableContainer>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell></StyledTableCell>
-                        <StyledTableCell>Classe</StyledTableCell>
-                        <StyledTableCell align="left">Vendas (Qtde)</StyledTableCell>
-                        <StyledTableCell align="left">Cortesia (Qtde)</StyledTableCell>
-                        <StyledTableCell align="left">Total (Qtde)</StyledTableCell>
-                        <StyledTableCell align="left">Valor</StyledTableCell>
-                        <StyledTableCell align="left">Total</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <React.Fragment key={row.tipo}>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row"></StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {row.classe}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">{row.vendas}</StyledTableCell>
-                                <StyledTableCell align="left">{row.cortesia}</StyledTableCell>
-                                <StyledTableCell align="left">{row.qtde}</StyledTableCell>
-                                <StyledTableCell align="left">{row.valor}</StyledTableCell>
-                                <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
-                            </StyledTableRow>
-                            <StyledTableRow>
-                                <StyledTableCell colSpan={12}>
-                                    {/* Detalhes */}
-                                    <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer>
-                                            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <StyledTableCell2>Classe</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Vendido</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Cortesia</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left"><Checkbox /></StyledTableCell2>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {camarote.map((camarote) => (
-                                                        <StyledTableRow>
-                                                            <StyledTableCell component="th" scope="row">
-                                                                {camarote.classe}
-                                                            </StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valor}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.vendido}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.cortesia}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.total}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valorTotal}</StyledTableCell>
-                                                            <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
-                                                        </StyledTableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </ExpandableButton>
-                                </StyledTableCell>
-                            </StyledTableRow>
+            <table className="classes-tabela">
+                <thead>
+                    <tr>
+                        <th className="classes-cabecalho"></th>
+                        <th className="classes-cabecalho">Classe</th>
+                        <th className="classes-cabecalho">Vendas (Qtde)</th>
+                        <th className="classes-cabecalho">Cortesia (Qtde)</th>
+                        <th className="classes-cabecalho">Total (Qtde)</th>
+                        <th className="classes-cabecalho">Valor</th>
+                        <th className="classes-cabecalho">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tabelaData.map((item, index) => (
+                        <React.Fragment key={item.id}>
+                            <tr
+                                className={index % 2 === 0 ? 'classes-linha-branca' : 'classes-linha-cinza'}
+                            >
+                                <td className="classes-celula">
+                                    <button
+                                        className="classes-botao-expandir"
+                                        onClick={() => expandirLinha(item.id)}
+                                    >
+                                        {item.expandir ? '-' : '+'}
+                                    </button>
+                                </td>
+                                <td className="classes-celula">{item.classe}</td>
+                                <td className="classes-celula">{item.vendas}</td>
+                                <td className="classes-celula">{item.cortesia}</td>
+                                <td className="classes-celula">{item.qtde}</td>
+                                <td className="classes-celula">{item.valor}</td>
+                                <td className="classes-celula">
+                                    <Checkbox />
+                                </td>
+                            </tr>
+                            {item.expandir && (
+                                <>
+                                    <tr>
+                                        <td className="classes-linha-azul">Classe</td>
+                                        <td className="classes-linha-azul">Valor</td>
+                                        <td className="classes-linha-azul">Vendido</td>
+                                        <td className="classes-linha-azul">Cortesia</td>
+                                        <td className="classes-linha-azul">Total</td>
+                                        <td className="classes-linha-azul">Valor Total</td>
+                                        <td className="classes-linha-azul">
+                                            <Checkbox />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="classes-conteudo-expandido">{item.classe}</td>
+                                        <td className="classes-conteudo-expandido">{item.valor}</td>
+                                        <td className="classes-conteudo-expandido">{item.vendas}</td>
+                                        <td className="classes-conteudo-expandido">{item.cortesia}</td>
+                                        <td className="classes-conteudo-expandido">{item.qtde}</td>
+                                        <td className="classes-conteudo-expandido">{item.valor}</td>
+                                        <td className="classes-conteudo-expandido">
+                                            <Checkbox />
+                                        </td>
+                                    </tr>
+                                </>
+                            )}
                         </React.Fragment>
                     ))}
-                    {total.map((total) => (
-                        <StyledTableRow>
-                            <StyledTableCell2 align="left"></StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.classe}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.vendas}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.cortesia}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.qtde}</StyledTableCell2>
-                            <StyledTableCell2 align="left">{total.valor}</StyledTableCell2>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    <tr>
+                        <td className="classes-rodape"></td>
+                        <td className="classes-rodape">Total (Vendas + Cortesia)</td>
+                        <td className="classes-rodape">0</td>
+                        <td className="classes-rodape">0</td>
+                        <td className="classes-rodape">0</td>
+                        <td className="classes-rodape">R$ 0,00</td>
+                        <td className="classes-rodape"></td>
+                    </tr>
+                </tbody>
+            </table>
         </TableContainer>
+
     );
-}
+};
+
+export default TableClasses;

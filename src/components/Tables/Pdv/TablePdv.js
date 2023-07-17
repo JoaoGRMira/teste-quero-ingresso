@@ -1,139 +1,118 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React, { useState } from 'react';
+import './tablePDV.css';
 import Checkbox from '@mui/material/Checkbox';
-import ExpandableButton from '../../Buttons/Accordion';
+import { TableContainer } from '@mui/material';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.white,
-        color: theme.palette.common.black,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
+const TablePDV = () => {
+    const [tabelaData, setTabelaData] = useState([
+        { id: 1, pdv: 'Loja A', qtdeHoje: 10, valorHoje: 'R$ 500,00', qtdeTotal: 100, valorTotal: 'R$ 5000,00', cortesia: 0 },
+        { id: 2, pdv: 'Loja B', qtdeHoje: 5, valorHoje: 'R$ 250,00', qtdeTotal: 50, valorTotal: 'R$ 2500,00', cortesia: 0 },
+        { id: 3, pdv: 'Loja C', qtdeHoje: 8, valorHoje: 'R$ 400,00', qtdeTotal: 80, valorTotal: 'R$ 4000,00', cortesia: 0 },
+        { id: 4, pdv: 'Loja D', qtdeHoje: 3, valorHoje: 'R$ 150,00', qtdeTotal: 30, valorTotal: 'R$ 1500,00', cortesia: 0 },
+        { id: 5, pdv: 'Loja E', qtdeHoje: 6, valorHoje: 'R$ 300,00', qtdeTotal: 60, valorTotal: 'R$ 3000,00', cortesia: 0 },
+        { id: 6, pdv: 'Loja F', qtdeHoje: 4, valorHoje: 'R$ 200,00', qtdeTotal: 40, valorTotal: 'R$ 2000,00', cortesia: 0 }
+    ]);
 
-const StyledTableCell2 = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: 'lightblue',
-        color: theme.palette.common.black,
-        fontWeight: 'bold',
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
+    const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+    const expandirLinha = (id) => {
+        setTabelaData((prevData) =>
+            prevData.map((item) => {
+                if (item.id === id) {
+                    return { ...item, expandir: !item.expandir };
+                }
+                return item;
+            })
+        );
 
-function createData(pdv, qtdehoje, valorhoje, qtdetotal, valortotal, cortesia) {
-    return { pdv, qtdehoje, valorhoje, qtdetotal, valortotal, cortesia };
-}
+        setLinhaSelecionada(id);
+    };
 
-const rows = [
-    createData('PONTO DE VENDA 1', 10, 100, 50, 'R$ 1.000,00', 0),
-    createData('PONTO DE VENDA 2', 20, 200, 60, 'R$ 2.000,00', 0),
-];
+    function createData(classe, valor, vendas, cortesia, total, vTotal) {
+        return { classe, valor, vendas, cortesia, total, vTotal };
+    }
 
-function dataTotal(classe, vendas, cortesia, qtde, valor) {
-    return { classe, vendas, cortesia, qtde, valor };
-}
+    const rows = [
+        createData('CAMAROTE', 'R$70,00', 24, 0, 24, 'R$ 1.680,00'),
+        createData('PISTA', 'R$50,00', 27, 0, 27, 'R$ 1.350,00'),
+    ];
 
-function dataCamarote(classe, valor, vendido, cortesia, total, valorTotal) {
-    return { classe, valor, vendido, cortesia, total, valorTotal };
-}
-
-const camarote = [
-    dataCamarote('CAMAROTE', 'R$ 50,00', 80, 0, 80, 'R$4.000,00'),
-]
-
-export default function TablePdv() {
     return (
         <TableContainer>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell></StyledTableCell>
-                        <StyledTableCell><strong>Pdv</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Qtde (Hoje)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Valor (Hoje)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Qtde (Total)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Valor (Total)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Cortesia</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Total</strong></StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <React.Fragment key={row.tipo}>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row"></StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {row.pdv}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">{row.qtdehoje}</StyledTableCell>
-                                <StyledTableCell align="left">{row.valorhoje}</StyledTableCell>
-                                <StyledTableCell align="left">{row.qtdetotal}</StyledTableCell>
-                                <StyledTableCell align="left">{row.valortotal}</StyledTableCell>
-                                <StyledTableCell align="left">{row.cortesia}</StyledTableCell>
-                                <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
-                            </StyledTableRow>
-                            <StyledTableRow>
-                                <StyledTableCell colSpan={12}>
-                                    {/* Detalhes */}
-                                    <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer>
-                                            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                    <StyledTableCell2>Classe</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Vendido</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Cortesia</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {camarote.map((camarote) => (
-                                                        <StyledTableRow>
-                                                            <StyledTableCell component="th" scope="row">
-                                                                {camarote.classe}
-                                                            </StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valor}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.vendido}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.cortesia}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.total}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valorTotal}</StyledTableCell>
-                                                            <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
-                                                        </StyledTableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </ExpandableButton>
-                                </StyledTableCell>
-                            </StyledTableRow>
+            <table className="pdv-tabela">
+                <thead>
+                    <tr>
+                        <th className="pdv-cabecalho"></th>
+                        <th className="pdv-cabecalho">PDV</th>
+                        <th className="pdv-cabecalho">Qtde (Hoje)</th>
+                        <th className="pdv-cabecalho">Valor (Hoje)</th>
+                        <th className="pdv-cabecalho">Qtde (Total)</th>
+                        <th className="pdv-cabecalho">Valor (Total)</th>
+                        <th className="pdv-cabecalho">Cortesia</th>
+                        <th className="pdv-cabecalho">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tabelaData.map((item, index) => (
+                        <React.Fragment key={item.id}>
+                            <tr
+                                className={index % 2 === 0 ? 'pdv-linha-branca' : 'pdv-linha-cinza'}
+                            >
+                                <td className="pdv-celula">
+                                    <button
+                                        className="pdv-botao-expandir"
+                                        onClick={() => expandirLinha(item.id)}
+                                    >
+                                        {item.expandir ? '-' : '+'}
+                                    </button>
+                                </td>
+                                <td className="pdv-celula">{item.pdv}</td>
+                                <td className="pdv-celula">{item.qtdeHoje}</td>
+                                <td className="pdv-celula">{item.valorHoje}</td>
+                                <td className="pdv-celula">{item.qtdeTotal}</td>
+                                <td className="pdv-celula">{item.valorTotal}</td>
+                                <td className="pdv-celula">{item.cortesia}</td>
+                                <td className="pdv-celula">
+                                    <Checkbox />
+                                </td>
+                            </tr>
+                            {item.expandir && (
+                                <>
+                                    <tr>
+                                        <td className="pdv-linha-azul"></td>
+                                        <td className="pdv-linha-azul">Classe</td>
+                                        <td className="pdv-linha-azul">Valor</td>
+                                        <td className="pdv-linha-azul">Vendido</td>
+                                        <td className="pdv-linha-azul">Cortesia</td>
+                                        <td className="pdv-linha-azul">Total</td>
+                                        <td className="pdv-linha-azul">Valor Total</td>
+                                        <td className="pdv-linha-azul">
+                                            <Checkbox />
+                                        </td>
+                                    </tr>
+                                    {rows.map((row) => (
+                                        <tr>
+                                            <td className="pdv-conteudo-expandido"></td>
+                                            <td className="pdv-conteudo-expandido">{row.classe}</td>
+                                            <td className="pdv-conteudo-expandido">{row.valor}</td>
+                                            <td className="pdv-conteudo-expandido">{row.vendas}</td>
+                                            <td className="pdv-conteudo-expandido">{row.cortesia}</td>
+                                            <td className="pdv-conteudo-expandido">{row.total}</td>
+                                            <td className="pdv-conteudo-expandido">{row.vTotal}</td>
+                                            <td className="pdv-conteudo-expandido">
+                                                <Checkbox />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </>
+                            )}
                         </React.Fragment>
                     ))}
-                </TableBody>
-            </Table>
+                </tbody>
+            </table>
         </TableContainer>
+
     );
-}
+};
+
+export default TablePDV;
