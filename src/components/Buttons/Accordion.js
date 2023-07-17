@@ -12,7 +12,7 @@ function ExpandableButton(props) {
 
   return (
     <Accordion expanded={expanded} onChange={handleExpand} sx={{ backgroundColor: "transparent" }} elevation={0}>
-      <AccordionSummary aria-controls="content" id="header">
+      <AccordionSummary aria-controls="content" id="header" sx={{mx: -4}}>
         <Button variant="contained" sx={{ backgroundColor: 'green', height: 50 }}>
           <AddIcon />
         </Button>
@@ -20,7 +20,7 @@ function ExpandableButton(props) {
           {props.title}
         </Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails sx={{mx: -4}}>
         <Typography>
           {props.children}
         </Typography>

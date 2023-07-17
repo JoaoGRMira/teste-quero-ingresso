@@ -101,27 +101,27 @@ export default function TablePdv() {
                                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                                 <TableHead>
                                                     <TableRow>
-                                                    <StyledTableCell2>Classe</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Vendido</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Cortesia</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
+                                                    <StyledTableCell2 align='center'>Classe</StyledTableCell2>
+                                                        <StyledTableCell2 align="center">Valor</StyledTableCell2>
+                                                        <StyledTableCell2 align="center">Vendido</StyledTableCell2>
+                                                        <StyledTableCell2 align="center">Cortesia</StyledTableCell2>
+                                                        <StyledTableCell2 align="center">Total</StyledTableCell2>
+                                                        <StyledTableCell2 align="center">Valor Total</StyledTableCell2>
+                                                        <StyledTableCell2 align="center">Total</StyledTableCell2>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
                                                     {camarote.map((camarote) => (
                                                         <StyledTableRow>
-                                                            <StyledTableCell component="th" scope="row">
+                                                            <StyledTableCell component="th" scope="row" align='center'>
                                                                 {camarote.classe}
                                                             </StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valor}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.vendido}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.cortesia}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.total}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valorTotal}</StyledTableCell>
-                                                            <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
+                                                            <StyledTableCell align="center">{camarote.valor}</StyledTableCell>
+                                                            <StyledTableCell align="center">{camarote.vendido}</StyledTableCell>
+                                                            <StyledTableCell align="center">{camarote.cortesia}</StyledTableCell>
+                                                            <StyledTableCell align="center">{camarote.total}</StyledTableCell>
+                                                            <StyledTableCell align="center">{camarote.valorTotal}</StyledTableCell>
+                                                            <StyledTableCell align="center">{<Checkbox />}</StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>
