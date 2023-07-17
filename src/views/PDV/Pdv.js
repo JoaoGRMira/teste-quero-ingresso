@@ -341,9 +341,6 @@ export default function Pdv() {
                   <SearchBar label="Buscar PDV ou POS" />
                   </Grid>
                   <Grid item xs={12}>
-                    <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />
-                  </Grid>
-                  <Grid item xs={12}>
                     <TablePdv />
                   </Grid>
                 </Grid>

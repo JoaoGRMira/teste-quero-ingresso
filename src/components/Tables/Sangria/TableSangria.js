@@ -1,128 +1,100 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ExpandableButton from '../../Buttons/Accordion';
-import { Checkbox } from '@mui/material';
+import React, { useState } from 'react';
+import './tableSangria.css';
+import Checkbox from '@mui/material/Checkbox';
+import { TableContainer } from '@mui/material';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.white,
-        color: theme.palette.common.black,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
+const TableSangria = () => {
+    const [tabelaData, setTabelaData] = useState([
+        { id: 1, pdv: 'Loja Virtual', vendas: 'R$ 850,00', sangrias: 'R$ 0,00', saldo: 'R$ 850,00'},
+        { id: 2, pdv: 'Loja Física', vendas: 'R$ 1.350,00', sangrias: 'R$ 0,00', saldo: 'R$ 1.350,00'},
+    ]);
 
-const StyledTableCell2 = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: 'lightblue',
-        color: theme.palette.common.black,
-        fontWeight: 'bold',
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
+    const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+    const expandirLinha = (id) => {
+        setTabelaData((prevData) =>
+            prevData.map((item) => {
+                if (item.id === id) {
+                    return { ...item, expandir: !item.expandir };
+                }
+                return item;
+            })
+        );
 
-function createData(pdv, vendas, sangrias, saldo, total) {
-    return { pdv, vendas, sangrias, saldo, total };
-}
+        setLinhaSelecionada(id);
+    };
 
-const rows = [
-    createData('Loja1','R$ 800,00', 'R$ 0,00', 'R$ 800,00' ),
-    createData('Loja2','R$ 1000,00', 'R$ 0,00', 'R$ 1000,00' ),
-];
+    function createData(classe, valor, vendas, cortesia, total, vTotal) {
+        return { classe, valor, vendas, cortesia, total, vTotal };
+    }
 
-function createPDVs(pdv, ingresso, cortesia, total) {
-    return { pdv, ingresso, cortesia, total };
-}
+    const rows = [
+        createData('CAMAROTE', 'R$70,00', 24, 0, 24, 'R$ 1.680,00'),
+        createData('PISTA', 'R$50,00', 27, 0, 27, 'R$ 1.350,00'),
+    ];
 
-const pdvs = [
-    createPDVs('Internet', 12, 0, '400,00'),
-    createPDVs('Loja 1', 2, 0, '80,00'),
-    createPDVs('Loja 2', 3, 0, '100,00'),
-];
-
-export default function TableSangria() {
     return (
         <TableContainer>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell></StyledTableCell>
-                        <StyledTableCell>PDV</StyledTableCell>
-                        <StyledTableCell align="center">Vendas</StyledTableCell>
-                        <StyledTableCell align="center">Sangrias</StyledTableCell>
-                        <StyledTableCell align="center">Saldo</StyledTableCell>
-                        <StyledTableCell align="center">Total</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <React.Fragment key={row.pdv}>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row"></StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {row.pdv}
-                                </StyledTableCell>
-                                <StyledTableCell align="center">{row.vendas}</StyledTableCell>
-                                <StyledTableCell align="center">{row.sangrias}</StyledTableCell>
-                                <StyledTableCell align="center">{row.saldo}</StyledTableCell>
-                                <StyledTableCell align="center">{<Checkbox />}</StyledTableCell>
-                            </StyledTableRow>
-                            <StyledTableRow>
-                                <StyledTableCell colSpan={6}>
-                                    {/* Detalhes */}
-                                    <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer>
-                                            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <StyledTableCell2>PDV</StyledTableCell2>
-                                                        <StyledTableCell2 align="center">Ingressos Vendidos</StyledTableCell2>
-                                                        <StyledTableCell2 align="center">Cortesias Emitidas</StyledTableCell2>
-                                                        <StyledTableCell2 align="center">Total Vendidas (R$)</StyledTableCell2>
-                                                        <StyledTableCell2 align="center">Total</StyledTableCell2>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {pdvs.map((pdv) => (
-                                                        <StyledTableRow>
-                                                            <StyledTableCell component="th" scope="row">
-                                                                {pdv.pdv}
-                                                            </StyledTableCell>
-                                                            <StyledTableCell align="center">{pdv.ingresso}</StyledTableCell>
-                                                            <StyledTableCell align="center">{pdv.cortesia}</StyledTableCell>
-                                                            <StyledTableCell align="center">{pdv.total}</StyledTableCell>
-                                                            <StyledTableCell align="center">{<Checkbox />}</StyledTableCell>
-                                                        </StyledTableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </ExpandableButton>
-                                </StyledTableCell>
-                            </StyledTableRow>
+            <table className="sangria-tabela">
+                <thead>
+                    <tr>
+                        <th className="sangria-cabecalho"></th>
+                        <th className="sangria-cabecalho">PDV</th>
+                        <th className="sangria-cabecalho">Vendas</th>
+                        <th className="sangria-cabecalho">Sangrias</th>
+                        <th className="sangria-cabecalho">Saldo</th>
+                        <th className="sangria-cabecalho">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tabelaData.map((item, index) => (
+                        <React.Fragment key={item.id}>
+                            <tr
+                                className={index % 2 === 0 ? 'sangria-linha-branca' : 'sangria-linha-cinza'}
+                            >
+                                <td className="sangria-celula">
+                                    <button
+                                        className="sangria-botao-expandir"
+                                        onClick={() => expandirLinha(item.id)}
+                                    >
+                                        {item.expandir ? '-' : '+'}
+                                    </button>
+                                </td>
+                                <td className="sangria-celula">{item.pdv}</td>
+                                <td className="sangria-celula">{item.vendas}</td>
+                                <td className="sangria-celula">{item.sangrias}</td>
+                                <td className="sangria-celula">{item.saldo}</td>
+                                <td className="sangria-celula"><Checkbox /></td>
+                            </tr>
+                            {item.expandir && (
+                                <>
+                                    <tr>
+                                        <td className="sangria-linha-azul">Classe</td>
+                                        <td className="sangria-linha-azul">Valor</td>
+                                        <td className="sangria-linha-azul">Vendido</td>
+                                        <td className="sangria-linha-azul">Cortesia</td>
+                                        <td className="sangria-linha-azul">Valor Total</td>
+                                        <td className="sangria-linha-azul">Total</td>
+                                    </tr>
+                                    {rows.map((row) => (
+                                        <tr>
+                                            <td className="sangria-conteudo-expandido">{row.classe}</td>
+                                            <td className="sangria-conteudo-expandido">{row.valor}</td>
+                                            <td className="sangria-conteudo-expandido">{row.vendas}</td>
+                                            <td className="sangria-conteudo-expandido">{row.cortesia}</td>
+                                            <td className="sangria-conteudo-expandido">{row.vTotal}</td>
+                                            <td className="sangria-conteudo-expandido"><Checkbox /></td>
+                                        </tr>
+                                    ))}
+                                </>
+                            )}
                         </React.Fragment>
                     ))}
-                </TableBody>
-            </Table>
+                </tbody>
+            </table>
         </TableContainer>
+
     );
-}
+};
+
+export default TableSangria;

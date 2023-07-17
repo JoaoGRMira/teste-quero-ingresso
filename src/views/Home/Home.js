@@ -66,17 +66,17 @@ const dataVpT = [
 ];
 
 const dataPeriodic = [
-  { periodo: '4', quantidade: 100 },
-  { periodo: '3', quantidade: 50 },
-  { periodo: '2', quantidade: 25 },
-  { periodo: '1', quantidade: 65 },
+  { periodo: '1', Venda: 100, Cortesia: 50, Total: 150, Acumulado: 65 },
+  { periodo: '2', Venda: 200, Cortesia: 100, Total: 300, Acumulado: 165 },
+  { periodo: '3', Venda: 150, Cortesia: 75, Total: 225, Acumulado: 240 },
+  { periodo: '4', Venda: 300, Cortesia: 150, Total: 450, Acumulado: 390 },
 ];
 
 const dataTime = [
-  { horario: '12:00', quantidade: 100 },
-  { horario: '13:00', quantidade: 50 },
-  { horario: '14:00', quantidade: 25 },
-  { horario: '15:00', quantidade: 65 },
+  { horario: '12:00', PDV: 0, WEB: 80},
+  { horario: '13:00', PDV: 2, WEB: 160 },
+  { horario: '14:00', PDV: 6, WEB: 150 },
+  { horario: '15:00', PDV: 15, WEB: 155 },
 ];
 
 const tipoIngressos = [
@@ -145,7 +145,7 @@ export default function Home() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height:72}} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height: 72 }} elevation={0}>
           <Toolbar
             sx={{
               pr: '24px', // mantém o padding direito quando o drawer é fechado
@@ -170,14 +170,14 @@ export default function Home() {
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
               >
                 <Link href='/eventos' sx={{
-                textDecoration: 'none',
-                '&:visited': {
-                  color: 'inherit',
-                },
-              }}>
-                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                  textDecoration: 'none',
+                  '&:visited': {
+                    color: 'inherit',
+                  },
+                }}>
+                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                     Home
-                    </Typography>
+                  </Typography>
                 </Link>
               </IconButton>
             </Box>
@@ -274,10 +274,10 @@ export default function Home() {
               </Grid>
               {/* Cards */}
               <Grid item xs={12} md={4} lg={3}>
-                  {/* Card 1 */}
+                {/* Card 1 */}
                 <Paper sx={{ height: 250, position: 'relative' }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <EventIcon />
+                    <EventIcon sx={{ marginRight: 2, marginBottom: 0.5 }}/>
                     Situação do Evento
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pt: 2 }} color='var(--grey)'>
@@ -305,34 +305,34 @@ export default function Home() {
                 <Paper sx={{ height: 250, position: 'relative' }}>
                   {/* Conteúdo do card */}
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <LocalActivityIcon />
+                    <LocalActivityIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Ingressos Emitidos
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pt: 2 }} color='var(--grey)'>
                     <div align='center'>
-                      <table>
+                      <table style={{ borderCollapse: 'collapse' }}>
                         <thead>
                           <tr>
-                            <th colSpan='1' />
-                            <th>Hoje</th>
-                            <th>Total</th>
+                            <th colSpan="1" />
+                            <th style={{ padding: '8px', textAlign: 'center' }}>Hoje</th>
+                            <th style={{ padding: '8px', textAlign: 'center' }}>Total</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <th>Venda:</th>
-                            <td align='center'>a</td>
-                            <td align='center'>a</td>
+                            <th style={{ padding: '8px', textAlign: 'center' }}>Venda:</th>
+                            <td align="center" style={{ padding: '8px', textAlign: 'center' }}>15</td>
+                            <td align="center" style={{ padding: '8px', textAlign: 'center' }}>654</td>
                           </tr>
                           <tr>
-                            <th>Cortesias:</th>
-                            <td align='center'>a</td>
-                            <td align='center'>a</td>
+                            <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>Cortesias:</th>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>0</td>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>0</td>
                           </tr>
                           <tr>
-                            <th>Total</th>
-                            <td align='center'>a</td>
-                            <td align='center'>a</td>
+                            <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total</th>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>15</td>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>654</td>
                           </tr>
                         </tbody>
                       </table>
@@ -344,7 +344,7 @@ export default function Home() {
                 {/* Card 3 */}
                 <Paper sx={{ height: 250, position: 'relative' }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <CreditCardIcon />
+                    <CreditCardIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Faturamentos
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pt: 6 }} color='var(--grey)'>
@@ -352,12 +352,12 @@ export default function Home() {
                       <table>
                         <tbody>
                           <tr>
-                            <th>Hoje:</th>
-                            <td align='center'>a</td>
+                            <th style={{ padding: '8px', textAlign: 'center' }}>Hoje:</th>
+                            <td align='center' style={{ padding: '8px', textAlign: 'center' }}>R$ 652,00</td>
                           </tr>
                           <tr>
-                            <th>Total:</th>
-                            <td align='center'>a</td>
+                            <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total:</th>
+                            <td align='center' style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>R$ 8.157,00</td>
                           </tr>
                         </tbody>
                       </table>
@@ -369,35 +369,35 @@ export default function Home() {
                 {/* Card 4 */}
                 <Paper sx={{ height: 100 }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <PeopleIcon />
+                    <PeopleIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Ticket Médio
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ p: 1 }}>
-                    R$ 0,00
+                    R$ 30,00
                   </Typography>
                 </Paper>
                 <Box sx={{ my: 2 }}>
                   {/* Card 5 */}
                   <Paper sx={{ height: 133 }}>
                     <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                      <HistoryIcon />
+                      <HistoryIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                       Média Diária
                     </Typography>
-                    <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--grey)'>
+                    <Typography variant="body1" align="center" sx={{ pb: 1.5 }} color='var(--grey)'>
                       <div align='center'>
-                        <table>
-                          <tbody>
-                            <tr>
-                              <th>Qtde</th>
-                              <td align='center'>0</td>
-                            </tr>
-                            <tr>
-                              <th>Valor</th>
-                              <td align='center'>R$00,00</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                      <table>
+                        <tbody>
+                          <tr>
+                            <th style={{ padding: '8px', textAlign: 'center' }}>Qtde</th>
+                            <td align='center' style={{ padding: '8px', textAlign: 'center' }}>7</td>
+                          </tr>
+                          <tr>
+                            <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Valor:</th>
+                            <td align='center' style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>R$ 157,00</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                     </ Typography>
                   </Paper>
                 </Box>
@@ -471,34 +471,37 @@ export default function Home() {
               <ContainerCharts
                 button1Content={
                   <Grid container spacing={3}>
-                    {/* Chart 1 */ }
+                    {/* Chart 1 */}
                     <Grid item xs={12} md={6} lg={6}>
                       <DonutChart data={dataVendas} />
                       <CustomizedTables />
                     </Grid>
-                    {/* Chart 2 */ }
+                    {/* Chart 2 */}
                     <Grid item xs={12} md={6} lg={6}>
                       <BarChartHorizontal data={tipoIngressos} />
                       <CustomizedTables />
                     </Grid>
-                    {/* Chart 3 */ }
+                    {/* Chart 3 */}
                     <Grid item xs={12} md={12} lg={12}>
-                      <LoteChart data={lote}/>
+                      <LoteChart data={lote} />
                       <CustomizedTables />
                     </Grid>
+                    {/* Chart 4 */}
                     <Grid item xs={12} md={12} lg={12}>
                       <VpTChart data={dataVpT} />
                       <CustomizedTables />
                     </Grid>
                     <Grid xs={12}>
                       <Ranking />
-                      </Grid>
+                    </Grid>
+                    {/* Chart 5 */}
                     <Grid xs={12}>
-                      <PeriodicChart data={dataPeriodic}/>
-                      </Grid>
-                      <Grid xs={12}>
-                      <TimeChart data={dataTime}/>
-                      </Grid>
+                      <PeriodicChart data={dataPeriodic} />
+                    </Grid>
+                    {/* Chart 6 */}
+                    <Grid xs={12}>
+                      <TimeChart data={dataTime} />
+                    </Grid>
                   </Grid>
                 }
                 button2Content={

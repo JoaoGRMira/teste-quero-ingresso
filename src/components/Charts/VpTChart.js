@@ -10,14 +10,17 @@ const VpTChart = ({ data }) => {
                 Vendas por Tipo de Ingresso <a href='/'>[Detalhes]</a>
             </Typography>
             <ResponsiveContainer width="100%" height={250}>
-            <BarChart width={1000} height={250} data={data} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" tick={{fontSize: 12}} />
-                <YAxis dataKey="tipo" type="category" tick={{fontSize: 12}} />
-                <Tooltip />
-                <Bar dataKey="Vendas" fill="#FA6384" />
-                <Bar dataKey="Cortesias" fill="#FA6384" />
-            </BarChart>
+                <BarChart width={1000} height={250} data={data} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis type="number" tick={{ fontSize: 12 }} />
+                    <YAxis dataKey="tipo" type="category" tick={{ fontSize: 12 }} />
+                    <Tooltip
+                        labelStyle={{ fontSize: 17 }}
+                        itemStyle={{ fontSize: 17 }}
+                    />
+                    <Bar dataKey="Vendas" fill="#FA6384" />
+                    <Bar dataKey="Cortesias" fill="#FA6384" />
+                </BarChart>
             </ResponsiveContainer>
         </React.Fragment>
     );
