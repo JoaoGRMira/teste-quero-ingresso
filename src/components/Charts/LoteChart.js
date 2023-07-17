@@ -10,13 +10,16 @@ const LoteChart = ({ data }) => {
                 Vendas por Lote <a href='/'>[Detalhes]</a>
             </Typography>
             <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={data} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" tick={{fontSize: 12}} />
-                <YAxis dataKey="tipo" type="category" tick={{fontSize: 12}} />
-                <Tooltip />
-                <Bar dataKey="quantidade" fill="#FCA503" />
-            </BarChart>
+                <BarChart data={data} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis type="number" tick={{ fontSize: 12 }} />
+                    <YAxis dataKey="tipo" type="category" tick={{ fontSize: 12 }} />
+                    <Tooltip
+                        labelStyle={{ fontSize: 17 }}
+                        itemStyle={{ fontSize: 17 }}
+                    />
+                    <Bar dataKey="quantidade" fill="#FCA503" />
+                </BarChart>
             </ResponsiveContainer>
         </React.Fragment>
     );

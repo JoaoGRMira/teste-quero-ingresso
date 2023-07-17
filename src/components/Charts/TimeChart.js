@@ -13,10 +13,13 @@ const TimeChart = ({ data }) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="horario" tick={{ fontSize: 12 }} />
           <YAxis tick={{ fontSize: 12 }} />
-          <Tooltip />
+          <Tooltip 
+            labelStyle={{ fontSize: 17 }}
+            itemStyle={{ fontSize: 17 }} 
+          />
           <Legend wrapperStyle={{ fontSize: 17 }} />
-          <Line type="monotone" dataKey="PDV" stroke="green" name="PDV" />
-          <Line type="monotone" dataKey="WEB" stroke="red" name="WEB" />
+          <Line type="monotone" dataKey="PDV" stroke="#8884d8" name="PDV" />
+          <Line type="monotone" dataKey="WEB" stroke="var(--blue)" name="WEB" />
         </LineChart>
       </ResponsiveContainer>
     </React.Fragment>

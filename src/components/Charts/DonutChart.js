@@ -27,7 +27,10 @@ const DonutChart = ({ data }) => {
             ))}
           </Pie>
           <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: 17 }} />
-          <Tooltip />
+          <Tooltip
+            labelStyle={{ fontSize: 17 }}
+            itemStyle={{ fontSize: 17 }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </React.Fragment>

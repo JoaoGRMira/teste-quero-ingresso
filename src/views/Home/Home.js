@@ -277,7 +277,7 @@ export default function Home() {
                 {/* Card 1 */}
                 <Paper sx={{ height: 250, position: 'relative' }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <EventIcon />
+                    <EventIcon sx={{ marginRight: 2, marginBottom: 0.5 }}/>
                     Situação do Evento
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pt: 2 }} color='var(--grey)'>
@@ -305,7 +305,7 @@ export default function Home() {
                 <Paper sx={{ height: 250, position: 'relative' }}>
                   {/* Conteúdo do card */}
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <LocalActivityIcon />
+                    <LocalActivityIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Ingressos Emitidos
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pt: 2 }} color='var(--grey)'>
@@ -344,7 +344,7 @@ export default function Home() {
                 {/* Card 3 */}
                 <Paper sx={{ height: 250, position: 'relative' }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <CreditCardIcon />
+                    <CreditCardIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Faturamentos
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pt: 6 }} color='var(--grey)'>
@@ -369,7 +369,7 @@ export default function Home() {
                 {/* Card 4 */}
                 <Paper sx={{ height: 100 }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <PeopleIcon />
+                    <PeopleIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Ticket Médio
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ p: 1 }}>
@@ -380,7 +380,7 @@ export default function Home() {
                   {/* Card 5 */}
                   <Paper sx={{ height: 133 }}>
                     <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                      <HistoryIcon />
+                      <HistoryIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                       Média Diária
                     </Typography>
                     <Typography variant="body1" align="center" sx={{ pb: 1.5 }} color='var(--grey)'>

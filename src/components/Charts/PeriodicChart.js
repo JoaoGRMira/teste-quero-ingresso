@@ -13,10 +13,13 @@ const PeriodicChart = ({ data }) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="periodo" tick={{ fontSize: 12 }} />
           <YAxis tick={{ fontSize: 12 }} />
-          <Tooltip />
-          <Legend wrapperStyle={{ fontSize: 17 }}/>
-          <Line type="monotone" dataKey="Venda" stroke="purple" />
-          <Line type="monotone" dataKey="Cortesia" stroke="blue" />
+          <Tooltip
+            labelStyle={{ fontSize: 17 }}
+            itemStyle={{ fontSize: 17 }}
+          />
+          <Legend wrapperStyle={{ fontSize: 17 }} />
+          <Line type="monotone" dataKey="Venda" stroke="#8884d8" />
+          <Line type="monotone" dataKey="Cortesia" stroke="var(--blue)" />
           <Line type="monotone" dataKey="Total" stroke="green" />
           <Line type="monotone" dataKey="Acumulado" stroke="red" />
         </LineChart>

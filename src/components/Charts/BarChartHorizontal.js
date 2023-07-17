@@ -13,7 +13,10 @@ const BarChartHorizontal = ({ data }) => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number" tick={{ fontSize: 12 }} />
                     <YAxis dataKey="tipo" type="category" tick={{ fontSize: 12 }} />
-                    <Tooltip />
+                    <Tooltip
+                        labelStyle={{ fontSize: 17 }}
+                        itemStyle={{ fontSize: 17 }}
+                    />
                     <Bar dataKey="Camarote" fill="var(--blue)" />
                     <Bar dataKey="Pista" fill="#8884d8" />
                     <Legend wrapperStyle={{ fontSize: 17 }} />
