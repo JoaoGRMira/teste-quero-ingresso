@@ -17,14 +17,14 @@ const ContainerCharts = ({ button1Content, button2Content }) => {
                 <Button onClick={() => handleButtonClick(1)} variant="contained" className={activeButton === 1 ? 'active' : ''} sx={{
                     backgroundColor: 'var(--body-background)', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
-                    }, boxShadow: "none", borderRadius: 0, mb: -0.1
+                    }, boxShadow: "none", borderRadius: 0, mb: -0.2, fontSize: '0.8rem', px: 0.5
                 }}>
                     Visão Geral
                 </Button>
                 <Button onClick={() => handleButtonClick(2)} variant="contained" className={activeButton === 2 ? 'active' : ''} sx={{
                     backgroundColor: 'var(--body-background)', color: 'var(--blue)', fontWeight: 'bold', '&:hover': {
                         backgroundColor: 'white', boxShadow: "none"
-                    }, boxShadow: "none", borderRadius: 0, mb: -0.1
+                    }, boxShadow: "none", borderRadius: 0, mb: -0.2, fontSize: '0.8rem', px: 0.5
                 }}>
                     Dados Demográficos
                 </Button>
