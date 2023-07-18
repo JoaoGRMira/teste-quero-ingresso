@@ -25,60 +25,113 @@
   color: var(--blue);
 }
 
-.table .sub-title {
+.table thead .sub-title {
   text-align: center;
   vertical-align: middle;
 }
 
-.table td {
+.table tbody td {
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.table .nome {
+.table tbody .nome {
   color: var(--blue);
   font-weight: bold;
   vertical-align: middle;
   text-transform: uppercase;
 }
 
-.table .local {
+.table tbody .local {
   color: gray;
   vertical-align: middle;
   text-transform: capitalize;
 }
 
-.table .data {
+.table tbody .data {
   color: gray;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
 }
 
-.table .dias {
+.table tbody .dias {
   color: var(--blue);
   vertical-align: middle;
 }
 
-.table .vendidos {
+.table tbody .vendidos {
   text-align: center;
   vertical-align: middle;
 }
 
-.table .receita {
+.table tbody .receita {
   color: rgb(2, 161, 2);
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
 }
 
-.table .cortesias {
+.table tbody .cortesias {
   text-align: center;
   vertical-align: middle;
 }
 
-.table .taxa {
+.table tbody .taxa {
   text-align: center;
   vertical-align: middle;
+}
+
+@media all and (max-width: 600px) {
+  .table tbody tr td {
+    display: block;
+    text-align: left;
+  }
+
+  .table tbody tr td:before {
+    content: attr(data-title);
+    text-align: left;
+    left: 15px;
+    display: block;
+    font-weight: 600;
+    font-size: 1em;
+    color: var(--blue);
+  }
+
+  .table {
+    border: none;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody tr {
+    margin-bottom: 10px;
+    display: block;
+    border: 1px solid #dad6eb;
+  }
+
+  .table tbody .vendidos {
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .table tbody .receita {
+    color: rgb(2, 161, 2);
+    font-weight: bold;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .table tbody .cortesias {
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .table tbody .taxa {
+    text-align: left;
+    vertical-align: middle;
+  }
 }

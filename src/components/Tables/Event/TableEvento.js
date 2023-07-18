@@ -90,20 +90,32 @@ const Table = () => {
         <tbody role="rowgroup">
           {dados.map((evento, index) => (
             <tr key={index} role="row" onClick={redirectToHome}>
-              <td className="nome">
-                {evento.nome} <br />
+              <td data-title="Nome">
+                <span className="nome">{evento.nome}</span> <br />
                 <span className="local">{evento.local}</span>
               </td>
-              <td className="data">
+              <td data-title="Data">
                 {evento.data} <br />
                 <span className="dias">Faltam {evento.dias} dias</span>
               </td>
-              <td className="vendidos">{evento.vendidosHoje}</td>
-              <td className="receita">R$ {evento.receitaHoje}</td>
-              <td className="cortesias">{evento.cortesiasTotal}</td>
-              <td className="vendidos">{evento.vendidosTotal}</td>
-              <td className="receita">R$ {evento.receitaTotal}</td>
-              <td className="taxa">R$ {evento.taxaTotal}</td>
+              <td data-title="Vendidos Hoje" className="vendidos">
+                {evento.vendidosHoje}
+              </td>
+              <td data-title="Receita Hoje" className="receita">
+                R$ {evento.receitaHoje}
+              </td>
+              <td data-title="Cortesias Total" className="cortesias">
+                {evento.cortesiasTotal}
+              </td>
+              <td data-title="Vendidos Total" className="vendidos">
+                {evento.vendidosTotal}
+              </td>
+              <td data-title="Receita Total" className="receita">
+                R$ {evento.receitaTotal}
+              </td>
+              <td data-title="Taxa Total" className="taxa">
+                R$ {evento.taxaTotal}
+              </td>
             </tr>
           ))}
         </tbody>
