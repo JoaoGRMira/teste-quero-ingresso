@@ -295,7 +295,7 @@ export default function Site() {
           <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               {/* Evento Atual */}
-              <Grid item xs={12} md={4} lg={4}>
+              <Grid item xs={12} md={5} lg={5}>
                 <Title>Relatório Site Detalhado</Title>
                 <EventoAtual nomeEvento="Nome do Evento"
                   dataEvento="01 de janeiro de 2023"
@@ -303,7 +303,7 @@ export default function Site() {
                   cidadeEvento="Cidade do Evento" />
               </Grid>
               {/* Botões */}
-              <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
                     Total: 0
@@ -318,7 +318,7 @@ export default function Site() {
                   </Typography>
                 </div>
               </Grid>
-              <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
                     R$ 0,00
