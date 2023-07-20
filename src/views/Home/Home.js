@@ -264,7 +264,7 @@ export default function Home() {
                   cidadeEvento="Cidade do Evento" />
               </Grid>
               {/* Botões */}
-              <Grid item xs={12} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Grid item xs={12} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <FilterButton />
                 <DownloadButton />
               </Grid>

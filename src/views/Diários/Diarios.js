@@ -207,7 +207,7 @@ export default function Diarios() {
           <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               {/* Evento Atual */}
-              <Grid item xs={12} md={6} lg={6}>
+              <Grid item xs={12} md={10} lg={10}>
                 <Title>Relatório Diário</Title>
                 <EventoAtual nomeEvento="Nome do Evento"
                   dataEvento="01 de janeiro de 2023"
@@ -215,7 +215,7 @@ export default function Diarios() {
                   cidadeEvento="Cidade do Evento" />
               </Grid>
 
-              <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
                     R$ 0,00
