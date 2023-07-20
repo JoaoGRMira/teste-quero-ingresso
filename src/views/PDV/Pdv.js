@@ -6,48 +6,22 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
-import Chart from '../../components/Outros/Chart';
-import Deposits from '../../components/Outros/Deposits';
-import Orders from '../../components/Outros/Orders';
 import Title from '../../components/Outros/Title';
+import EventoAtual from '../../components/Outros/EventoAtual';
 import DownloadButton from '../../components/Buttons/DownloadButton';
 import FilterButton from '../../components/Buttons/FilterButton';
-import EventoAtual from '../../components/Outros/EventoAtual';
-import EventIcon from '@mui/icons-material/Event';
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import PeopleIcon from '@mui/icons-material/People';
-import HistoryIcon from '@mui/icons-material/History';
-import Accordion from '../../components/Buttons/Accordion';
-import ContainerCharts from '../../components/Charts/ContainerCharts';
-import DonutChart from '../../components/Charts/DonutChart';
-import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
-import LoteChart from '../../components/Charts/LoteChart';
-import VpTChart from '../../components/Charts/VpTChart';
-import PeriodicChart from '../../components/Charts/PeriodicChart';
-import TimeChart from '../../components/Charts/TimeChart';
-import Ranking from '../../components/Tables/Charts/Ranking';
-import CustomizedTables from '../../components/Tables/Charts/Table';
 import SearchBar from '../../components/Outros/SearchBar';
 import TablePdv from '../../components/Tables/Pdv/TablePdv';
-import ExpandableButton from '../../components/Buttons/Accordion';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 
 function Copyright(props) {
   return (
@@ -62,68 +36,11 @@ function Copyright(props) {
   );
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.white,
-      color: theme.palette.common.black,
-  },
-  [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-      border: 0,
-  },
-}));
-
 const drawerWidth = 240;
 
-const usuario = 'Usuário'
+const usuario = 'Usuário';
 
-const dataTabela = [
-  { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
-  { tipo: 'Venda', qtde: 30, porcentagem: 60 },
-  { tipo: 'Total', qtde: 40, porcentagem: 80 },
-];
-
-const dataVendas = [
-  { tipo: 'Vendas', quantidade: 100 },
-  { tipo: 'Cortesias', quantidade: 50 },
-];
-
-const dataVpT = [
-  { tipo: 'Vendas', Vendas: 50 },
-  { tipo: 'Cortesias', Cortesias: 0 },
-];
-
-const dataPeriodic = [
-  { periodo: '4', quantidade: 100 },
-  { periodo: '3', quantidade: 50 },
-  { periodo: '2', quantidade: 25 },
-  { periodo: '1', quantidade: 65 },
-];
-
-const dataTime = [
-  { horario: '12:00', quantidade: 100 },
-  { horario: '13:00', quantidade: 50 },
-  { horario: '14:00', quantidade: 25 },
-  { horario: '15:00', quantidade: 65 },
-];
-
-const tipoIngressos = [
-  { tipo: 'Camarote', Camarote: 100 },
-  { tipo: 'Pista', Pista: 50 },
-];
-
-const lote = [
-  { tipo: '1° Lote', quantidade: 100 },
-];
+const defaultTheme = createTheme();
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -160,17 +77,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing(7),
+        width: theme.spacing(0),
         [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
+          width: theme.spacing(0),
         },
       }),
     },
   }),
 );
-
-// TODO remove
-const defaultTheme = createTheme();
 
 export default function Pdv() {
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
@@ -183,7 +97,7 @@ export default function Pdv() {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height: 72 }} elevation={0}>
-        <Toolbar
+          <Toolbar
             sx={{
               pr: '24px', // mantém o padding direito quando o drawer é fechado
             }}
@@ -194,7 +108,7 @@ export default function Pdv() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
+                marginRight: '15px',
                 ...(open && { display: 'none' }),
               }}
             >
@@ -252,7 +166,7 @@ export default function Pdv() {
               justifyContent: 'flex-end',
               px: [1],
               backgroundColor: 'var(--blue)',
-              border: 'none'
+              border: 'none',
             }}
           >
             <IconButton onClick={toggleDrawer}>
@@ -264,10 +178,11 @@ export default function Pdv() {
               width: drawerWidth,
               height: '91vh',
               overflowY: 'auto',
-              backgroundColor: 'var(--blue)'
+              backgroundColor: 'var(--blue)',
+              display: open ? 'block' : 'none',
             }}
           >
-            <List component="nav">
+            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> {}
               {mainListItems}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {secondaryListItems}

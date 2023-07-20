@@ -5,12 +5,12 @@ import { TableContainer } from '@mui/material';
 
 const TablePDV = () => {
     const [tabelaData, setTabelaData] = useState([
-        { id: 1, pdv: 'Loja A', qtdeHoje: 10, valorHoje: 'R$ 500,00', qtdeTotal: 100, valorTotal: 'R$ 5000,00', cortesia: 0 },
-        { id: 2, pdv: 'Loja B', qtdeHoje: 5, valorHoje: 'R$ 250,00', qtdeTotal: 50, valorTotal: 'R$ 2500,00', cortesia: 0 },
-        { id: 3, pdv: 'Loja C', qtdeHoje: 8, valorHoje: 'R$ 400,00', qtdeTotal: 80, valorTotal: 'R$ 4000,00', cortesia: 0 },
-        { id: 4, pdv: 'Loja D', qtdeHoje: 3, valorHoje: 'R$ 150,00', qtdeTotal: 30, valorTotal: 'R$ 1500,00', cortesia: 0 },
-        { id: 5, pdv: 'Loja E', qtdeHoje: 6, valorHoje: 'R$ 300,00', qtdeTotal: 60, valorTotal: 'R$ 3000,00', cortesia: 0 },
-        { id: 6, pdv: 'Loja F', qtdeHoje: 4, valorHoje: 'R$ 200,00', qtdeTotal: 40, valorTotal: 'R$ 2000,00', cortesia: 0 }
+        { id: 1, pdv: 'Loja A', qtdeHoje: 10, valorHoje: 'R$ 500,00', qtdeTotal: 100, valorTotal: 'R$ 5000,00', cortesia: 0, pgto: 'R$ 0,00' },
+        { id: 2, pdv: 'Loja B', qtdeHoje: 5, valorHoje: 'R$ 250,00', qtdeTotal: 50, valorTotal: 'R$ 2500,00', cortesia: 0, pgto: 'R$ 0,00' },
+        { id: 3, pdv: 'Loja C', qtdeHoje: 8, valorHoje: 'R$ 400,00', qtdeTotal: 80, valorTotal: 'R$ 4000,00', cortesia: 0, pgto: 'R$ 0,00' },
+        { id: 4, pdv: 'Loja D', qtdeHoje: 3, valorHoje: 'R$ 150,00', qtdeTotal: 30, valorTotal: 'R$ 1500,00', cortesia: 0, pgto: 'R$ 0,00' },
+        { id: 5, pdv: 'Loja E', qtdeHoje: 6, valorHoje: 'R$ 300,00', qtdeTotal: 60, valorTotal: 'R$ 3000,00', cortesia: 0, pgto: 'R$ 0,00' },
+        { id: 6, pdv: 'Loja F', qtdeHoje: 4, valorHoje: 'R$ 200,00', qtdeTotal: 40, valorTotal: 'R$ 2000,00', cortesia: 0, pgto: 'R$ 0,00' }
     ]);
 
     const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
@@ -49,6 +49,7 @@ const TablePDV = () => {
                         <th className="pdv-cabecalho">Qtde (Total)</th>
                         <th className="pdv-cabecalho">Valor (Total)</th>
                         <th className="pdv-cabecalho">Cortesia</th>
+                        <th className="pdv-cabecalho">Pgto</th>
                         <th className="pdv-cabecalho">Total</th>
                     </tr>
                 </thead>
@@ -72,6 +73,7 @@ const TablePDV = () => {
                                 <td className="pdv-celula">{item.qtdeTotal}</td>
                                 <td className="pdv-celula">{item.valorTotal}</td>
                                 <td className="pdv-celula">{item.cortesia}</td>
+                                <td className="pdv-celula">DIN {item.pgto}<br/>CCR {item.pgto}<br/>DEB {item.pgto}<br/>BOL {item.pgto}<br/>PIX {item.pgto}</td>
                                 <td className="pdv-celula">
                                     <Checkbox />
                                 </td>

@@ -106,7 +106,7 @@ export default function Pdv() {
                       <FilterEventos />
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                      <SearchBar label="Buscar eventos" />
+                      <SearchBar label="Informe o nome do evento" />
                     </Grid>
                     <Grid item xs={12}>
                       <TableEvento />

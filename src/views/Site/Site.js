@@ -6,15 +6,10 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -50,6 +45,11 @@ import TableSite from '../../components/Tables/Site/TableSite';
 import ExpandableButton from '../../components/Buttons/Accordion';
 import FilterButtonStatus from '../../components/Buttons/FilterButtonStatus';
 import FilterButtonIngresso from '../../components/Buttons/FilterButtonIngresso';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 
 function Copyright(props) {
   return (
@@ -86,7 +86,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const drawerWidth = 240;
 
-const usuario = 'Usuário'
+const usuario = 'Usuário';
+
+const defaultTheme = createTheme();
 
 const dataTabela = [
   { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
@@ -162,17 +164,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing(7),
+        width: theme.spacing(0),
         [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
+          width: theme.spacing(0),
         },
       }),
     },
   }),
 );
-
-// TODO remove
-const defaultTheme = createTheme();
 
 export default function Site() {
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
@@ -185,7 +184,7 @@ export default function Site() {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height: 72 }} elevation={0}>
-        <Toolbar
+          <Toolbar
             sx={{
               pr: '24px', // mantém o padding direito quando o drawer é fechado
             }}
@@ -196,7 +195,7 @@ export default function Site() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
+                marginRight: '15px',
                 ...(open && { display: 'none' }),
               }}
             >
@@ -254,7 +253,7 @@ export default function Site() {
               justifyContent: 'flex-end',
               px: [1],
               backgroundColor: 'var(--blue)',
-              border: 'none'
+              border: 'none',
             }}
           >
             <IconButton onClick={toggleDrawer}>
@@ -266,10 +265,11 @@ export default function Site() {
               width: drawerWidth,
               height: '91vh',
               overflowY: 'auto',
-              backgroundColor: 'var(--blue)'
+              backgroundColor: 'var(--blue)',
+              display: open ? 'block' : 'none',
             }}
           >
-            <List component="nav">
+            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> {}
               {mainListItems}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {secondaryListItems}
