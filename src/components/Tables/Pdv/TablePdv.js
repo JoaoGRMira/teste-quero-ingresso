@@ -73,10 +73,17 @@ const TablePDV = () => {
                                 <td className="pdv-celula">{item.qtdeTotal}</td>
                                 <td className="pdv-celula">{item.valorTotal}</td>
                                 <td className="pdv-celula">{item.cortesia}</td>
-                                <td className="pdv-celula">DIN {item.pgto}<br/>CCR {item.pgto}<br/>DEB {item.pgto}<br/>BOL {item.pgto}<br/>PIX {item.pgto}</td>
+                                <td className="pdv-celula-pgto">
+                                    <span class="pdv-celula-span">DIN</span><br/>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">CCR</span><br/>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">DEB</span><br/>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">BOL</span><br/>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">PIX</span><br/>{item.pgto}
+                                </td>
                                 <td className="pdv-celula">
                                     <Checkbox />
                                 </td>
+
                             </tr>
                             {item.expandir && (
                                 <>

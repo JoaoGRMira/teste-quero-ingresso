@@ -24,6 +24,11 @@
     text-align: center;
   }
   
+  .pdv-celula-pgto {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+  }
+
   .pdv-botao-expandir {
     width: 30px;
     height: 30px;
@@ -56,3 +61,10 @@
     text-align: center;
   }
   
+  .pdv-celula-pgto .pdv-celula-span {
+    background-color: gray;
+    color: white;
+    border-radius: 3px;
+    padding: 1px 2px;
+    display: inline-block;
+  }
