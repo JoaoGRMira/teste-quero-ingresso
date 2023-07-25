@@ -275,7 +275,7 @@ export default function Home() {
               {/* Cards */}
               <Grid item xs={12} md={4} lg={3}>
                 {/* Card 1 */}
-                <Paper sx={{ height: 250, position: 'relative' }}>
+                <Paper sx={{ height: 260, position: 'relative' }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <EventIcon sx={{ marginRight: 2, marginBottom: 0.5 }}/>
                     Situação do Evento
@@ -302,7 +302,7 @@ export default function Home() {
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
                 {/* Card 2 */}
-                <Paper sx={{ height: 250, position: 'relative' }}>
+                <Paper sx={{ height: 260, position: 'relative' }}>
                   {/* Conteúdo do card */}
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <LocalActivityIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
@@ -340,24 +340,48 @@ export default function Home() {
                   </ Typography>
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={3}>
+              <Grid item xs={12} md={5} lg={4}>
                 {/* Card 3 */}
-                <Paper sx={{ height: 250, position: 'relative' }}>
+                <Paper sx={{ height: 260, position: 'relative' }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <CreditCardIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Faturamentos
                   </Typography>
-                  <Typography variant="body1" align="center" sx={{ pt: 6 }} color='var(--grey)'>
+                  <Typography variant="body1" align="center" sx={{ p: 0  }} color='var(--grey)'>
                     <div align='center'>
-                      <table>
+                      <table style={{ borderCollapse: 'collapse' }}>
+                        <thead>
+                          <tr>
+                            <th colSpan="1" />
+                            <th style={{ padding: '4px', textAlign: 'center' }}>WEB</th>
+                            <th style={{ padding: '4px', textAlign: 'center' }}>PDV</th>
+                          </tr>
+                        </thead>
                         <tbody>
                           <tr>
-                            <th style={{ padding: '8px', textAlign: 'center' }}>Hoje:</th>
-                            <td align='center' style={{ padding: '8px', textAlign: 'center' }}>R$ 652,00</td>
+                            <th style={{ padding: '4px', textAlign: 'center' }}>Dinheiro:</th>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
                           </tr>
                           <tr>
-                            <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total:</th>
-                            <td align='center' style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>R$ 8.157,00</td>
+                            <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>Crédito:</th>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
+                          </tr>
+                          <tr>
+                            <th style={{ padding: '4px', textAlign: 'center' }}>Débito:</th>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                          </tr>
+                          <tr>
+                            <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>Pix:</th>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
+                          </tr>
+                          <tr>
+                            <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total</th>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>1.000.000,00</td>
                           </tr>
                         </tbody>
                       </table>
@@ -365,9 +389,9 @@ export default function Home() {
                   </ Typography>
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={3}>
+              <Grid item xs={12} md={4} lg={2}>
                 {/* Card 4 */}
-                <Paper sx={{ height: 100 }}>
+                <Paper sx={{ height: 105 }}>
                   <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <PeopleIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Ticket Médio
@@ -378,7 +402,7 @@ export default function Home() {
                 </Paper>
                 <Box sx={{ my: 2 }}>
                   {/* Card 5 */}
-                  <Paper sx={{ height: 133 }}>
+                  <Paper sx={{ height: 138 }}>
                     <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                       <HistoryIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                       Média Diária
