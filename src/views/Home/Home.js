@@ -27,6 +27,7 @@ import DonutChart from '../../components/Charts/DonutChart';
 import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
 import LoteChart from '../../components/Charts/LoteChart';
 import VpTChart from '../../components/Charts/VpTChart';
+import FaturamentoChart from '../../components/Charts/FaturamentoChart';
 import PeriodicChart from '../../components/Charts/PeriodicChart';
 import TimeChart from '../../components/Charts/TimeChart';
 import Ranking from '../../components/Tables/Charts/Ranking';
@@ -84,6 +85,13 @@ const dataTime = [
 const tipoIngressos = [
   { tipo: 'Camarote', Camarote: 100 },
   { tipo: 'Pista', Pista: 50 },
+];
+
+const faturamento = [
+  { tipo: 'Dinheiro', Dinheiro: 90 },
+  { tipo: 'Crédito', Crédito: 50 },
+  { tipo: 'Débito', Débito: 70 },
+  { tipo: 'Pix', Pix: 50 },
 ];
 
 const lote = [
@@ -518,11 +526,16 @@ export default function Home() {
                     <Grid xs={12}>
                       <Ranking />
                     </Grid>
-                    {/* Chart 5 */}
+                    {/* Chart 5*/}
+                    <Grid item xs={12} md={12} lg={12}>
+                      <FaturamentoChart data={faturamento} />
+                      <CustomizedTables />
+                    </Grid>
+                    {/* Chart 6 */}
                     <Grid xs={12}>
                       <PeriodicChart data={dataPeriodic} />
                     </Grid>
-                    {/* Chart 6 */}
+                    {/* Chart 7 */}
                     <Grid xs={12}>
                       <TimeChart data={dataTime} />
                     </Grid>
