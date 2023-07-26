@@ -69,14 +69,14 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/Numerados" sx={{ color: 'white' }}>
       <ListItemIcon>
         <NumbersIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Numerados#
+            Numerados
           </Typography>
         }
       />
@@ -122,14 +122,14 @@ export const secondaryListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/Detalhados" sx={{ color: 'white' }}>
       <ListItemIcon>
         <AssignmentIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Detalhados#
+            Detalhados
           </Typography>
         }
       />
