@@ -29,8 +29,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Fab from '@mui/material/Fab';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
 
 function Copyright(props) {
   return (
@@ -154,21 +152,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const ScrollTopButton = styled(Fab)(({ theme }) => ({
-  position: 'fixed',
-  bottom: theme.spacing(3),
-  right: theme.spacing(3),
-  zIndex: 1,
-}));
-
 export default function Detalhados() {
   const [open, setOpen] = useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
-  };
-
-  const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -351,14 +338,6 @@ export default function Detalhados() {
           </Container>
         </Box>
       </Box>
-      <ScrollTopButton
-        id="scroll-top-button"
-        color="primary"
-        size="small"
-        onClick={handleScrollTop}
-      >
-        <KeyboardArrowUpIcon />
-      </ScrollTopButton>
     </ThemeProvider>
   );
 }

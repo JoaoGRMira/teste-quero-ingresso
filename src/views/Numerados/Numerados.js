@@ -41,7 +41,7 @@ import TimeChart from '../../components/Charts/TimeChart';
 import Ranking from '../../components/Tables/Charts/Ranking';
 import CustomizedTables from '../../components/Tables/Charts/Table';
 import SearchBar from '../../components/Outros/SearchBar';
-import TableClasses from '../../components/Tables/Classes/TableClasses';
+import TableNumerados from '../../components/Tables/Numerados/TableNumerados';
 import ExpandableButton from '../../components/Buttons/Accordion';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -338,11 +338,10 @@ export default function Numerados() {
                     <DownloadButton />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                  <SearchBar label="Buscar classe" />
-
+                  <SearchBar label="Buscar" />
                   </Grid>
                   <Grid item xs={12}>
-                    <TableClasses />
+                    <TableNumerados />
                   </Grid>
                 </Grid>
               </Container>
