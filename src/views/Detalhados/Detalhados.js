@@ -313,8 +313,8 @@ export default function Detalhados() {
                 <Divider sx={{ my: 1, backgroundColor: 'var(--grey-shadow)' }} />
               </Grid>
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1 }}>
-                <Grid container spacing={3} sx={{ py: 2 }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+                <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
+                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
                     <FilterButtonPdv />
                     <FilterButtonPos />
                     <FilterButtonSituacao />
