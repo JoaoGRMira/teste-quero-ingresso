@@ -17,6 +17,10 @@ import DownloadButton from '../../components/Buttons/DownloadButton';
 import FilterButton from '../../components/Buttons/FilterButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
 import EventIcon from '@mui/icons-material/Event';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PaymentIcon from '@mui/icons-material/Payment';
+import PixIcon from '@mui/icons-material/Pix';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import PeopleIcon from '@mui/icons-material/People';
@@ -338,7 +342,7 @@ export default function Home() {
                             <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>0</td>
                           </tr>
                           <tr>
-                            <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total</th>
+                            <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total:</th>
                             <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>15</td>
                             <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>654</td>
                           </tr>
@@ -367,27 +371,42 @@ export default function Home() {
                         </thead>
                         <tbody>
                           <tr>
-                            <th style={{ padding: '4px', textAlign: 'center' }}>Dinheiro:</th>
+                            <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
+                              <AttachMoneyIcon sx={{ marginRight: 1, color: 'green'}}/>
+                              Dinheiro:
+                            </th>
                             <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
                             <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
                           </tr>
                           <tr>
-                            <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>Crédito:</th>
-                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
-                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
-                          </tr>
-                          <tr>
-                            <th style={{ padding: '4px', textAlign: 'center' }}>Débito:</th>
+                            <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
+                              <CreditCardIcon sx={{ marginRight: 1, color: 'var(--blue)'}}/>
+                              Crédito:
+                            </th>
                             <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
                             <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
                           </tr>
                           <tr>
-                            <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>Pix:</th>
-                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
-                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>1.000.000,00</td>
+                            <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
+                              <CreditCardIcon sx={{ marginRight: 1, color: 'var(--blue)'}}/>
+                              Débito:
+                            </th>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
                           </tr>
                           <tr>
-                            <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total</th>
+                            <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
+                              <PixIcon sx={{ marginRight: 1, color: 'LightSeaGreen' }} />
+                              Pix:
+                            </th>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                          </tr>
+                          <tr>
+                            <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
+                              <MonetizationOnIcon sx={{ marginRight: 1, color: 'DarkOrange' }} />
+                              Total:
+                            </th>
                             <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>1.000.000,00</td>
                             <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>1.000.000,00</td>
                           </tr>
@@ -420,7 +439,7 @@ export default function Home() {
                       <table>
                         <tbody>
                           <tr>
-                            <th style={{ padding: '8px', textAlign: 'center' }}>Qtde</th>
+                            <th style={{ padding: '8px', textAlign: 'center' }}>Qtde:</th>
                             <td align='center' style={{ padding: '8px', textAlign: 'center' }}>7</td>
                           </tr>
                           <tr>
