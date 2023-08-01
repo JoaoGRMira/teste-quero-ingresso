@@ -354,8 +354,8 @@ export default function Home() {
               </Grid>
               <Grid item xs={12} md={5} lg={4}>
                 {/* Card 3 */}
-                <Paper sx={{ height: 260, position: 'relative' }}>
-                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                <Paper sx={{ height: 260, position: 'relative', overflow: 'auto' }}>
+                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, width: '100%' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                     <CreditCardIcon sx={{ marginRight: 2, marginBottom: 0.5 }} />
                     Faturamentos
                   </Typography>

@@ -50,6 +50,7 @@ const Table = () => {
 
   return (
     <div className="table-responsive">
+      {/* Desktop */}
       <table className="table table-bordered table-hover">
         <thead role="rowgroup">
           <tr role="row">
@@ -120,6 +121,88 @@ const Table = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Mobile */}
+      <div className="table-container">
+        <table className="mobile-table">
+          <tbody>
+            <tr>
+              <th></th>
+              <th className="title">Nome</th>
+              <th className="title">Data do Evento</th>
+            </tr>
+            {dados.map((evento, index) => (
+              <React.Fragment key={index}>
+                <tr className="evento-row" onClick={redirectToHome}>
+                  <td></td>
+                  <td data-title="Nome">
+                    <span className="nome">{evento.nome}</span> <br />
+                    <span className="local">{evento.local}</span>
+                  </td>
+                  <td data-title="Data">
+                    <span className="data">{evento.data}</span> <br />
+                    <span className="dias">Faltam {evento.dias} dias</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th className="title" rowspan="2" scope="rowgroup">
+                    Hoje
+                  </th>
+                  <th className="sub-title" scope="row">
+                    Vendidos
+                  </th>
+                  <td data-title="Vendidos Hoje" className="vendidos">
+                    {evento.vendidosHoje}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="sub-title" scope="row">
+                    Receita
+                  </th>
+                  <td data-title="Receita Hoje" className="receita">
+                    R$ {evento.receitaHoje}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="title" rowspan="4" scope="rowgroup">
+                    Total
+                  </th>
+                  <th className="sub-title" scope="row">
+                    Cortesias
+                  </th>
+                  <td data-title="Cortesias Total" className="cortesias">
+                    {evento.cortesiasTotal}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="sub-title" scope="row">
+                    Vendidos
+                  </th>
+                  <td data-title="Vendidos Total" className="vendidos">
+                    {evento.vendidosTotal}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="sub-title" scope="row">
+                    Receita
+                  </th>
+                  <td data-title="Receita Total" className="receita">
+                    R$ {evento.receitaTotal}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="sub-title" scope="row">
+                    Taxa
+                  </th>
+                  <td data-title="Taxa Total" className="taxa">
+                    R$ {evento.taxaTotal}
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

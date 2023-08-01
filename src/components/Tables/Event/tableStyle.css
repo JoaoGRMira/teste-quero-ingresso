@@ -12,7 +12,7 @@
 
 .table {
   height: auto;
-  width: auto;
+  width: 100%;
 }
 
 .table-responsive {
@@ -83,55 +83,95 @@
   vertical-align: middle;
 }
 
+.mobile-table {
+  display: none;
+}
+
 @media all and (max-width: 600px) {
-  .table tbody tr td {
-    display: block;
-    text-align: left;
-  }
-
-  .table tbody tr td:before {
-    content: attr(data-title);
-    text-align: left;
-    left: 15px;
-    display: block;
-    font-weight: 600;
-    font-size: 1em;
-    color: var(--blue);
-  }
-
   .table {
-    border: none;
-  }
-
-  .table thead {
     display: none;
   }
 
-  .table tbody tr {
-    margin-bottom: 10px;
+  .mobile-table {
     display: block;
-    border: 1px solid #dad6eb;
+    width: 100%;
+    margin-bottom: 20px;
   }
 
-  .table tbody .vendidos {
-    text-align: left;
+  .mobile-table th,
+  .mobile-table td {
+    border: 1px solid #ccc;
+    padding: 15px;
+  }
+
+  .mobile-table tbody td {
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .mobile-table tbody tr {
+    margin-bottom: 10px;
+  }
+
+  .title {
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    color: var(--blue);
+  }
+
+  .sub-title {
+    text-align: center;
     vertical-align: middle;
   }
 
-  .table tbody .receita {
+  .nome {
+    color: var(--blue);
+    font-weight: bold;
+    vertical-align: middle;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .local {
+    color: gray;
+    vertical-align: middle;
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  .data {
+    color: gray;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .dias {
+    color: var(--blue);
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .vendidos {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .receita {
     color: rgb(2, 161, 2);
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
   }
 
-  .table tbody .cortesias {
-    text-align: left;
+  .cortesias {
+    text-align: center;
     vertical-align: middle;
   }
 
-  .table tbody .taxa {
-    text-align: left;
+  .taxa {
+    text-align: center;
     vertical-align: middle;
   }
 }
