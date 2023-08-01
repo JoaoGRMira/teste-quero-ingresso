@@ -133,7 +133,10 @@ const Table = () => {
             </tr>
             {dados.map((evento, index) => (
               <React.Fragment key={index}>
-                <tr className="evento-row" onClick={redirectToHome}>
+                <tr
+                  className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
+                  onClick={redirectToHome}
+                >
                   <td></td>
                   <td data-title="Nome">
                     <span className="nome">{evento.nome}</span> <br />
@@ -144,7 +147,10 @@ const Table = () => {
                     <span className="dias">Faltam {evento.dias} dias</span>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
+                  onClick={redirectToHome}
+                >
                   <th className="title" rowspan="2" scope="rowgroup">
                     Hoje
                   </th>
@@ -155,7 +161,10 @@ const Table = () => {
                     {evento.vendidosHoje}
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
+                  onClick={redirectToHome}
+                >
                   <th className="sub-title" scope="row">
                     Receita
                   </th>
@@ -163,7 +172,10 @@ const Table = () => {
                     R$ {evento.receitaHoje}
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
+                  onClick={redirectToHome}
+                >
                   <th className="title" rowspan="4" scope="rowgroup">
                     Total
                   </th>
@@ -174,7 +186,10 @@ const Table = () => {
                     {evento.cortesiasTotal}
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
+                  onClick={redirectToHome}
+                >
                   <th className="sub-title" scope="row">
                     Vendidos
                   </th>
@@ -182,7 +197,10 @@ const Table = () => {
                     {evento.vendidosTotal}
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
+                  onClick={redirectToHome}
+                >
                   <th className="sub-title" scope="row">
                     Receita
                   </th>
@@ -190,7 +208,10 @@ const Table = () => {
                     R$ {evento.receitaTotal}
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
+                  onClick={redirectToHome}
+                >
                   <th className="sub-title" scope="row">
                     Taxa
                   </th>

@@ -113,6 +113,14 @@
     margin-bottom: 10px;
   }
 
+  .mobile-table .event-odd {
+    background-color: #ffffff; /* White color for odd events */
+  }
+
+  .mobile-table .event-even {
+    background-color: #f2f2f2; /* Light color for even events */
+  }
+
   .title {
     font-weight: bold;
     text-align: center;
