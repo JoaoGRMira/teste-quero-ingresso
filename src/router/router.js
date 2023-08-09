@@ -9,9 +9,11 @@ import Site from '../views/Site/Site';
 import Sangria from '../views/Sangria/Sangria';
 import Detalhados from '../views/Detalhados/Detalhados';
 import Numerados from '../views/Numerados/Numerados';
+import { TokenProvider } from '../model/tokenContext';
 
 function Router() {
     return (
+        <TokenProvider>
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Login />}/>
@@ -26,6 +28,7 @@ function Router() {
                 <Route path='/numerados' element={<Numerados />}/>
             </Routes>
         </BrowserRouter>
+        </TokenProvider>
     )
 }
 
