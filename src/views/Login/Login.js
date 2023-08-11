@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../images/quero_ingresso_logo.png';
 import Connection from '../../model/index';
-import { useToken } from '../../model/tokenContext'; // Importe o hook useToken
+import { useToken } from '../../model/tokenContext';
 import "./login.css";
 
 export default function Login() {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ login: '', senha: '' });
   const [error, setError] = useState('');
-  const { setToken } = useToken(); // Use o hook useToken para acessar setToken do contexto
+  const { setToken } = useToken();
 
   const handleLoginChange = (event) => {
     setLoginData({ ...loginData, login: event.target.value });
@@ -27,7 +27,6 @@ export default function Login() {
       const response = await conn.post('/user/login', loginData);
 
       if (response.status === 200) {
-        // Salvar o token no contexto
         setToken(response.data.token);
         navigate('/eventos');
       } else {

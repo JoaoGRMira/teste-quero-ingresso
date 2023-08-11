@@ -1,53 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./tableStyle.css";
-
-const dados = [
-  {
-    nome: "Evento 1",
-    local: "Local 1 - cidade",
-    data: "01/01/2023",
-    dias: 10,
-    vendidosHoje: 100,
-    receitaHoje: 1000,
-    cortesiasTotal: 10,
-    vendidosTotal: 1000,
-    receitaTotal: 10000,
-    taxaTotal: 10
-  },
-  {
-    nome: "Evento 2",
-    local: "Local 2 - cidade",
-    data: "02/02/2023",
-    dias: 20,
-    vendidosHoje: 150,
-    receitaHoje: 1500,
-    cortesiasTotal: 5,
-    vendidosTotal: 2000,
-    receitaTotal: 20000,
-    taxaTotal: 20
-  },
-  {
-    nome: "Evento 3",
-    local: "Local 3 - cidade",
-    data: "03/03/2023",
-    dias: 30,
-    vendidosHoje: 200,
-    receitaHoje: 2000,
-    cortesiasTotal: 3,
-    vendidosTotal: 3000,
-    receitaTotal: 30000,
-    taxaTotal: 30
-  },
-];
+import Connection from '../../../model/index';
+import { useToken } from '../../../model/tokenContext';
 
 const Table = () => {
+  const { token } = useToken();
   const navigate = useNavigate();
+  const [eventos, setEventos] = useState([]); // Estado para armazenar os dados de eventos
+
+  useEffect(() => {
+    const conn = Connection()
+    const fetchEventos = async () => {
+      try {
+        const response = await conn.get('eventos', {
+          headers: {
+            'token': token
+          }
+        });
+  
+        if (response.status === 200) {
+          setEventos(response.data); // Armazena os dados no estado
+        } else {
+          console.log('Erro na resposta da API:', response);
+          // Tratar erros de solicitação, se necessário
+        }
+      } catch (error) {
+        console.error('Erro na solicitação GET:', error);
+        // Tratar erros de solicitação, se necessário
+      }
+    };
+  
+    fetchEventos();
+  }, [token]);
+  
 
   const redirectToHome = () => {
     navigate("/home");
   };
 
+  console.log(eventos)
+  console.log(eventos.eve_nome)
+  console.log(token)
   return (
     <div className="table-responsive">
       {/* Desktop */}
@@ -89,33 +83,33 @@ const Table = () => {
           </tr>
         </thead>
         <tbody role="rowgroup">
-          {dados.map((evento, index) => (
+          {eventos.map((evento, index) => (
             <tr key={index} role="row" onClick={redirectToHome}>
               <td data-title="Nome">
-                <span className="nome">{evento.nome}</span> <br />
+                <span className="nome">{evento.eve_nome}</span> <br />
                 <span className="local">{evento.local}</span>
               </td>
               <td data-title="Data">
-                {evento.data} <br />
-                <span className="dias">Faltam {evento.dias} dias</span>
+                {evento.eve_data} <br />
+                <span className="dias">{evento.inicio_evento}</span>
               </td>
               <td data-title="Vendidos Hoje" className="vendidos">
-                {evento.vendidosHoje}
+                {evento.vendido_hoje}
               </td>
               <td data-title="Receita Hoje" className="receita">
-                R$ {evento.receitaHoje}
+                {evento.receitas_hoje}
               </td>
               <td data-title="Cortesias Total" className="cortesias">
-                {evento.cortesiasTotal}
+                {evento.cortesias_pdv_total}
               </td>
               <td data-title="Vendidos Total" className="vendidos">
-                {evento.vendidosTotal}
+                {evento.vendido_total}
               </td>
               <td data-title="Receita Total" className="receita">
-                R$ {evento.receitaTotal}
+                {evento.receitas_total}
               </td>
               <td data-title="Taxa Total" className="taxa">
-                R$ {evento.taxaTotal}
+                R${evento.taxaTotal} 0,00
               </td>
             </tr>
           ))}
@@ -131,7 +125,7 @@ const Table = () => {
               <th className="title">Nome</th>
               <th className="title">Data do Evento</th>
             </tr>
-            {dados.map((evento, index) => (
+            {eventos.map((evento, index) => (
               <React.Fragment key={index}>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
@@ -139,12 +133,12 @@ const Table = () => {
                 >
                   <td></td>
                   <td data-title="Nome">
-                    <span className="nome">{evento.nome}</span> <br />
+                    <span className="nome">{evento.eve_nome}</span> <br />
                     <span className="local">{evento.local}</span>
                   </td>
                   <td data-title="Data">
-                    <span className="data">{evento.data}</span> <br />
-                    <span className="dias">Faltam {evento.dias} dias</span>
+                    <span className="data">{evento.eve_data}</span> <br />
+                    <span className="dias"> {evento.inicio_evento}</span>
                   </td>
                 </tr>
                 <tr
@@ -158,7 +152,7 @@ const Table = () => {
                     Vendidos
                   </th>
                   <td data-title="Vendidos Hoje" className="vendidos">
-                    {evento.vendidosHoje}
+                    {evento.vendido_hoje}
                   </td>
                 </tr>
                 <tr
@@ -169,7 +163,7 @@ const Table = () => {
                     Receita
                   </th>
                   <td data-title="Receita Hoje" className="receita">
-                    R$ {evento.receitaHoje}
+                    {evento.receitas_hoje}
                   </td>
                 </tr>
                 <tr
@@ -183,7 +177,7 @@ const Table = () => {
                     Cortesias
                   </th>
                   <td data-title="Cortesias Total" className="cortesias">
-                    {evento.cortesiasTotal}
+                    {evento.cortesias_pdv_total}
                   </td>
                 </tr>
                 <tr
@@ -194,7 +188,7 @@ const Table = () => {
                     Vendidos
                   </th>
                   <td data-title="Vendidos Total" className="vendidos">
-                    {evento.vendidosTotal}
+                    {evento.vendido_total}
                   </td>
                 </tr>
                 <tr
@@ -205,7 +199,7 @@ const Table = () => {
                     Receita
                   </th>
                   <td data-title="Receita Total" className="receita">
-                    R$ {evento.receitaTotal}
+                    {evento.receitas_total}
                   </td>
                 </tr>
                 <tr
@@ -216,7 +210,7 @@ const Table = () => {
                     Taxa
                   </th>
                   <td data-title="Taxa Total" className="taxa">
-                    R$ {evento.taxaTotal}
+                    R$ {evento.taxaTotal} 0,00
                   </td>
                 </tr>
               </React.Fragment>
