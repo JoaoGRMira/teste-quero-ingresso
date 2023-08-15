@@ -41,6 +41,7 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import { useLogin } from '../../model/loginContext';
 import './home.css'
 
 function Copyright(props) {
@@ -57,8 +58,6 @@ function Copyright(props) {
 }
 
 const drawerWidth = 240;
-
-const usuario = 'Usuário';
 
 const defaultTheme = createTheme();
 
@@ -147,6 +146,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Home() {
+  const { login } = useLogin();
+  const usuario = login;
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);

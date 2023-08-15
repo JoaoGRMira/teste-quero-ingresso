@@ -10,9 +10,11 @@ import Sangria from '../views/Sangria/Sangria';
 import Detalhados from '../views/Detalhados/Detalhados';
 import Numerados from '../views/Numerados/Numerados';
 import { TokenProvider } from '../model/tokenContext';
+import { LoginProvider } from '../model/loginContext';
 
 function Router() {
     return (
+        <LoginProvider>
         <TokenProvider>
         <BrowserRouter>
             <Routes>
@@ -29,6 +31,7 @@ function Router() {
             </Routes>
         </BrowserRouter>
         </TokenProvider>
+        </LoginProvider>
     )
 }
 

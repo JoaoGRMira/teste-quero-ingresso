@@ -4,12 +4,14 @@ import logo from '../../images/quero_ingresso_logo.png';
 import Connection from '../../model/index';
 import { useToken } from '../../model/tokenContext';
 import "./login.css";
+import { useLogin } from '../../model/loginContext';
 
 export default function Login() {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ login: '', senha: '' });
   const [error, setError] = useState('');
   const { setToken } = useToken();
+  const { setLogin } = useLogin();
 
   const checkVazio = () => {
         let isVazio = false
@@ -45,6 +47,7 @@ export default function Login() {
   
       if (response.status === 200) {
         setToken(response.data.token);
+        setLogin(loginData.login)
         navigate('/eventos');
       }
     } catch (error) {
@@ -52,7 +55,6 @@ export default function Login() {
       setError('Credenciais inválidas');
     }
   }
-  
 
   /*const handleSubmit = async (event) => {
     event.preventDefault();

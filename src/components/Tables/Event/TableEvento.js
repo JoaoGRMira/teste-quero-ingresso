@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "./tableStyle.css";
 import Connection from '../../../model/index';
 import { useToken } from '../../../model/tokenContext';
+import { useLogin } from '../../../model/loginContext';
 
 const Table = () => {
   const { token } = useToken();
+  const { login } = useLogin();
   const navigate = useNavigate();
   const [eventos, setEventos] = useState([]); // Estado para armazenar os dados de eventos
 
@@ -42,6 +44,7 @@ const Table = () => {
   console.log(eventos)
   console.log(eventos.eve_nome)
   console.log(token)
+  console.log(login)
   return (
     <div className="table-responsive">
       {/* Desktop */}
