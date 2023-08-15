@@ -11,6 +11,18 @@ export default function Login() {
   const [error, setError] = useState('');
   const { setToken } = useToken();
 
+  const checkVazio = () => {
+        let isVazio = false
+        if (document.getElementById('Login').value === '') {
+            isVazio = true
+            return isVazio
+        }
+        if (document.getElementById('Password').value === '') {
+            isVazio = true
+            return isVazio
+        }
+    }
+
   const handleLoginChange = (event) => {
     setLoginData({ ...loginData, login: event.target.value });
   };
@@ -20,6 +32,29 @@ export default function Login() {
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    if (checkVazio()) {
+      setError('Preencha suas credenciais.');
+      return;
+    }
+  
+    try {
+      const conn = Connection();
+      const response = await conn.post('/user/login', loginData);
+  
+      if (response.status === 200) {
+        setToken(response.data.token);
+        navigate('/eventos');
+      }
+    } catch (error) {
+      console.error('Erro durante a requisição:', error);
+      setError('Credenciais inválidas');
+    }
+  }
+  
+
+  /*const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
@@ -35,7 +70,7 @@ export default function Login() {
     } catch (error) {
       setError('Ocorreu um erro ao fazer login. Por favor, tente novamente.');
     }
-  };
+  };*/
 
   return (
     <div className="App">
@@ -47,6 +82,7 @@ export default function Login() {
             <div className="mb-3">
               <input
                 type="text"
+                id="Login"
                 className="form-control"
                 placeholder="Login"
                 value={loginData.login}
@@ -57,6 +93,7 @@ export default function Login() {
             <div className="mb-3">
               <input
                 type="password"
+                id="Password"
                 className="form-control"
                 placeholder="Senha"
                 value={loginData.senha}
