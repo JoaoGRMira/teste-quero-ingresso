@@ -10,9 +10,10 @@ const Table = () => {
   const { login } = useLogin();
   const navigate = useNavigate();
   const [eventos, setEventos] = useState([]); // Estado para armazenar os dados de eventos
+  const [selectedEventCode, setSelectedEventCode] = useState(null);
 
   useEffect(() => {
-    const conn = Connection()
+    const conn = Connection();
     const fetchEventos = async () => {
       try {
         const response = await conn.get('eventos', {
@@ -20,31 +21,34 @@ const Table = () => {
             'token': token
           }
         });
-  
+
         if (response.status === 200) {
-          setEventos(response.data); // Armazena os dados no estado
+          setEventos(response.data);
         } else {
           console.log('Erro na resposta da API:', response);
-          // Tratar erros de solicitação, se necessário
         }
       } catch (error) {
         console.error('Erro na solicitação GET:', error);
-        // Tratar erros de solicitação, se necessário
       }
     };
-  
+
     fetchEventos();
   }, [token]);
-  
 
-  const redirectToHome = () => {
-    navigate("/home");
+  const handleEventClick = (eventCode) => {
+    setSelectedEventCode(eventCode);
+    
+    // Você pode salvar o código do evento no Local Storage aqui se necessário
+    localStorage.setItem('selectedEventCode', eventCode);
+
+    navigate('/home')
   };
 
   console.log(eventos)
   console.log(eventos.eve_nome)
   console.log(token)
   console.log(login)
+
   return (
     <div className="table-responsive">
       {/* Desktop */}
@@ -87,7 +91,7 @@ const Table = () => {
         </thead>
         <tbody role="rowgroup">
           {eventos.map((evento, index) => (
-            <tr key={index} role="row" onClick={redirectToHome}>
+            <tr key={index} role="row" onClick={() => handleEventClick(evento.eve_cod)}>
               <td data-title="Nome">
                 <span className="nome">{evento.eve_nome}</span> <br />
                 <span className="local">{evento.local}</span>
@@ -132,7 +136,7 @@ const Table = () => {
               <React.Fragment key={index}>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
-                  onClick={redirectToHome}
+                  onClick={() => handleEventClick(evento.eve_cod)}
                 >
                   <td></td>
                   <td data-title="Nome">
@@ -146,7 +150,7 @@ const Table = () => {
                 </tr>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
-                  onClick={redirectToHome}
+                  onClick={() => handleEventClick(evento.eve_cod)}
                 >
                   <th className="title" rowspan="2" scope="rowgroup">
                     Hoje
@@ -160,7 +164,7 @@ const Table = () => {
                 </tr>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
-                  onClick={redirectToHome}
+                  onClick={() => handleEventClick(evento.eve_cod)}
                 >
                   <th className="sub-title" scope="row">
                     Receita
@@ -171,7 +175,7 @@ const Table = () => {
                 </tr>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
-                  onClick={redirectToHome}
+                  onClick={() => handleEventClick(evento.eve_cod)}
                 >
                   <th className="title" rowspan="4" scope="rowgroup">
                     Total
@@ -185,7 +189,7 @@ const Table = () => {
                 </tr>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
-                  onClick={redirectToHome}
+                  onClick={() => handleEventClick(evento.eve_cod)}
                 >
                   <th className="sub-title" scope="row">
                     Vendidos
@@ -196,7 +200,7 @@ const Table = () => {
                 </tr>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
-                  onClick={redirectToHome}
+                  onClick={() => handleEventClick(evento.eve_cod)}
                 >
                   <th className="sub-title" scope="row">
                     Receita
@@ -207,7 +211,7 @@ const Table = () => {
                 </tr>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
-                  onClick={redirectToHome}
+                  onClick={() => handleEventClick(evento.eve_cod)}
                 >
                   <th className="sub-title" scope="row">
                     Taxa

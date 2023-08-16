@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -43,6 +43,8 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import { useLogin } from '../../model/loginContext';
 import './home.css'
+import { useToken } from '../../model/tokenContext';
+import Connection from '../../model';
 
 function Copyright(props) {
   return (
@@ -146,12 +148,50 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Home() {
+  const { token } = useToken();
   const { login } = useLogin();
   const usuario = login;
-  const [open, setOpen] = React.useState(false); // inicia o menu fechado
+  const [open, setOpen] = React.useState(false);
+  const [selectedEventCode, setSelectedEventCode] = useState(null);
+  const [infos, setInfos] = useState([]);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    const selectedEventCode = localStorage.getItem("selectedEventCode");
+    setSelectedEventCode(selectedEventCode);
+  }, []);
+
+  useEffect(() => {
+    // Verificar se selectedEventCode não é nulo ou indefinido antes de fazer a requisição
+    if (selectedEventCode) {
+      const conn = Connection(); // Certifique-se de que Connection() retorna uma instância axios
+      const fetchEventos = async () => {
+        try {
+          const response = await conn.get('eventos/info?evento=' + selectedEventCode, {
+            headers: {
+              'token': token
+            }
+          });
+
+          if (response.status === 200) {
+            setInfos(response.data);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+
+      fetchEventos();
+    }
+  }, [token, selectedEventCode]); // Adicionar selectedEventCode aqui para reagir às mudanças
+
+  console.log(selectedEventCode)
+  console.log(infos)
 
   return (
     <ThemeProvider theme={defaultTheme}>
