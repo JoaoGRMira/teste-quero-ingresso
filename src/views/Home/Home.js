@@ -192,6 +192,9 @@ export default function Home() {
 
   console.log(selectedEventCode)
   console.log(infos)
+  console.log(token)
+  console.log(infos.situacao_do_evento.inicio_venda)
+  console.log(infos.faturamentos)
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -337,10 +340,10 @@ export default function Home() {
                     Vendas iniciadas em:
                   </Typography>
                   <Typography variant="body1" align="center" color='var(--grey)'>
-                    01/01/2023
+                    {infos.situacao_do_evento.inicio_venda}
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pb: 2 }} fontWeight="bold" color='var(--grey)'>
-                    (Iniciado há 61 dias)
+                    {infos.situacao_do_evento.status_venda}
                   </Typography>
                   {/* Rodapé */}
                   <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
@@ -348,7 +351,7 @@ export default function Home() {
                       Dias restantes para o evento
                     </Typography>
                     <Typography variant="body1" sx={{ backgroundColor: 'var(--grey-shadow)', pb: 1 }} align='center' fontWeight="bold" color="var(--blue)">
-                      Faltam 5 dias
+                      {infos.situacao_do_evento.inicio_evento}
                     </Typography>
                   </div>
                 </Paper>
@@ -374,13 +377,13 @@ export default function Home() {
                         <tbody>
                           <tr>
                             <th style={{ padding: '8px', textAlign: 'center' }}>Venda:</th>
-                            <td align="center" style={{ padding: '8px', textAlign: 'center' }}>15</td>
-                            <td align="center" style={{ padding: '8px', textAlign: 'center' }}>654</td>
+                            <td align="center" style={{ padding: '8px', textAlign: 'center' }}>{infos.ingressos_emitidos.vendido_hoje}</td>
+                            <td align="center" style={{ padding: '8px', textAlign: 'center' }}>{infos.ingressos_emitidos.vendido_total}</td>
                           </tr>
                           <tr>
                             <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>Cortesias:</th>
-                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>0</td>
-                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>0</td>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>{infos.ingressos_emitidos.cortesias_pdv_hoje}</td>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', textAlign: 'center' }}>{infos.ingressos_emitidos.cortesias_pdv_total}</td>
                           </tr>
                           <tr>
                             <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total:</th>
