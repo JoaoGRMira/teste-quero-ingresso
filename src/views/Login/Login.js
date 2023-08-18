@@ -13,6 +13,8 @@ export default function Login() {
   const { setToken } = useToken();
   const { setLogin } = useLogin();
 
+  localStorage.clear();
+
   const checkVazio = () => {
         let isVazio = false
         if (document.getElementById('Login').value === '') {

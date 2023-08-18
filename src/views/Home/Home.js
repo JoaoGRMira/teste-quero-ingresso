@@ -152,22 +152,18 @@ export default function Home() {
   const { login } = useLogin();
   const usuario = login;
   const [open, setOpen] = React.useState(false);
-  const [selectedEventCode, setSelectedEventCode] = useState(null);
   const [infos, setInfos] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  useEffect(() => {
-    const selectedEventCode = localStorage.getItem("selectedEventCode");
-    setSelectedEventCode(selectedEventCode);
-  }, []);
+  const selectedEventCode = localStorage.getItem("selectedEventCode");
 
   useEffect(() => {
-    // Verificar se selectedEventCode não é nulo ou indefinido antes de fazer a requisição
     if (selectedEventCode) {
-      const conn = Connection(); // Certifique-se de que Connection() retorna uma instância axios
+      const conn = Connection();
       const fetchEventos = async () => {
         try {
           const response = await conn.get('eventos/info?evento=' + selectedEventCode, {
@@ -178,6 +174,7 @@ export default function Home() {
 
           if (response.status === 200) {
             setInfos(response.data);
+            setDataLoaded(true); // Marcar que os dados foram carregados
           } else {
             console.log('Erro na resposta da API:', response);
           }
@@ -188,15 +185,22 @@ export default function Home() {
 
       fetchEventos();
     }
-  }, [token, selectedEventCode]); // Adicionar selectedEventCode aqui para reagir às mudanças
+  }, [token, selectedEventCode]);
 
   console.log(selectedEventCode)
-  console.log(infos)
+
+  //console.log(selectedEventCode)
+  //console.log(infos)
   console.log(token)
-  console.log(infos.situacao_do_evento.inicio_venda)
-  console.log(infos.faturamentos)
+  //console.log(infos.situacao_do_evento)
+  //console.log(infos.ingressos_emitidos)
+  //console.log(infos.media_diaria)
+  //console.log(infos.ticket_medio)
 
   return (
+    <div>
+    {dataLoaded ? (
+      <div>
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -343,7 +347,7 @@ export default function Home() {
                     {infos.situacao_do_evento.inicio_venda}
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ pb: 2 }} fontWeight="bold" color='var(--grey)'>
-                    {infos.situacao_do_evento.status_venda}
+                    {'('+infos.situacao_do_evento.status_venda+')'}
                   </Typography>
                   {/* Rodapé */}
                   <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
@@ -387,8 +391,8 @@ export default function Home() {
                           </tr>
                           <tr>
                             <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Total:</th>
-                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>15</td>
-                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>654</td>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.ingressos_emitidos.vendido_hoje + infos.ingressos_emitidos.cortesias_pdv_hoje}</td>
+                            <td align="center" style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.ingressos_emitidos.vendido_total + infos.ingressos_emitidos.cortesias_pdv_total}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -468,7 +472,7 @@ export default function Home() {
                     Ticket Médio
                   </Typography>
                   <Typography variant="body1" align="center" sx={{ p: 1 }}>
-                    R$ 30,00
+                    {infos.ticket_medio}
                   </Typography>
                 </Paper>
                 <Box sx={{ my: 2 }}>
@@ -484,11 +488,11 @@ export default function Home() {
                         <tbody>
                           <tr>
                             <th style={{ padding: '8px', textAlign: 'center' }}>Qtde:</th>
-                            <td align='center' style={{ padding: '8px', textAlign: 'center' }}>7</td>
+                            <td align='center' style={{ padding: '8px', textAlign: 'center' }}>{infos.media_diaria.quant}</td>
                           </tr>
                           <tr>
                             <th style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>Valor:</th>
-                            <td align='center' style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>R$ 157,00</td>
+                            <td align='center' style={{ padding: '8px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.media_diaria.valor}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -617,5 +621,13 @@ export default function Home() {
         </Box>
       </Box>
     </ThemeProvider>
+    </div>
+    ) : (
+      // Renderizar um indicador de carregamento enquanto os dados são buscados
+      <div>
+        Carregando...
+      </div>
+    )}
+  </div>
   );
 }
