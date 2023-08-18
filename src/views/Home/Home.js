@@ -159,14 +159,19 @@ export default function Home() {
     setOpen(!open);
   };
 
-  const selectedEventCode = localStorage.getItem("selectedEventCode");
+  // Recupere o objeto do evento selecionado do Local Storage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converta a string JSON em um objeto
+
+  console.log(selectedEventCode); // Exibe o objeto do evento completo
+  console.log(selectedEventCode.eve_cod); // Exibe o código do evento
 
   useEffect(() => {
     if (selectedEventCode) {
       const conn = Connection();
       const fetchEventos = async () => {
         try {
-          const response = await conn.get('eventos/info?evento=' + selectedEventCode, {
+          const response = await conn.get('eventos/info?evento=' + selectedEventCode.eve_cod, {
             headers: {
               'token': token
             }
@@ -187,7 +192,7 @@ export default function Home() {
     }
   }, [token, selectedEventCode]);
 
-  console.log(selectedEventCode)
+  console.log(selectedEventCode);
 
   //console.log(selectedEventCode)
   //console.log(infos)
@@ -318,10 +323,10 @@ export default function Home() {
               {/* Evento Atual */}
               <Grid item xs={12} md={8} lg={9}>
                 <Title>Relatório Geral</Title>
-                <EventoAtual nomeEvento="Nome do Evento"
-                  dataEvento="01 de janeiro de 2023"
-                  localEvento="Local do Evento"
-                  cidadeEvento="Cidade do Evento" />
+                <EventoAtual nomeEvento={selectedEventCode.eve_nome}
+                  dataEvento={selectedEventCode.eve_data}
+                  localEvento={selectedEventCode.local}
+                  cidadeEvento={selectedEventCode.cidade} />
               </Grid>
               {/* Botões */}
               <Grid item xs={12} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>

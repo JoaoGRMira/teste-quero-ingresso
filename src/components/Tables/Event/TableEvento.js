@@ -36,13 +36,19 @@ const Table = () => {
   }, [token]);
 
   const handleEventClick = (eventCode) => {
-    setSelectedEventCode(eventCode);
-    
-    // Você pode salvar o código do evento no Local Storage aqui se necessário
-    localStorage.setItem('selectedEventCode', eventCode);
-
-    navigate('/home')
-  };
+    // Encontre o evento selecionado nos dados do estado 'eventos'
+    const selectedEvent = eventos.find(evento => evento.eve_cod === eventCode);
+  
+    // Verifique se encontrou o evento
+    if (selectedEvent) {
+      setSelectedEventCode(eventCode);
+  
+      // Salve os dados do evento selecionado no Local Storage
+      localStorage.setItem('selectedEvent', JSON.stringify(selectedEvent));
+  
+      navigate('/home');
+    }
+  };  
 
   console.log(eventos)
   console.log(eventos.eve_nome)
