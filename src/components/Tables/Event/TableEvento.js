@@ -51,7 +51,6 @@ const Table = () => {
   };  
 
   console.log(eventos)
-  console.log(eventos.eve_nome)
   console.log(token)
   console.log(login)
 
@@ -122,7 +121,7 @@ const Table = () => {
                 {evento.receitas_total}
               </td>
               <td data-title="Taxa Total" className="taxa">
-                R${evento.taxaTotal} 0,00
+                {evento.taxas_total}
               </td>
             </tr>
           ))}
