@@ -171,7 +171,7 @@ export default function Home() {
       const conn = Connection();
       const fetchEventos = async () => {
         try {
-          const response = await conn.get('eventos/info?evento=' + selectedEventCode.eve_cod, {
+          const response = await conn.get('eventos/info?evento=' + selectedEventCode.eve_cod + '&categoria=' + selectedEventCode.categoria, {
             headers: {
               'token': token
             }
@@ -197,6 +197,8 @@ export default function Home() {
   //console.log(selectedEventCode)
   //console.log(infos)
   console.log(token)
+  console.log(infos.faturamentos)
+  console.log(infos.faturamentos.pdv)
   //console.log(infos.situacao_do_evento)
   //console.log(infos.ingressos_emitidos)
   //console.log(infos.media_diaria)
@@ -428,40 +430,40 @@ export default function Home() {
                               <AttachMoneyIcon sx={{ marginRight: 1, color: 'green'}}/>
                               Dinheiro:
                             </th>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.dinheiro}</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.dinheiro}</td>
                           </tr>
                           <tr>
                             <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
                               <CreditCardIcon sx={{ marginRight: 1, color: 'var(--blue)'}}/>
                               Crédito:
                             </th>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.credito}</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.credito}</td>
                           </tr>
                           <tr>
                             <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
                               <CreditCardIcon sx={{ marginRight: 1, color: 'var(--blue)'}}/>
                               Débito:
                             </th>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.debito}</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.debito}</td>
                           </tr>
                           <tr>
                             <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
                               <PixIcon sx={{ marginRight: 1, color: 'LightSeaGreen' }} />
                               Pix:
                             </th>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
-                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.pix}</td>
+                            <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.pix}</td>
                           </tr>
                           <tr>
                             <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
                               <MonetizationOnIcon sx={{ marginRight: 1, color: 'DarkOrange' }} />
                               Total:
                             </th>
-                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>1.000.000,00</td>
-                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>1.000.000,00</td>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.faturamentos.site.total}</td>
+                            <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.faturamentos.pdv.total}</td>
                           </tr>
                         </tbody>
                       </table>
