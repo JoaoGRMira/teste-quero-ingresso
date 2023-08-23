@@ -44,6 +44,7 @@ import { useLogin } from '../../model/loginContext';
 import { useToken } from '../../model/tokenContext';
 import Connection from '../../model';
 import './home.css'
+import { CircularProgress } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -632,8 +633,8 @@ export default function Home() {
         </div>
       ) : (
         // Renderizar um indicador de carregamento enquanto os dados são buscados
-        <div>
-          Carregando...
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CircularProgress />
         </div>
       )}
     </div>

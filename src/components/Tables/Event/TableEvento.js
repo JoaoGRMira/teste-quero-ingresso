@@ -222,7 +222,7 @@ const Table = () => {
                     Taxa
                   </th>
                   <td data-title="Taxa Total" className="taxa">
-                    R$ {evento.taxaTotal} 0,00
+                    {evento.taxas_total}
                   </td>
                 </tr>
               </React.Fragment>
