@@ -40,7 +40,7 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import { useLogin } from '../../model/loginContext';
+//import { useLogin } from '../../model/loginContext';
 import { useToken } from '../../model/tokenContext';
 import Connection from '../../model';
 import './home.css'
@@ -149,8 +149,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Home() {
   const { token } = useToken();
-  const { login } = useLogin();
-  const usuario = login;
+  //const { login } = useLogin();
+  //const usuario = login;
+  const usuario = localStorage.getItem('login');
   const [open, setOpen] = React.useState(false);
   const [infos, setInfos] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
@@ -173,7 +174,8 @@ export default function Home() {
         try {
           const response = await conn.get('eventos/info?evento=' + selectedEventCode.eve_cod + '&categoria=' + selectedEventCode.categoria, {
             headers: {
-              'token': token
+              //'token': token
+              'token': localStorage.getItem('token')
             }
           });
 

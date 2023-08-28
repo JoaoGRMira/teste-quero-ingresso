@@ -49,7 +49,9 @@ export default function Login() {
   
       if (response.status === 200) {
         setToken(response.data.token);
+        localStorage.setItem('token', response.data.token)
         setLogin(loginData.login)
+        localStorage.setItem('login', loginData.login)
         navigate('/eventos');
       }
     } catch (error) {

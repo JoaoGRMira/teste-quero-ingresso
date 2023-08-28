@@ -13,7 +13,7 @@ import Link from '@mui/material/Link';
 import FilterEventos from '../../components/Buttons/FilterEventos';
 import SearchBar from '../../components/Outros/SearchBar';
 import TableEvento from "../../components/Tables/Event/TableEvento";
-import { useLogin } from '../../model/loginContext';
+//import { useLogin } from '../../model/loginContext';
 
 const defaultTheme = createTheme();
 
@@ -29,11 +29,12 @@ const StyledContainer = styled(Container)({
   padding: defaultTheme.spacing(2),
 });
 
-export default function Pdv() {
+export default function Eventos() {
 
-  const { login } = useLogin();
+  //const { login } = useLogin();
 
-  const usuario = login;
+  //const usuario = login;
+  const usuario = localStorage.getItem('login');
 
   return (
     <ThemeProvider theme={defaultTheme}>

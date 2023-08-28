@@ -18,7 +18,8 @@ const Table = () => {
       try {
         const response = await conn.get('eventos', {
           headers: {
-            'token': token
+            //'token': token
+            'token': localStorage.getItem('token')
           }
         });
 
@@ -51,8 +52,10 @@ const Table = () => {
   };  
 
   console.log(eventos)
-  console.log(token)
-  console.log(login)
+  //console.log(token)
+  console.log(localStorage.getItem('token')) 
+  console.log(localStorage.getItem('login')) 
+  //console.log(login)
 
   return (
     <div className="table-responsive">
