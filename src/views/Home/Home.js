@@ -154,6 +154,7 @@ export default function Home() {
   const usuario = localStorage.getItem('login');
   const [open, setOpen] = React.useState(false);
   const [infos, setInfos] = useState([]);
+  const [tipoIngressoMetrics, setTipoIngressoMetrics] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
 
   const toggleDrawer = () => {
@@ -170,19 +171,24 @@ export default function Home() {
   useEffect(() => {
     if (selectedEventCode) {
       const conn = Connection();
-      const fetchEventos = async () => {
+  
+      const fetchEventosInfo = async () => {
         try {
-          const response = await conn.get('eventos/info?evento=' + selectedEventCode.eve_cod + '&categoria=' + selectedEventCode.categoria, {
-            headers: {
-              //'token': token
-              'token': localStorage.getItem('token')
+          const response = await conn.get(
+            'eventos/info?evento=' +
+              selectedEventCode.eve_cod +
+              '&categoria=' +
+              selectedEventCode.categoria,
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
             }
-          });
-
+          );
+  
           if (response.status === 200) {
-            console.log(response.status)
             setInfos(response.data);
-            setDataLoaded(true); // Marcar que os dados foram carregados
+            setDataLoaded(true);
           } else {
             console.log('Erro na resposta da API:', response);
           }
@@ -190,15 +196,42 @@ export default function Home() {
           console.error('Erro na solicitação GET:', error);
         }
       };
-
-      fetchEventos();
+  
+      const fetchTipoIngressoMetrics = async () => {
+        try {
+          const response = await conn.get(
+            'metrics/tipo_ingresso?evento=' +
+              selectedEventCode.eve_cod +
+              '&categoria=' +
+              selectedEventCode.categoria,
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+  
+          if (response.status === 200) {
+            setTipoIngressoMetrics(response.data);
+          } else {
+            console.log('Erro na resposta da API (Tipo Ingresso):', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+        }
+      };
+  
+      fetchEventosInfo();
+      fetchTipoIngressoMetrics();
     }
-  }, [token, selectedEventCode]);
+  }, [selectedEventCode]);
+  
 
   console.log(selectedEventCode);
 
   //console.log(selectedEventCode)
   console.log(infos)
+  console.log(tipoIngressoMetrics)
   console.log(token)
   //console.log(infos.faturamentos)
   //console.log(infos.faturamentos.pdv)
