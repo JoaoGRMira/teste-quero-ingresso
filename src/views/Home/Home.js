@@ -45,7 +45,9 @@ import { useToken } from '../../model/tokenContext';
 import Connection from '../../model';
 import './home.css'
 import { CircularProgress } from '@mui/material';
+import TableVendas from '../../components/Tables/Charts/TableVendas';
 
+// Rodapé com copyright
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -59,15 +61,12 @@ function Copyright(props) {
   );
 }
 
+// Configuração do MUI
 const drawerWidth = 240;
 
 const defaultTheme = createTheme();
 
-const dataVendas = [
-  { tipo: 'Vendas', quantidade: 100 },
-  { tipo: 'Cortesias', quantidade: 50 },
-];
-
+// Dados mocados
 const dataVpT = [
   { tipo: 'Vendas', Vendas: 50 },
   { tipo: 'Cortesias', Cortesias: 0 },
@@ -103,6 +102,7 @@ const lote = [
   { tipo: '1° Lote', quantidade: 100 },
 ];
 
+// Configuração do MUI
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -148,44 +148,49 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Home() {
-  const { token } = useToken();
+  const { token } = useToken(); // Recupera o token salvo no login
   //const { login } = useLogin();
   //const usuario = login;
-  const usuario = localStorage.getItem('login');
-  const [open, setOpen] = React.useState(false);
-  const [infos, setInfos] = useState([]);
-  const [tipoIngressoMetrics, setTipoIngressoMetrics] = useState([]);
+  const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
+  const [open, setOpen] = React.useState(false); // Configuração do MUI
+  const [infos, setInfos] = useState([]); // Estado para armazenar dados da rota
+  const [tipoIngressoMetrics, setTipoIngressoMetrics] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
 
+  // Configuração do MUI
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  // Recupere o objeto do evento selecionado do Local Storage
+  // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
-  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converta a string JSON em um objeto
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-  console.log(selectedEventCode); // Exibe o objeto do evento completo
-  console.log(selectedEventCode.eve_cod); // Exibe o código do evento
+  console.log(selectedEventCode);
+  console.log(selectedEventCode.eve_cod);
 
   useEffect(() => {
     if (selectedEventCode) {
       const conn = Connection();
   
+      // Acessa o endpoint de infos do evento
       const fetchEventosInfo = async () => {
         try {
+          // Acessa a rota adicionando o id do evento e o id de categoria, salvos no objeto 'selectedEventCode'
           const response = await conn.get(
             'eventos/info?evento=' +
               selectedEventCode.eve_cod +
               '&categoria=' +
               selectedEventCode.categoria,
             {
+              // Passa o token como header da rota
               headers: {
                 'token': localStorage.getItem('token')
               }
             }
           );
   
+          // Se der certo, salva os dados no estado das infos
           if (response.status === 200) {
             setInfos(response.data);
             setDataLoaded(true);
@@ -197,6 +202,7 @@ export default function Home() {
         }
       };
   
+      // Acessa o endpoint de tipo de ingresso
       const fetchTipoIngressoMetrics = async () => {
         try {
           const response = await conn.get(
@@ -211,6 +217,7 @@ export default function Home() {
             }
           );
   
+          // Se der certo, salva os dados no estado de tipo de ingresso
           if (response.status === 200) {
             setTipoIngressoMetrics(response.data);
           } else {
@@ -226,6 +233,11 @@ export default function Home() {
     }
   }, [selectedEventCode]);
   
+  // Dados do gráfico de vendas
+  const dataVendas = [
+    { tipo: 'Vendas', quantidade: tipoIngressoMetrics.vendas },
+    { tipo: 'Cortesias', quantidade: tipoIngressoMetrics.cortesias },
+  ];
 
   console.log(selectedEventCode);
 
@@ -242,6 +254,7 @@ export default function Home() {
 
   return (
     <div>
+      {/* Renderiza os componentes se os dados estiverem carregados */}
       {dataLoaded ? (
         <div>
           <ThemeProvider theme={defaultTheme}>
@@ -617,7 +630,7 @@ export default function Home() {
                           {/* Chart 1 */}
                           <Grid item xs={12} md={6} lg={6}>
                             <DonutChart data={dataVendas} />
-                            <CustomizedTables />
+                            <TableVendas />
                           </Grid>
                           {/* Chart 2 */}
                           <Grid item xs={12} md={6} lg={6}>
