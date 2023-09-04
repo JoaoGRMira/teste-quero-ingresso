@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,6 +8,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import Connection from '../../../model';
+import { Container, Divider, Grid } from '@mui/material';
+import DownloadButton from '../../Buttons/DownloadButton';
+import FilterButton from '../../Buttons/FilterButton';
+import FilterButtonTipo from '../../Buttons/FilterButtonTipo';
+import FilterButtonSituacao from '../../Buttons/FilterButtonSituacao';
+import FilterButtonPos from '../../Buttons/FilterButtonPos';
+import FilterButtonPdv from '../../Buttons/FilterButtonPdv';
+import SearchBar from '../../Outros/SearchBar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,26 +38,80 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(data, hora, pdv, pos, npedido, cod, situacao, ingresso, ingressonumerado, valor, formapagamento) {
-  return { data, hora, pdv, pos, npedido, cod, situacao, ingresso, ingressonumerado, valor, formapagamento};
-}
+export default function TableDetalhados() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
+  const [detalhes, setDetalhes] = useState([]); // Estado para armazenar dados da rota
+  const [filtro, setFiltro] = useState([]); // Estado para armazenar dados da rota
 
-const rows = [
-  createData('10/02/2023', '10:02:23', 'PDV 1', '', '63853', '7269635501', 'APROVADO', '', '-', 'R$ 100,00', 'CARTÃO DE CRÉDITO'),
-  createData('20/03/2023', '20:08:37', 'PDV 2', '202-532-087', '09723', '2742836562', 'APROVADO', '', '-', 'R$ 200,00', 'PIX'),
-  createData('30/04/2023', '14:09:20', 'PDV 3', '', '74593', '7269635501', 'CANCELADO', '', '-', 'R$ 50,00', 'CARTÃO DE CRÉDITO'),
-  createData('11/05/2023', '23:03:28', 'PDV 4', '200-532-087', '26440', '7365836022', 'APROVADO', '', '-', 'R$ 200,00', 'DINHEIRO'),
-  createData('05/06/2023', '12:02:23', 'PDV 5', '', '75586', '589635501', 'NÃO APROVADO', '', '-', 'R$ 70,00', 'CARTÃO DE DÉBITO'),
-  createData('02/07/2023', '22:04:27', 'PDV 6', '200-532-087', '32948', '9034236562', 'APROVADO', '', '-', 'R$ 200,00', 'PIX'),
-  createData('19/08/2023', '10:02:23', 'PDV 7', '', '74536', '7269635501', 'APROVADO', '', '-', 'R$ 90,00', 'CARTÃO DE CRÉDITO'),
-  createData('27/09/2023', '20:06:52', 'PDV 8', '204-532-087', '39285', '8293836562', 'APROVADO', '', '-', 'R$ 250,00', 'DINHEIRO'),
-  createData('13/10/2023', '17:07:23', 'PDV 9', '', '47539', '7269635501', 'CANCELADO', '', '-', 'R$ 50,00', 'CARTÃO DE DÉBITO'),
-  createData('24/11/2023', '25:05:27', 'PDV 10', '202-532-087', '47356', '093636562', 'NÃO APROVADO', '', '-', 'R$ 55,00', 'PIX'),
-];
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-export default function TableSite() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  useEffect(() => {
+    if (selectedEventCode) {
+      const conn = Connection();
+
+      // Acessa o endpoint de detalhes do evento
+      const fetchDetalhes = async () => {
+        try {
+          // Acessa a rota adicionando o id do evento, salvos no objeto 'selectedEventCode'
+          const response = await conn.post(
+            'eventos/detalhados',
+            {
+              evento: selectedEventCode.eve_cod,
+            },
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          // Se der certo, salva os dados no estado dos detalhes
+          if (response.status === 200) {
+            setDetalhes(response.data.data);
+            setDataLoaded(true);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+
+      // Acessa o endpoint de filtro de detalhados
+      const fetchFiltro = async () => {
+        try {
+          const response = await conn.get(
+            'eventos/detalhados/filtros?evento=' +
+            selectedEventCode.eve_cod,
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          // Se der certo, salva os dados no estado de filtro de detalhados
+          if (response.status === 200) {
+            setFiltro(response.data);
+          } else {
+            console.log('Erro na resposta da API (Filtro):', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET (Filtro):', error);
+        }
+      };
+
+      fetchDetalhes();
+      fetchFiltro();
+    }
+  }, [selectedEventCode]);
+
+  console.log(detalhes)
+  console.log(filtro)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -59,88 +122,109 @@ export default function TableSite() {
     setPage(0);
   };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, detalhes.length - page * rowsPerPage);
 
   return (
     <React.Fragment>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell></StyledTableCell>
-              <StyledTableCell>
-                <strong>Data da Compra</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Pdv</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Pos</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Nº Pedido</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Cód. de Barras</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Situação</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Ingresso</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Ingresso Numerado</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Valor</strong>
-              </StyledTableCell>
-              <StyledTableCell align="left">
-                <strong>Forma de Pagamento</strong>
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row) => (
-              <StyledTableRow key={row.tipo}>
-                <StyledTableCell component="th" scope="row"></StyledTableCell>
-                <StyledTableCell component="th" scope="row">
-                  {row.data} <br /> {row.hora}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.pdv}</StyledTableCell>
-                <StyledTableCell align="left">{row.pos}</StyledTableCell>
-                <StyledTableCell align="left">{row.npedido}</StyledTableCell>
-                <StyledTableCell align="left">{row.cod}</StyledTableCell>
-                <StyledTableCell align="left">{row.situacao}</StyledTableCell>
-                <StyledTableCell align="left">{row.ingresso}</StyledTableCell>
-                <StyledTableCell align="left">{row.ingressonumerado}</StyledTableCell>
-                <StyledTableCell align="left">{row.valor}</StyledTableCell>
-                <StyledTableCell align="left">{row.formapagamento}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-            {emptyRows > 0 && (
-              <StyledTableRow style={{ height: 53 * emptyRows }}>
-                <StyledTableCell colSpan={6} />
-              </StyledTableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        labelRowsPerPage="Linhas por página:"
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-        rowsPerPageOptions={[5, 10, 20]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
-      />
+      <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1 }}>
+        <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
+          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
+            <FilterButtonPdv />
+            <FilterButtonPos />
+            <FilterButtonSituacao />
+            <FilterButtonTipo />
+            <FilterButton />
+            <DownloadButton />
+          </Grid>
+          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            <SearchBar label="Informe o nome do PDV, o POS série" />
+          </Grid>
+          <Grid item xs={12}>
+            <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
+          </Grid>
+          <Grid item xs={12}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      <strong>Data da Compra</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Pdv</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Pos</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Número do Pedido</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Código de Barras</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Situação</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Ingresso</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Ingresso Numerado</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Valor</strong>
+                    </TableCell>
+                    <TableCell align='center'>
+                      <strong>Forma de Pagamento</strong>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(rowsPerPage > 0
+                    ? detalhes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : detalhes
+                  ).map((row) => (
+                    <TableRow key={row.tipo}>
+                      <TableCell component="th" scope="row"></TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.data_compra}
+                      </TableCell>
+                      <TableCell align='center'>{row.pdv}</TableCell>
+                      <TableCell align='center'>{row.pos}</TableCell>
+                      <TableCell align='center'>{row.pedido}</TableCell>
+                      <TableCell align='center'>{row.cod_barras}</TableCell>
+                      <TableCell align='center'>{row.situacao}</TableCell>
+                      <TableCell align='center'>{row.ing}</TableCell>
+                      <TableCell align='center'>{row.ing_num}</TableCell>
+                      <TableCell align='center'>{row.valor}</TableCell>
+                      <TableCell align='center'>{row.pagamento}</TableCell>
+                    </TableRow>
+                  ))}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              labelRowsPerPage="Linhas por página:"
+              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+              rowsPerPageOptions={[5, 10, 20]}
+              component="div"
+              count={detalhes.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
+            />
+          </Grid>
+        </Grid>
+      </Container>
+
     </React.Fragment>
   );
 }

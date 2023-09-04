@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -29,6 +29,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Fab from '@mui/material/Fab';
+import Connection from '../../model';
 
 function Copyright(props) {
   return (
@@ -44,8 +45,6 @@ function Copyright(props) {
 }
 
 const drawerWidth = 240;
-
-const usuario = 'Usuário';
 
 const defaultTheme = createTheme();
 
@@ -94,6 +93,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Detalhados() {
+  const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
+  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
+  const [detalhes, setDetalhes] = useState([]); // Estado para armazenar dados da rota
+  const [filtro, setFiltro] = useState([]); // Estado para armazenar dados da rota
   const [open, setOpen] = useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
@@ -260,27 +263,7 @@ export default function Detalhados() {
               <Grid item xs={12}>
                 <Divider sx={{ my: 1, backgroundColor: 'var(--grey-shadow)' }} />
               </Grid>
-              <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1 }}>
-                <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <FilterButtonPdv />
-                    <FilterButtonPos />
-                    <FilterButtonSituacao />
-                    <FilterButtonTipo />
-                    <FilterButton />
-                    <DownloadButton />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <SearchBar label="Informe o nome do PDV, o POS série" />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TableDetalhados />
-                  </Grid>
-                </Grid>
-              </Container>
+              <TableDetalhados />
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>

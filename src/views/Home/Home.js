@@ -152,12 +152,12 @@ export default function Home() {
   //const { login } = useLogin();
   //const usuario = login;
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
-  const [open, setOpen] = React.useState(false); // Configuração do MUI
+  const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const [infos, setInfos] = useState([]); // Estado para armazenar dados da rota
   const [tipoIngressoMetrics, setTipoIngressoMetrics] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
 
-  // Configuração do MUI
+  // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -207,9 +207,7 @@ export default function Home() {
         try {
           const response = await conn.get(
             'metrics/tipo_ingresso?evento=' +
-              selectedEventCode.eve_cod +
-              '&categoria=' +
-              selectedEventCode.categoria,
+              selectedEventCode.eve_cod,
             {
               headers: {
                 'token': localStorage.getItem('token')
