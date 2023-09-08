@@ -50,7 +50,7 @@ export default function TableDetalhados() {
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
   useEffect(() => {
-    if (selectedEventCode) {
+    if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
 
       // Acessa o endpoint de detalhes do evento
@@ -108,7 +108,7 @@ export default function TableDetalhados() {
       fetchDetalhes();
       fetchFiltro();
     }
-  }, [selectedEventCode]);
+  }, [selectedEventCode, dataLoaded]);
 
   console.log(detalhes)
   console.log(filtro)

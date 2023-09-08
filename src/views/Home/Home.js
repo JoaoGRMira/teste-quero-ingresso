@@ -170,7 +170,7 @@ export default function Home() {
   console.log(selectedEventCode.eve_cod);
 
   useEffect(() => {
-    if (selectedEventCode) {
+    if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
   
       // Acessa o endpoint de infos do evento
@@ -229,7 +229,7 @@ export default function Home() {
       fetchEventosInfo();
       fetchTipoIngressoMetrics();
     }
-  }, [selectedEventCode]);
+  }, [selectedEventCode, dataLoaded]);
   
   // Dados do gráfico de vendas
   const dataVendas = [
