@@ -149,12 +149,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Home() {
   const { token } = useToken(); // Recupera o token salvo no login
-  //const { login } = useLogin();
-  //const usuario = login;
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const [infos, setInfos] = useState([]); // Estado para armazenar dados da rota
-  const [tipoIngressoMetrics, setTipoIngressoMetrics] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
 
   // inicia o menu fechado
@@ -202,53 +199,13 @@ export default function Home() {
         }
       };
   
-      // Acessa o endpoint de tipo de ingresso
-      const fetchTipoIngressoMetrics = async () => {
-        try {
-          const response = await conn.get(
-            'metrics/tipo_ingresso?evento=' +
-              selectedEventCode.eve_cod,
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
-            }
-          );
-  
-          // Se der certo, salva os dados no estado de tipo de ingresso
-          if (response.status === 200) {
-            setTipoIngressoMetrics(response.data);
-          } else {
-            console.log('Erro na resposta da API (Tipo Ingresso):', response);
-          }
-        } catch (error) {
-          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
-        }
-      };
-  
       fetchEventosInfo();
-      fetchTipoIngressoMetrics();
     }
   }, [selectedEventCode, dataLoaded]);
-  
-  // Dados do gráfico de vendas
-  const dataVendas = [
-    { tipo: 'Vendas', quantidade: tipoIngressoMetrics.vendas },
-    { tipo: 'Cortesias', quantidade: tipoIngressoMetrics.cortesias },
-  ];
 
   console.log(selectedEventCode);
-
-  //console.log(selectedEventCode)
   console.log(infos)
-  console.log(tipoIngressoMetrics)
   console.log(token)
-  //console.log(infos.faturamentos)
-  //console.log(infos.faturamentos.pdv)
-  //console.log(infos.situacao_do_evento)
-  //console.log(infos.ingressos_emitidos)
-  //console.log(infos.media_diaria)
-  //console.log(infos.ticket_medio)
 
   return (
     <div>
@@ -627,12 +584,12 @@ export default function Home() {
                         <Grid container spacing={3}>
                           {/* Chart 1 */}
                           <Grid item xs={12} md={6} lg={6}>
-                            <DonutChart data={dataVendas} />
+                            <DonutChart />
                             <TableVendas />
                           </Grid>
                           {/* Chart 2 */}
                           <Grid item xs={12} md={6} lg={6}>
-                            <BarChartHorizontal data={tipoIngressos} />
+                            <BarChartHorizontal />
                             <CustomizedTables />
                           </Grid>
                           {/* Chart 3 */}
