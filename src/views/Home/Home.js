@@ -37,6 +37,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import HistoryIcon from '@mui/icons-material/History';
 import ExpandableButton from '../../components/Buttons/Accordion';
 import ContainerCharts from '../../components/Charts/ContainerCharts';
+import FaturamentoChart from '../../components/Charts/FaturamentoChart';
 import DonutChart from '../../components/Charts/DonutChart';
 import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
@@ -45,11 +46,6 @@ import VpTChart from '../../components/Charts/VpTChart';
 import PeriodicChart from '../../components/Charts/PeriodicChart';
 import TimeChart from '../../components/Charts/TimeChart';
 import Ranking from '../../components/Tables/Charts/Ranking';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import './home.css'
 
 function Copyright(props) {
@@ -68,6 +64,13 @@ function Copyright(props) {
 const drawerWidth = 240;
 
 const usuario = 'Usuário'
+
+const faturamento = [
+  { tipo: "Dinheiro", Dinheiro: 90},
+  { tipo: "Crédito", Crédito: 50},
+  { tipo: "Débito", Débito: 70},
+  { tipo: "Pix", Pix: 50},
+];
 
 const dataTabela = [
   { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },

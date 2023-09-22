@@ -6,7 +6,6 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -21,10 +20,10 @@ import { tableCellClasses } from '@mui/material/TableCell';
 import SearchBar from '../../components/Outros/SearchBar';
 import TableClasses from '../../components/Tables/Classes/TableClasses';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import ExpandableButton from '../../components/Buttons/Accordion';
 
 function Copyright(props) {
   return (
