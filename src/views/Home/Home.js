@@ -25,9 +25,11 @@ import Deposits from '../../components/Outros/Deposits';
 import Orders from '../../components/Outros/Orders';
 import Title from '../../components/Outros/Title';
 import DownloadButton from '../../components/Buttons/DownloadButton';
-import FilterButton from '../../components/Buttons/FilterButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
 import EventIcon from '@mui/icons-material/Event';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PixIcon from '@mui/icons-material/Pix';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
@@ -43,7 +45,11 @@ import VpTChart from '../../components/Charts/VpTChart';
 import PeriodicChart from '../../components/Charts/PeriodicChart';
 import TimeChart from '../../components/Charts/TimeChart';
 import Ranking from '../../components/Tables/Charts/Ranking';
-import CustomizedTables from '../../components/Tables/Charts/Table';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import './home.css'
 
 function Copyright(props) {
@@ -159,7 +165,7 @@ export default function Home() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height:72}} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height: 72 }} elevation={2}>
           <Toolbar
             sx={{
               pr: '24px', // mantém o padding direito quando o drawer é fechado
@@ -273,8 +279,7 @@ export default function Home() {
                   cidadeEvento="Cidade do Evento" />
               </Grid>
               {/* Botões */}
-              <Grid item xs={12} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <FilterButton />
+              <Grid item xs={12} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
                 <DownloadButton />
               </Grid>
               {/* Divider */}
@@ -283,27 +288,27 @@ export default function Home() {
               </Grid>
               {/* Cards */}
               <Grid item xs={12} md={4} lg={3}>
-                  {/* Card 1 */}
-                <Paper sx={{ height: 250, position: 'relative' }}>
-                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <EventIcon />
+                {/* Card 1 */}
+                <Paper sx={{ height: 240, position: 'relative' }}>
+                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                    <EventIcon sx={{ marginRight: 2, marginBottom: 0.2 }}/>
                     Situação do Evento
                   </Typography>
-                  <Typography variant="body1" align="center" sx={{ pt: 2 }} color='var(--grey)'>
+                  <Typography variant="body1" align="center" sx={{ pt: 2, fontSize: '14px' }} color='var(--grey)'>
                     Vendas iniciadas em:
                   </Typography>
-                  <Typography variant="body1" align="center" color='var(--grey)'>
+                  <Typography variant="body1" align="center" color='var(--grey)' fontSize= '14px'>
                     01/01/2023
                   </Typography>
-                  <Typography variant="body1" align="center" sx={{ pb: 2 }} fontWeight="bold" color='var(--grey)'>
+                  <Typography variant="body1" align="center" sx={{ pb: 2 }} fontWeight="bold" color='var(--grey)' fontSize= '14px'>
                     (Iniciado há 61 dias)
                   </Typography>
                   {/* Rodapé */}
                   <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-                    <Typography variant="body1" sx={{ backgroundColor: 'var(--grey-shadow)', pt: 1, mt: 2 }} align='center' fontWeight="bold">
+                    <Typography variant="body1" sx={{ backgroundColor: 'var(--grey-shadow)', pt: 1, mt: 2 }} align='center' fontWeight="bold" fontSize= '14px'>
                       Dias restantes para o evento
                     </Typography>
-                    <Typography variant="body1" sx={{ backgroundColor: 'var(--grey-shadow)', pb: 1 }} align='center' fontWeight="bold" color="var(--blue)">
+                    <Typography variant="body1" sx={{ backgroundColor: 'var(--grey-shadow)', pb: 1 }} align='center' fontWeight="bold" color="var(--blue)" fontSize= '14px'>
                       Faltam 5 dias
                     </Typography>
                   </div>
@@ -311,13 +316,13 @@ export default function Home() {
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
                 {/* Card 2 */}
-                <Paper sx={{ height: 250, position: 'relative' }}>
+                <Paper sx={{ height: 240, position: 'relative' }}>
                   {/* Conteúdo do card */}
-                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <LocalActivityIcon />
+                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                    <LocalActivityIcon sx={{ marginRight: 2, marginBottom: 0.2 }} />
                     Ingressos Emitidos
                   </Typography>
-                  <Typography variant="body1" align="center" sx={{ pt: 2 }} color='var(--grey)'>
+                  <Typography variant="body1" align="center" sx={{ pt: 2 }} color='var(--grey)' fontSize= '14px'>
                     <div align='center'>
                       <table>
                         <thead>
@@ -351,12 +356,12 @@ export default function Home() {
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
                 {/* Card 3 */}
-                <Paper sx={{ height: 250, position: 'relative' }}>
-                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <CreditCardIcon />
+                <Paper sx={{ height: 240, position: 'relative', overflow: 'auto' }}>
+                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, width: '100%', fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                    <CreditCardIcon sx={{ marginRight: 2, marginBottom: 0.2 }} />
                     Faturamentos
                   </Typography>
-                  <Typography variant="body1" align="center" sx={{ pt: 6 }} color='var(--grey)'>
+                  <Typography variant="body1" align="center" sx={{ p: 0 }} color='var(--grey)' fontSize= '12px'>
                     <div align='center'>
                       <table>
                         <tbody>
@@ -376,23 +381,23 @@ export default function Home() {
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
                 {/* Card 4 */}
-                <Paper sx={{ height: 100 }}>
-                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                    <PeopleIcon />
+                <Paper sx={{ height: 95 }}>
+                  <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                    <PeopleIcon sx={{ marginRight: 2, marginBottom: 0.2 }} />
                     Ticket Médio
                   </Typography>
-                  <Typography variant="body1" align="center" sx={{ p: 1 }}>
-                    R$ 0,00
+                  <Typography variant="body1" align="center" fontSize= '14px' sx={{ p: 1 }}>
+                    R$ 30,00
                   </Typography>
                 </Paper>
                 <Box sx={{ my: 2 }}>
                   {/* Card 5 */}
-                  <Paper sx={{ height: 133 }}>
-                    <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                      <HistoryIcon />
+                  <Paper sx={{ height: 130 }}>
+                    <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 1, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                      <HistoryIcon sx={{ marginRight: 2, marginBottom: 0.2 }} />
                       Média Diária
                     </Typography>
-                    <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--grey)'>
+                    <Typography variant="body1" align="center" sx={{ pb: 1.5 }} color='var(--grey)' fontSize= '14px'>
                       <div align='center'>
                         <table>
                           <tbody>
@@ -415,61 +420,60 @@ export default function Home() {
                 <ExpandableButton title="Informações Gerais Bar">
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={4} lg={3}>
-                      <Paper sx={{ height: 133 }}>
-                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                      <Paper sx={{ height: 110 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                           Qtde de Caixas
                         </Typography>
-                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--grey)' fontWeight="bold">
+                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--grey)' fontWeight="bold" fontSize= '14px'>
                           0 caixas
                         </ Typography>
                       </Paper>
                     </Grid>
                     <Grid item xs={12} md={4} lg={3}>
-                      <Paper sx={{ height: 133 }}>
-                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                      <Paper sx={{ height: 110 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                           Itens Vendidos
                         </Typography>
-                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--blue)' fontWeight="bold">
+                        <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='var(--blue)' fontWeight="bold" fontSize= '14px'>
                           0
                         </ Typography>
                       </Paper>
                     </Grid>
                     <Grid item xs={12} md={4} lg={3}>
-                      <Paper sx={{ height: 133 }}>
-                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                      <Paper sx={{ height: 110 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                           Faturamento Bar
                         </Typography>
-                        <Typography variant="body1" align="center" sx={{ p: 1 }} color='green' fontWeight="bold">
+                        <Typography variant="body1" align="center" sx={{ p: 1 }} color='green' fontWeight="bold" fontSize= '14px'>
                           R$ 0,00
                         </Typography>
                       </Paper>
                       <Box sx={{ my: 2 }}>
-                        <Paper sx={{ height: 133 }}>
-                          <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'green', color: 'white', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                        <Paper sx={{ height: 110 }}>
+                          <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'green', color: 'white', p: 1, mb: 2, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                             Faturamento (Ing. + Bar)
                           </Typography>
-                          <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='green' fontWeight="bold">
+                          <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='green' fontWeight="bold" fontSize= '14px'>
                             R$ 0,00
                           </ Typography>
                         </Paper>
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={4} lg={3}>
-                      <Paper sx={{ height: 133 }}>
-                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                          <PeopleIcon />
+                      <Paper sx={{ height: 110 }}>
+                        <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: 'lightblue', p: 1, mb: 2, fontSize:'14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                           Ticket Médio Bar
                         </Typography>
-                        <Typography variant="body1" align="center" sx={{ p: 1 }} fontWeight="bold">
+                        <Typography variant="body1" align="center" sx={{ p: 1 }} fontWeight="bold" fontSize= '14px'>
                           R$ 0,00
                         </Typography>
                       </Paper>
                       <Box sx={{ my: 2 }}>
-                        <Paper sx={{ height: 133 }}>
-                          <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: '#FCA503', p: 1, mb: 2 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+                        <Paper sx={{ height: 110 }}>
+                          <Typography component='h2' variant="subtitle1" sx={{ backgroundColor: '#FCA503', p: 1, mb: 2, fontSize: '14px' }} align='center' fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
                             Ticket Médio (Ing. + Bar)
                           </Typography>
-                          <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='#FCA503' fontWeight="bold">
+                          <Typography variant="body1" align="center" sx={{ pt: 1.5 }} color='#FCA503' fontWeight="bold" fontSize= '14px'>
                             R$ 0,00
                           </ Typography>
                         </Paper>
@@ -484,25 +488,26 @@ export default function Home() {
                     {/* Chart 1 */ }
                     <Grid item xs={12} md={6} lg={6}>
                       <DonutChart data={dataVendas} />
-                      <CustomizedTables />
                     </Grid>
                     {/* Chart 2 */ }
                     <Grid item xs={12} md={6} lg={6}>
-                      <BarChartHorizontal data={tipoIngressos} />
-                      <CustomizedTables />
+                      <BarChartHorizontal data={tipoIngressos} />                      
                     </Grid>
                     {/* Chart 3 */ }
                     <Grid item xs={12} md={12} lg={12}>
-                      <LoteChart data={lote}/>
-                      <CustomizedTables />
+                      <LoteChart data={lote} />                     
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
                       <VpTChart data={dataVpT} />
-                      <CustomizedTables />
                     </Grid>
                     <Grid xs={12}>
                       <Ranking />
-                      </Grid>
+                    </Grid>
+                    {/* Chart 5*/}
+                    <Grid item xs={12} md={12} lg={12}>
+                      <FaturamentoChart data={faturamento} />
+                    </Grid>
+                    {/* Chart 6 */}
                     <Grid xs={12}>
                       <PeriodicChart data={dataPeriodic}/>
                       </Grid>
@@ -513,7 +518,7 @@ export default function Home() {
                 }
                 button2Content={
                   <div>
-                    <h1>Título</h1>
+                    <h3>Título</h3>
                     <p>Conteúdo</p>
                   </div>
                 }

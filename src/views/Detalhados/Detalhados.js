@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -6,20 +6,23 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
 import Title from '../../components/Outros/Title';
 import DownloadButton from '../../components/Buttons/DownloadButton';
+import FilterButton from '../../components/Buttons/FilterButton';
+import FilterButtonPdv from '../../components/Buttons/FilterButtonPdv';
+import FilterButtonPos from '../../components/Buttons/FilterButtonPos';
+import FilterButtonSituacao from '../../components/Buttons/FilterButtonSituacao';
+import FilterButtonTipo from '../../components/Buttons/FilterButtonTipo';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import { TableRow, TableCell} from '@mui/material';
+import { TableRow, TableCell } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import SearchBar from '../../components/Outros/SearchBar';
-import TableClasses from '../../components/Tables/Classes/TableClasses';
+import TableDetalhados from '../../components/Tables/Detalhados/TableDetalhados';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
@@ -39,9 +42,31 @@ function Copyright(props) {
   );
 }
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
 const drawerWidth = 240;
 
-const usuario = 'Usuário'
+const usuario = 'Usuário';
+
+const defaultTheme = createTheme();
 
 const dataTabela = [
   { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
@@ -117,20 +142,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing(7),
+        width: theme.spacing(0),
         [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
+          width: theme.spacing(0),
         },
       }),
     },
   }),
 );
 
-// TODO remove
-const defaultTheme = createTheme();
-
-export default function Classes() {
-  const [open, setOpen] = React.useState(true);
+export default function Detalhados() {
+  const [open, setOpen] = useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -151,7 +173,7 @@ export default function Classes() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
+                marginRight: '15px',
                 ...(open && { display: 'none' }),
               }}
             >
@@ -162,16 +184,21 @@ export default function Classes() {
               <IconButton
                 color="inherit"
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
-                component={Link}
-                href="/home"
               >
-                <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
-                  Home
-                </Typography>
+                <Link href='/eventos' sx={{
+                  textDecoration: 'none',
+                  '&:visited': {
+                    color: 'inherit',
+                  },
+                }}>
+                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                    Home
+                  </Typography>
+                </Link>
               </IconButton>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
-              <Link href='/' sx={{
+              <Link href='#' sx={{
                 textDecoration: 'none',
                 '&:visited': {
                   color: 'inherit',
@@ -204,7 +231,7 @@ export default function Classes() {
               justifyContent: 'flex-end',
               px: [1],
               backgroundColor: 'var(--blue)',
-              border: 'none'
+              border: 'none',
             }}
           >
             <IconButton onClick={toggleDrawer}>
@@ -216,10 +243,11 @@ export default function Classes() {
               width: drawerWidth,
               height: '91vh',
               overflowY: 'auto',
-              backgroundColor: 'var(--blue)'
+              backgroundColor: 'var(--blue)',
+              display: open ? 'block' : 'none',
             }}
           >
-            <List component="nav">
+            <List component="nav" sx={{ display: open ? 'block' : 'none' }}>
               {mainListItems}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {secondaryListItems}
@@ -245,15 +273,15 @@ export default function Classes() {
           <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               {/* Evento Atual */}
-              <Grid item xs={12} md={4} lg={4}>
-                <Title>Relatório Geral</Title>
+              <Grid item xs={12} md={5} lg={5}>
+                <Title>Relatório Detalhados</Title>
                 <EventoAtual nomeEvento="Nome do Evento"
                   dataEvento="01 de janeiro de 2023"
                   localEvento="Local do Evento"
                   cidadeEvento="Cidade do Evento" />
               </Grid>
               {/* Botões */}
-              <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
                     Total: 0
@@ -268,7 +296,7 @@ export default function Classes() {
                   </Typography>
                 </div>
               </Grid>
-              <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
                     R$ 0,00
@@ -283,18 +311,24 @@ export default function Classes() {
               <Grid item xs={12}>
                 <Divider sx={{ my: 1, backgroundColor: 'var(--grey-shadow)' }} />
               </Grid>
-              <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
-                <Grid container spacing={3} sx={{ py: 2 }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <SearchBar label="Buscar classe" />
+              <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2  }}>
+                <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
+                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <SearchBar label="Informe o nome do PDV, o POS série" />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                    <FilterButtonPdv />
+                    <FilterButtonPos />
+                    <FilterButtonSituacao />
+                    <FilterButtonTipo />
+                    <FilterButton />
                     <DownloadButton />
                   </Grid>
                   <Grid item xs={12}>
-                    <ExpandableButton>
-                      
-                    </ExpandableButton>
+                    <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TableDetalhados />
                   </Grid>
                 </Grid>
               </Container>

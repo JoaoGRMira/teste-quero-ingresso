@@ -1,14 +1,6 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import ExpandableButton from '../../Buttons/Accordion';
+import React, { useState } from 'react';
+import './tablePDV.css';
+import { TableContainer } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -64,72 +56,75 @@ const camarote = [
 
 export default function TablePdv() {
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell></StyledTableCell>
-                        <StyledTableCell><strong>Pdv</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Qtde (Hoje)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Valor (Hoje)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Qtde (Total)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Valor (Total)</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Cortesia</strong></StyledTableCell>
-                        <StyledTableCell align="left"><strong>Total</strong></StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <React.Fragment key={row.tipo}>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row"></StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {row.pdv}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">{row.qtdehoje}</StyledTableCell>
-                                <StyledTableCell align="left">{row.valorhoje}</StyledTableCell>
-                                <StyledTableCell align="left">{row.qtdetotal}</StyledTableCell>
-                                <StyledTableCell align="left">{row.valortotal}</StyledTableCell>
-                                <StyledTableCell align="left">{row.cortesia}</StyledTableCell>
-                                <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
-                            </StyledTableRow>
-                            <StyledTableRow>
-                                <StyledTableCell colSpan={6}>
-                                    {/* Detalhes */}
-                                    <ExpandableButton title='Mais Detalhes'>
-                                        <TableContainer component={Paper}>
-                                            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                    <StyledTableCell2>Classe</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Vendido</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Cortesia</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Valor Total</StyledTableCell2>
-                                                        <StyledTableCell2 align="left">Total</StyledTableCell2>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {camarote.map((camarote) => (
-                                                        <StyledTableRow>
-                                                            <StyledTableCell component="th" scope="row">
-                                                                {camarote.classe}
-                                                            </StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valor}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.vendido}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.cortesia}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.total}</StyledTableCell>
-                                                            <StyledTableCell align="left">{camarote.valorTotal}</StyledTableCell>
-                                                            <StyledTableCell align="left">{<Checkbox />}</StyledTableCell>
-                                                        </StyledTableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </ExpandableButton>
-                                </StyledTableCell>
-                            </StyledTableRow>
+        <TableContainer>
+            <table className="pdv-tabela">
+                <thead>
+                    <tr>
+                        <th className="pdv-cabecalho"></th>
+                        <th className="pdv-cabecalho">PDV</th>
+                        <th className="pdv-cabecalho">Qtde (Hoje)</th>
+                        <th className="pdv-cabecalho">Valor (Hoje)</th>
+                        <th className="pdv-cabecalho">Qtde (Total)</th>
+                        <th className="pdv-cabecalho">Valor (Total)</th>
+                        <th className="pdv-cabecalho">Cortesia</th>
+                        <th className="pdv-cabecalho">Pgto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tabelaData.map((item, index) => (
+                        <React.Fragment key={item.id}>
+                            <tr
+                                className={index % 2 === 0 ? 'pdv-linha-branca' : 'pdv-linha-cinza'}
+                            >
+                                <td className="pdv-celula">
+                                    <button
+                                        className="pdv-botao-expandir"
+                                        onClick={() => expandirLinha(item.id)}
+                                    >
+                                        {item.expandir ? '-' : '+'}
+                                    </button>
+                                </td>
+                                <td className="pdv-celula">{item.pdv}</td>
+                                <td className="pdv-celula">{item.qtdeHoje}</td>
+                                <td className="pdv-celula">{item.valorHoje}</td>
+                                <td className="pdv-celula">{item.qtdeTotal}</td>
+                                <td className="pdv-celula">{item.valorTotal}</td>
+                                <td className="pdv-celula">{item.cortesia}</td>
+                                <td className="pdv-celula-pgto">
+                                    <span class="pdv-celula-span">DIN</span> {item.pgto}<br/>
+                                    <span class="pdv-celula-span">CCR</span> {item.pgto}<br/>
+                                    <span class="pdv-celula-span">DEB</span> {item.pgto}<br/>
+                                    <span class="pdv-celula-span">BOL</span> {item.pgto}<br/>
+                                    <span class="pdv-celula-span">PIX</span> {item.pgto}
+                                </td>
+
+                            </tr>
+                            {item.expandir && (
+                                <>
+                                    <tr>
+                                        <td className="pdv-linha-azul"></td>
+                                        <td className="pdv-linha-azul">Ponto de Venda</td>
+                                        <td className="pdv-linha-azul">Vendas</td>
+                                        <td className="pdv-linha-azul">Cortesias</td>
+                                        <td className="pdv-linha-azul">Impressos</td>
+                                        <td className="pdv-linha-azul">Cancelados</td>
+                                        <td className="pdv-linha-azul">PGTO</td>
+                                        <td className="pdv-linha-azul">Valor</td>
+                                    </tr>
+                                    {rows.map((row) => (
+                                        <tr>
+                                            <td className="pdv-conteudo-expandido"></td>
+                                            <td className="pdv-conteudo-expandido">{row.pdv}</td>
+                                            <td className="pdv-conteudo-expandido">{row.vendas}</td>
+                                            <td className="pdv-conteudo-expandido">{row.cortesias}</td>
+                                            <td className="pdv-conteudo-expandido">{row.impressos}</td>
+                                            <td className="pdv-conteudo-expandido">{row.cancelados}</td>
+                                            <td className="pdv-conteudo-expandido">{row.pgto}</td>
+                                            <td className="pdv-conteudo-expandido">{row.valor}</td>
+                                        </tr>
+                                    ))}
+                                </>
+                            )}
                         </React.Fragment>
                     ))}
                 </TableBody>

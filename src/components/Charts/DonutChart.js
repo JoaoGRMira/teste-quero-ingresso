@@ -7,28 +7,32 @@ const DonutChart = ({ data }) => {
 
   return (
     <React.Fragment>
-      <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-      Tipos de Ingresso
+      <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5, fontSize: '14px' }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+        Tipos de Ingresso
       </Typography>
       <ResponsiveContainer width="100%" height={250}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="quantidade"
-          nameKey="tipo"
-          cx="50%"
-          cy="50%"
-          outerRadius={80}
-          fill="var(--blue)"
-          label
-        >
-          {data.map((entry, index) => (
-            <Cell key={index} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: 17 }}/>
-        <Tooltip />
-      </PieChart>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="quantidade"
+            nameKey="tipo"
+            cx="50%"
+            cy="50%"
+            outerRadius={80}
+            fill="var(--blue)"
+            label
+            fontSize={'14px'}
+          >
+            {data.map((entry, index) => (
+              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: 14 }} />
+          <Tooltip
+            labelStyle={{ fontSize: 14 }}
+            itemStyle={{ fontSize: 14 }}
+          />
+        </PieChart>
       </ResponsiveContainer>
     </React.Fragment>
   );
