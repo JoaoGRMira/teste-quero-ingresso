@@ -174,9 +174,10 @@ function EnhancedTableToolbar(props) {
           variant="h6"
           id="tableTitle"
           component="div"
+          fontSize="14px"
+          fontWeight="bold"
         >
-          Ranking de PDVs (Com movimentação) <br/>
-        <a href='/'>[Detalhes]</a>
+          Ranking de PDVs (Com movimentação) <a href='/'>[Detalhes]</a>
         </Typography>
       )}
       {numSelected > 0 ? (

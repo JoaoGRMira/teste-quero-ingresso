@@ -126,18 +126,18 @@ export default function TableDetalhados() {
 
   return (
     <React.Fragment>
-      <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1 }}>
+      <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
         <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
           <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
+            <SearchBar label="Informe o nome do PDV, o POS série" />
+          </Grid>
+          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <FilterButtonPdv />
             <FilterButtonPos />
             <FilterButtonSituacao />
             <FilterButtonTipo />
             <FilterButton />
             <DownloadButton />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-            <SearchBar label="Informe o nome do PDV, o POS série" />
           </Grid>
           <Grid item xs={12}>
             <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />

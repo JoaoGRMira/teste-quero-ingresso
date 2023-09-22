@@ -35,7 +35,6 @@ const TableClasses = () => {
                         <th className="classes-cabecalho">Cortesia (Qtde)</th>
                         <th className="classes-cabecalho">Total (Qtde)</th>
                         <th className="classes-cabecalho">Valor</th>
-                        <th className="classes-cabecalho">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,9 +56,6 @@ const TableClasses = () => {
                                 <td className="classes-celula">{item.cortesia}</td>
                                 <td className="classes-celula">{item.qtde}</td>
                                 <td className="classes-celula">{item.valor}</td>
-                                <td className="classes-celula">
-                                    <Checkbox />
-                                </td>
                             </tr>
                             {item.expandir && (
                                 <>
@@ -70,9 +66,6 @@ const TableClasses = () => {
                                         <td className="classes-linha-azul">Cortesia</td>
                                         <td className="classes-linha-azul">Total</td>
                                         <td className="classes-linha-azul">Valor Total</td>
-                                        <td className="classes-linha-azul">
-                                            <Checkbox />
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td className="classes-conteudo-expandido">{item.classe}</td>
@@ -81,9 +74,6 @@ const TableClasses = () => {
                                         <td className="classes-conteudo-expandido">{item.cortesia}</td>
                                         <td className="classes-conteudo-expandido">{item.qtde}</td>
                                         <td className="classes-conteudo-expandido">{item.valor}</td>
-                                        <td className="classes-conteudo-expandido">
-                                            <Checkbox />
-                                        </td>
                                     </tr>
                                 </>
                             )}
@@ -96,7 +86,6 @@ const TableClasses = () => {
                         <td className="classes-rodape">0</td>
                         <td className="classes-rodape">0</td>
                         <td className="classes-rodape">R$ 0,00</td>
-                        <td className="classes-rodape"></td>
                     </tr>
                 </tbody>
             </table>

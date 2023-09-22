@@ -43,7 +43,6 @@ const TableSangria = () => {
                         <th className="sangria-cabecalho">Vendas</th>
                         <th className="sangria-cabecalho">Sangrias</th>
                         <th className="sangria-cabecalho">Saldo</th>
-                        <th className="sangria-cabecalho">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +63,6 @@ const TableSangria = () => {
                                 <td className="sangria-celula">{item.vendas}</td>
                                 <td className="sangria-celula">{item.sangrias}</td>
                                 <td className="sangria-celula">{item.saldo}</td>
-                                <td className="sangria-celula"><Checkbox /></td>
                             </tr>
                             {item.expandir && (
                                 <>
@@ -74,7 +72,6 @@ const TableSangria = () => {
                                         <td className="sangria-linha-azul">Vendido</td>
                                         <td className="sangria-linha-azul">Cortesia</td>
                                         <td className="sangria-linha-azul">Valor Total</td>
-                                        <td className="sangria-linha-azul">Total</td>
                                     </tr>
                                     {rows.map((row) => (
                                         <tr>
@@ -83,7 +80,6 @@ const TableSangria = () => {
                                             <td className="sangria-conteudo-expandido">{row.vendas}</td>
                                             <td className="sangria-conteudo-expandido">{row.cortesia}</td>
                                             <td className="sangria-conteudo-expandido">{row.vTotal}</td>
-                                            <td className="sangria-conteudo-expandido"><Checkbox /></td>
                                         </tr>
                                     ))}
                                 </>

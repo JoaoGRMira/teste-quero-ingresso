@@ -13,10 +13,10 @@ function ExpandableButton(props) {
   return (
     <Accordion expanded={expanded} onChange={handleExpand} sx={{ backgroundColor: "transparent" }} elevation={0}>
       <AccordionSummary aria-controls="content" id="header" sx={{mx: -4}}>
-        <Button variant="contained" sx={{ backgroundColor: 'green', height: 50 }}>
+        <Button variant="contained" sx={{ backgroundColor: 'var(--blue)', height: 40 }}>
           <AddIcon />
         </Button>
-        <Typography component='h2' variant="subtitle1" sx={{ p: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+        <Typography component='h2' variant="subtitle1" sx={{ p: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom fontSize= '16px'>
           {props.title}
         </Typography>
       </AccordionSummary>

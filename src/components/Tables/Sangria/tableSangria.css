@@ -28,13 +28,12 @@
   .sangria-botao-expandir {
     width: 30px;
     height: 30px;
-    background-color: green;
+    background-color: var(--blue);
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     margin-right: 20px;
     border: none
   }
-  
   
   .sangria-conteudo-expandido {
     border-bottom: 1px solid var(--grey-shadow);

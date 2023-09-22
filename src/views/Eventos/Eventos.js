@@ -40,7 +40,7 @@ export default function Eventos() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <StyledAppBar position="absolute" elevation={0}>
+        <StyledAppBar position="absolute" elevation={2}>
           <Toolbar>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <img src={logo} alt="Logo" style={{ height: '71px' }} />
@@ -105,7 +105,7 @@ export default function Eventos() {
           <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <StyledContainer>
+                <StyledContainer sx={{ boxShadow: 2 }}>
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
                       <FilterEventos />

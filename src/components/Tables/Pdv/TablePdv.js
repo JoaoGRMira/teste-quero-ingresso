@@ -50,7 +50,6 @@ const TablePDV = () => {
                         <th className="pdv-cabecalho">Valor (Total)</th>
                         <th className="pdv-cabecalho">Cortesia</th>
                         <th className="pdv-cabecalho">Pgto</th>
-                        <th className="pdv-cabecalho">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,16 +73,12 @@ const TablePDV = () => {
                                 <td className="pdv-celula">{item.valorTotal}</td>
                                 <td className="pdv-celula">{item.cortesia}</td>
                                 <td className="pdv-celula-pgto">
-                                    <span class="pdv-celula-span">DIN</span><br/>{item.pgto}<br/>
-                                    <span class="pdv-celula-span">CCR</span><br/>{item.pgto}<br/>
-                                    <span class="pdv-celula-span">DEB</span><br/>{item.pgto}<br/>
-                                    <span class="pdv-celula-span">BOL</span><br/>{item.pgto}<br/>
-                                    <span class="pdv-celula-span">PIX</span><br/>{item.pgto}
+                                    <span class="pdv-celula-span">DIN</span>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">CCR</span>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">DEB</span>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">BOL</span>{item.pgto}<br/>
+                                    <span class="pdv-celula-span">PIX</span>{item.pgto}
                                 </td>
-                                <td className="pdv-celula">
-                                    <Checkbox />
-                                </td>
-
                             </tr>
                             {item.expandir && (
                                 <>
@@ -96,9 +91,6 @@ const TablePDV = () => {
                                         <td className="pdv-linha-azul">Cancelados</td>
                                         <td className="pdv-linha-azul">PGTO</td>
                                         <td className="pdv-linha-azul">Valor</td>
-                                        <td className="pdv-linha-azul">
-                                            <Checkbox />
-                                        </td>
                                     </tr>
                                     {rows.map((row) => (
                                         <tr>
@@ -110,9 +102,6 @@ const TablePDV = () => {
                                             <td className="pdv-conteudo-expandido">{row.cancelados}</td>
                                             <td className="pdv-conteudo-expandido">{row.pgto}</td>
                                             <td className="pdv-conteudo-expandido">{row.valor}</td>
-                                            <td className="pdv-conteudo-expandido">
-                                                <Checkbox />
-                                            </td>
                                         </tr>
                                     ))}
                                 </>

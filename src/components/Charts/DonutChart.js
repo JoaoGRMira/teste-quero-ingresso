@@ -59,7 +59,7 @@ const DonutChart = () => {
 
   return (
     <React.Fragment>
-      <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
+      <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5, fontSize: '14px' }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
         Tipos de Ingresso
       </Typography>
       <ResponsiveContainer width="100%" height={250}>
@@ -71,6 +71,7 @@ const DonutChart = () => {
             cx="50%"
             cy="50%"
             outerRadius={80}
+            fontSize={'14px'}
             fill="var(--blue)"
             label
           >
@@ -78,10 +79,10 @@ const DonutChart = () => {
               <Cell key={index} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: 17 }} />
+          <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: 14 }} />
           <Tooltip
-            labelStyle={{ fontSize: 17 }}
-            itemStyle={{ fontSize: 17 }}
+            labelStyle={{ fontSize: 14 }}
+            itemStyle={{ fontSize: 14 }}
           />
         </PieChart>
       </ResponsiveContainer>

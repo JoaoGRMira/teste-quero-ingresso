@@ -26,9 +26,9 @@
   .numerados-botao-expandir {
     width: 30px;
     height: 30px;
-    background-color: green;
+    background-color: var(--blue);
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     margin-right: 20px;
     margin-left: 10px;
     border: none
@@ -45,7 +45,7 @@
     height: 30px;
     background-color: lightblue;
     color: rgb(0, 0, 0);
-    font-size: 20px;
+    font-size: 18px;
     margin-right: 20px;
     margin-left: 10px;
     border: none
