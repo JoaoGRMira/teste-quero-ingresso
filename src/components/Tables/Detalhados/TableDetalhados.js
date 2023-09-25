@@ -142,7 +142,7 @@ export default function TableDetalhados() {
           <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
             <SearchBar label="Informe o nome do PDV, o POS série" />
           </Grid>
-          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap' }}>
             <FilterButtonPdv />
             <FilterButtonPos />
             <FilterButtonSituacao />
