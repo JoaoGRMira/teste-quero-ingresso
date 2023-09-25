@@ -8,6 +8,7 @@
     border-top: 1px solid var(--grey-shadow);
     padding: 10px;
     text-align: center;
+    font-weight: bold;
     color: black
   }
 

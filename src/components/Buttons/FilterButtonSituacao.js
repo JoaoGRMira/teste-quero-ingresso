@@ -1,14 +1,32 @@
-import {
-    caretDown,
-} from '../../images/icons';
-import "./buttonStyle.css"
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
-const FilterButtonSituacao = () => {
-    return (
-        <button className='button button-blue bold align-center flex' style={{ height: '50px', fontSize: 14, margin: 5, padding: '7px 10px' }}>
-            Situação <img src={caretDown} alt='situacao' style={{ width: '10px', height: '10px', marginLeft: '7px' }} />
-        </button>
-    )
+export default function FilterButtonSituacao() {
+  const [situacao, setSituacao] = React.useState('');
+
+  const handleChange = (event) => {
+    setSituacao(event.target.value);
+  };
+
+  return (
+    <Box sx={{ minWidth: 120, marginRight:'7px' }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Situação</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={situacao}
+          label="Situação"
+          onChange={handleChange}
+        >
+          <MenuItem value={10}>Aprovado</MenuItem>
+          <MenuItem value={20}>Estornado</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+  );
 }
-
-export default FilterButtonSituacao;

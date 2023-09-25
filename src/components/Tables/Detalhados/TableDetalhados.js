@@ -11,12 +11,12 @@ import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import { Container, Divider, Grid } from '@mui/material';
 import DownloadButton from '../../Buttons/DownloadButton';
-import FilterButton from '../../Buttons/FilterButton';
 import FilterButtonTipo from '../../Buttons/FilterButtonTipo';
 import FilterButtonSituacao from '../../Buttons/FilterButtonSituacao';
 import FilterButtonPos from '../../Buttons/FilterButtonPos';
 import FilterButtonPdv from '../../Buttons/FilterButtonPdv';
 import SearchBar from '../../Outros/SearchBar';
+import TableSortLabel from '@mui/material/TableSortLabel';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,24 +39,29 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function TableDetalhados() {
+  const [orderBy, setOrderBy] = useState('data_compra');
+  const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
-  const [detalhes, setDetalhes] = useState([]); // Estado para armazenar dados da rota
-  const [filtro, setFiltro] = useState([]); // Estado para armazenar dados da rota
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [detalhes, setDetalhes] = useState([]);
+  const [filtro, setFiltro] = useState([]);
 
-  // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
-  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+
+  const handleRequestSort = (property) => () => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
 
-      // Acessa o endpoint de detalhes do evento
       const fetchDetalhes = async () => {
         try {
-          // Acessa a rota adicionando o id do evento, salvos no objeto 'selectedEventCode'
           const response = await conn.post(
             'eventos/detalhados',
             {
@@ -69,7 +74,6 @@ export default function TableDetalhados() {
             }
           );
 
-          // Se der certo, salva os dados no estado dos detalhes
           if (response.status === 200) {
             setDetalhes(response.data.data);
             setDataLoaded(true);
@@ -81,7 +85,6 @@ export default function TableDetalhados() {
         }
       };
 
-      // Acessa o endpoint de filtro de detalhados
       const fetchFiltro = async () => {
         try {
           const response = await conn.get(
@@ -94,7 +97,6 @@ export default function TableDetalhados() {
             }
           );
 
-          // Se der certo, salva os dados no estado de filtro de detalhados
           if (response.status === 200) {
             setFiltro(response.data);
           } else {
@@ -110,9 +112,6 @@ export default function TableDetalhados() {
     }
   }, [selectedEventCode, dataLoaded]);
 
-  console.log(detalhes)
-  console.log(filtro)
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -123,6 +122,18 @@ export default function TableDetalhados() {
   };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, detalhes.length - page * rowsPerPage);
+
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
 
   return (
     <React.Fragment>
@@ -136,7 +147,6 @@ export default function TableDetalhados() {
             <FilterButtonPos />
             <FilterButtonSituacao />
             <FilterButtonTipo />
-            <FilterButton />
             <DownloadButton />
           </Grid>
           <Grid item xs={12}>
@@ -148,41 +158,104 @@ export default function TableDetalhados() {
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
-                    <TableCell>
-                      <strong>Data da Compra</strong>
+                    <TableCell align='center'>
+                      <TableSortLabel
+                        active={orderBy === 'data_compra'}
+                        direction={orderBy === 'data_compra' ? order : 'asc'}
+                        onClick={handleRequestSort('data_compra')}
+                      >
+                        <strong>Data da Compra</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Pdv</strong>
+                      <TableSortLabel
+                        active={orderBy === 'pdv'}
+                        direction={orderBy === 'pdv' ? order : 'asc'}
+                        onClick={handleRequestSort('pdv')}
+                      >
+                        <strong>Pdv</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Pos</strong>
+                      <TableSortLabel
+                        active={orderBy === 'pos'}
+                        direction={orderBy === 'pos' ? order : 'asc'}
+                        onClick={handleRequestSort('pos')}
+                      >
+                        <strong>Pos</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Número do Pedido</strong>
+                      <TableSortLabel
+                        active={orderBy === 'numero_pedido'}
+                        direction={orderBy === 'numero_pedido' ? order : 'asc'}
+                        onClick={handleRequestSort('numero_pedido')}
+                      >
+                        <strong>Número do Pedido</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Código de Barras</strong>
+                      <TableSortLabel
+                        active={orderBy === 'codigo_barras'}
+                        direction={orderBy === 'codigo_barras' ? order : 'asc'}
+                        onClick={handleRequestSort('codigo_barras')}
+                      >
+                        <strong>Código de Barras</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Situação</strong>
+                      <TableSortLabel
+                        active={orderBy === 'situacao'}
+                        direction={orderBy === 'situacao' ? order : 'asc'}
+                        onClick={handleRequestSort('situacao')}
+                      >
+                        <strong>Situação</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Ingresso</strong>
+                      <TableSortLabel
+                        active={orderBy === 'ingresso'}
+                        direction={orderBy === 'ingresso' ? order : 'asc'}
+                        onClick={handleRequestSort('ingresso')}
+                      >
+                        <strong>Ingresso</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Ingresso Numerado</strong>
+                      <TableSortLabel
+                        active={orderBy === 'ingresso_numerado'}
+                        direction={orderBy === 'ingresso_numerado' ? order : 'asc'}
+                        onClick={handleRequestSort('ingresso_numerado')}
+                      >
+                        <strong>Ingresso Numerado</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Valor</strong>
+                      <TableSortLabel
+                        active={orderBy === 'valor'}
+                        direction={orderBy === 'valor' ? order : 'asc'}
+                        onClick={handleRequestSort('valor')}
+                      >
+                        <strong>Valor</strong>
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell align='center'>
-                      <strong>Forma de Pagamento</strong>
+                      <TableSortLabel
+                        active={orderBy === 'forma_pagamento'}
+                        direction={orderBy === 'forma_pagamento' ? order : 'asc'}
+                        onClick={handleRequestSort('forma_pagamento')}
+                      >
+                        <strong>Forma de Pagamento</strong>
+                      </TableSortLabel>
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {(rowsPerPage > 0
-                    ? detalhes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    ? stableSort(detalhes, (a, b) => {
+                        const isAsc = order === 'asc';
+                        return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
+                      }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     : detalhes
                   ).map((row) => (
                     <TableRow key={row.tipo}>
@@ -224,7 +297,6 @@ export default function TableDetalhados() {
           </Grid>
         </Grid>
       </Container>
-
     </React.Fragment>
   );
 }
