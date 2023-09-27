@@ -14,7 +14,7 @@ export default function FilterButtonPos() {
 
   return (
     <Box sx={{ minWidth: 120, marginRight:'7px' }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Pos</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -22,6 +22,7 @@ export default function FilterButtonPos() {
           value={pos}
           label="Pos"
           onChange={handleChange}
+          sx={{ height: '39px'}}
         >
           <MenuItem value={10}>000-000-002</MenuItem>
           <MenuItem value={20}>1171649445</MenuItem>

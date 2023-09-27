@@ -67,11 +67,11 @@ const BarChartHorizontal = () => {
             <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={classeIngressos} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" tick={{ fontSize: 12 }} />
-                    <YAxis dataKey="tipo" type="category" tick={{ fontSize: 12 }} />
+                    <XAxis type="number" tick={{ fontSize: 10 }} />
+                    <YAxis dataKey="tipo" type="category" tick={{ fontSize: 8 }} />
                     <Tooltip
-                        labelStyle={{ fontSize: 14 }}
-                        itemStyle={{ fontSize: 14 }}
+                        labelStyle={{ fontSize: 12 }}
+                        itemStyle={{ fontSize: 12 }}
                     />
                     {classeIngressos.length > 0 && Object.keys(classeIngressos[0]).map((tipo, index) => (
 

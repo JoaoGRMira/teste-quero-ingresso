@@ -14,7 +14,7 @@ export default function FilterButtonIngresso() {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Ingresso</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -22,6 +22,7 @@ export default function FilterButtonIngresso() {
           value={ingresso}
           label="Ingresso"
           onChange={handleChange}
+          sx={{ height: '39px'}}
         >
           <MenuItem value={10}>Pista</MenuItem>
           <MenuItem value={20}>Camarote</MenuItem>

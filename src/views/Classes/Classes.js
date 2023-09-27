@@ -8,41 +8,16 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
-import Chart from '../../components/Outros/Chart';
-import Deposits from '../../components/Outros/Deposits';
-import Orders from '../../components/Outros/Orders';
 import Title from '../../components/Outros/Title';
 import DownloadButton from '../../components/Buttons/DownloadButton';
-import FilterButton from '../../components/Buttons/FilterButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import EventIcon from '@mui/icons-material/Event';
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import PeopleIcon from '@mui/icons-material/People';
-import HistoryIcon from '@mui/icons-material/History';
-import Accordion from '../../components/Buttons/Accordion';
-import ContainerCharts from '../../components/Charts/ContainerCharts';
-import DonutChart from '../../components/Charts/DonutChart';
-import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
+import { TableRow, TableCell, TableContainer } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
-import LoteChart from '../../components/Charts/LoteChart';
-import VpTChart from '../../components/Charts/VpTChart';
-import PeriodicChart from '../../components/Charts/PeriodicChart';
-import TimeChart from '../../components/Charts/TimeChart';
-import Ranking from '../../components/Tables/Charts/Ranking';
-import CustomizedTables from '../../components/Tables/Charts/Table';
 import SearchBar from '../../components/Outros/SearchBar';
 import TableClasses from '../../components/Tables/Classes/TableClasses';
-import ExpandableButton from '../../components/Buttons/Accordion';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
@@ -318,11 +293,11 @@ export default function Classes() {
               </Grid>
               <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
-                  <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
                     R$ 0,00
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">
                     Total Líquido
                   </Typography>
                 </div>

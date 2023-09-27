@@ -14,7 +14,7 @@ export default function FilterButtonSituacao() {
 
   return (
     <Box sx={{ minWidth: 120, marginRight:'7px' }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Situação</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -22,6 +22,7 @@ export default function FilterButtonSituacao() {
           value={situacao}
           label="Situação"
           onChange={handleChange}
+          sx={{ height: '39px'}}
         >
           <MenuItem value={10}>Aprovado</MenuItem>
           <MenuItem value={20}>Estornado</MenuItem>

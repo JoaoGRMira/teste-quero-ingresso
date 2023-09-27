@@ -248,6 +248,15 @@ export default function TableDetalhados() {
                         <strong>Forma de Pagamento</strong>
                       </TableSortLabel>
                     </TableCell>
+                    <TableCell align='center'>
+                      <TableSortLabel
+                        active={orderBy === 'cod_transacao'}
+                        direction={orderBy === 'cod_transacao' ? order : 'asc'}
+                        onClick={handleRequestSort('cod_transacao')}
+                      >
+                        <strong>Cód. da Transação</strong>
+                      </TableSortLabel>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -272,6 +281,7 @@ export default function TableDetalhados() {
                       <TableCell align='center'>{row.ing_num}</TableCell>
                       <TableCell align='center'>{row.valor}</TableCell>
                       <TableCell align='center'>{row.pagamento}</TableCell>
+                      <TableCell align='center'>{}</TableCell>
                     </TableRow>
                   ))}
                   {emptyRows > 0 && (

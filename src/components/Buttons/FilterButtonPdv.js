@@ -14,7 +14,7 @@ export default function FilterButtonPdv() {
 
   return (
     <Box sx={{ minWidth: 120, marginRight:'7px' }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Pdv</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -22,6 +22,7 @@ export default function FilterButtonPdv() {
           value={pdv}
           label="Pdv"
           onChange={handleChange}
+          sx={{ height: '39px'}}
         >
           <MenuItem value={10}>Copiadora Nanquim</MenuItem>
           <MenuItem value={20}>Quero Ingresso - Internet</MenuItem>

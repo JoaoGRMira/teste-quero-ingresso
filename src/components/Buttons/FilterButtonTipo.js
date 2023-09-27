@@ -14,7 +14,7 @@ export default function FilterButtonTipo() {
 
   return (
     <Box sx={{ minWidth: 120, marginRight:'7px' }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -22,6 +22,7 @@ export default function FilterButtonTipo() {
           value={tipo}
           label="Tipo"
           onChange={handleChange}
+          sx={{ height: '39px'}}
         >
           <MenuItem value={10}>Are Vip</MenuItem>
           <MenuItem value={20}>Pista</MenuItem>
