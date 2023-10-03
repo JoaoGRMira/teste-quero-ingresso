@@ -24,7 +24,8 @@ const Table = () => {
         });
 
         if (response.status === 200) {
-          setEventos(response.data);
+          console.log(response.data)
+          setEventos(response.data.eventos);
         } else {
           console.log('Erro na resposta da API:', response);
         }
