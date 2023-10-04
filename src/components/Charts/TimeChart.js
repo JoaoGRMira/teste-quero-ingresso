@@ -11,8 +11,8 @@ const TimeChart = ({ data }) => {
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-  console.log(selectedEventCode);
-  console.log(selectedEventCode.eve_cod);
+  //console.log(selectedEventCode);
+  //console.log(selectedEventCode.eve_cod);
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
