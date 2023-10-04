@@ -591,7 +591,7 @@ export default function Home() {
                           </Grid>
                           {/* Chart 3 */}
                           <Grid item xs={12} md={12} lg={12}>
-                            <LoteChart data={lote} />
+                            <LoteChart />
                           </Grid>
                           {/* Chart 4 */}
                           <Grid item xs={12} md={12} lg={12}>
@@ -602,15 +602,15 @@ export default function Home() {
                           </Grid>
                           {/* Chart 5*/}
                           <Grid item xs={12} md={12} lg={12}>
-                            <FaturamentoChart data={faturamento} />
+                            <FaturamentoChart />
                           </Grid>
                           {/* Chart 6 */}
                           <Grid xs={12}>
-                            <PeriodicChart data={dataPeriodic} />
+                            <PeriodicChart />
                           </Grid>
                           {/* Chart 7 */}
                           <Grid xs={12}>
-                            <TimeChart data={dataTime} />
+                            <TimeChart />
                           </Grid>
                         </Grid>
                       }

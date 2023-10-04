@@ -47,17 +47,17 @@ const BarChartHorizontal = () => {
         }
     }, [selectedEventCode, dataLoaded]);
 
-    console.log(classes)
+    console.log('Classes: ' + classes)
 
     const classeIngressos = classes.map(item => ({
         tipo: item.tipo,
         quantidade: item.total
     }))
 
-    const tipoIngressos = [
+    /*const tipoIngressos = [
         { tipo: 'Camarote', Camarote: 100 },
         { tipo: 'Pista', Pista: 50 },
-    ];
+    ];*/
 
     return (
         <React.Fragment>

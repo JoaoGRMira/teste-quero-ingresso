@@ -48,7 +48,7 @@ const DonutChart = () => {
       }
     }, [selectedEventCode, dataLoaded]);
 
-    console.log(tipoIngressoMetrics)
+    //console.log(tipoIngressoMetrics)
     
     // Dados do gráfico de vendas
     const dataVendas = [
