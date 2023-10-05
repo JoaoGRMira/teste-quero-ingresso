@@ -94,9 +94,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Detalhados() {
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
-  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
-  const [detalhes, setDetalhes] = useState([]); // Estado para armazenar dados da rota
-  const [filtro, setFiltro] = useState([]); // Estado para armazenar dados da rota
   const [open, setOpen] = useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);

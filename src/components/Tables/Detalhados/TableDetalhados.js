@@ -43,10 +43,10 @@ export default function TableDetalhados() {
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const [detalhes, setDetalhes] = useState([]);
-  const [filtro, setFiltro] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
+  const [detalhes, setDetalhes] = useState([]); //estado para salvar os dados retornados pelo endpoint 
 
+  //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON);
 
@@ -58,14 +58,14 @@ export default function TableDetalhados() {
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
-      const conn = Connection();
+      const conn = Connection(); //conecta com o servidor backend
 
       const fetchDetalhes = async () => {
         try {
           const response = await conn.post(
-            'eventos/detalhados',
+            'eventos/detalhados', //faz a requisição na rota especificada
             {
-              evento: selectedEventCode.eve_cod,
+              evento: selectedEventCode.eve_cod, //passa o id do evento
             },
             {
               headers: {
@@ -84,31 +84,7 @@ export default function TableDetalhados() {
           console.error('Erro na solicitação GET:', error);
         }
       };
-
-      const fetchFiltro = async () => {
-        try {
-          const response = await conn.get(
-            'eventos/detalhados/filtros?evento=' +
-            selectedEventCode.eve_cod,
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
-            }
-          );
-
-          if (response.status === 200) {
-            setFiltro(response.data);
-          } else {
-            console.log('Erro na resposta da API (Filtro):', response);
-          }
-        } catch (error) {
-          console.error('Erro na solicitação GET (Filtro):', error);
-        }
-      };
-
       fetchDetalhes();
-      fetchFiltro();
     }
   }, [selectedEventCode, dataLoaded]);
 
