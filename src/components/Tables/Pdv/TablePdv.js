@@ -93,43 +93,43 @@ const EnhancedTableHead = (props) => {
       <tr>
         <th className="pdv-cabecalho"></th>
         <SortableTableCell
-          label="PDV"
+          label={<b>PDV</b>}
           numeric={false}
           order={orderBy === 'pdv' ? order : false}
           onRequestSort={createSortHandler('pdv')}
         />
         <SortableTableCell
-          label="Qtde (Hoje)"
+          label={<b>Qtde (Hoje)</b>}
           numeric={true}
-          order={orderBy === 'qtdeHoje' ? order : false}
-          onRequestSort={createSortHandler('qtdeHoje')}
+          order={orderBy === 'quant_hoje' ? order : false}
+          onRequestSort={createSortHandler('quant_hoje')}
         />
         <SortableTableCell
-          label="Valor (Hoje)"
+          label={<b>Valor (Hoje)</b>}
           numeric={false}
-          order={orderBy === 'valorHoje' ? order : false}
-          onRequestSort={createSortHandler('valorHoje')}
+          order={orderBy === 'valor_hoje' ? order : false}
+          onRequestSort={createSortHandler('valor_hoje')}
         />
         <SortableTableCell
-          label="Qtde (Total)"
+          label={<b>Qtde (Total)</b>}
           numeric={true}
-          order={orderBy === 'qtdeTotal' ? order : false}
-          onRequestSort={createSortHandler('qtdeTotal')}
+          order={orderBy === 'quant_total' ? order : false}
+          onRequestSort={createSortHandler('quant_total')}
         />
         <SortableTableCell
-          label="Valor (Total)"
+          label={<b>Valor (Total)</b>}
           numeric={false}
-          order={orderBy === 'valorTotal' ? order : false}
-          onRequestSort={createSortHandler('valorTotal')}
+          order={orderBy === 'valor_total' ? order : false}
+          onRequestSort={createSortHandler('valor_total')}
         />
         <SortableTableCell
-          label="Cortesia"
+          label={<b>Cortesia</b>}
           numeric={false}
-          order={orderBy === 'cortesia' ? order : false}
-          onRequestSort={createSortHandler('cortesia')}
+          order={orderBy === 'cortesias' ? order : false}
+          onRequestSort={createSortHandler('cortesias')}
         />
         <SortableTableCell
-          label="Pgto"
+          label={<b>Pgto</b>}
           numeric={false}
           order={orderBy === 'pgto' ? order : false}
           onRequestSort={createSortHandler('pgto')}
@@ -144,7 +144,7 @@ const SortableTableCell = (props) => {
   const { label, numeric, order, onRequestSort } = props;
 
   return (
-    <TableCell className="pdv-cabecalho" align={numeric ? 'right' : 'left'}>
+    <TableCell className="pdv-cabecalho" align={numeric ? 'center' : 'center'}>
       <TableSortLabel
         active={order !== false}
         direction={order === 'asc' ? 'asc' : 'desc'}
@@ -176,16 +176,7 @@ const [tabelaData, setTabelaData] = useState([])
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const expandirLinha = (pdv) => {
-    setPdvs((prevData) =>
-      prevData.map((item) => {
-        if (item.pdv === pdv) {
-          return { ...item, expandir: !item.expandir };
-        }
-        return item;
-      })
-    );
-
-    setLinhaSelecionada(pdvs);
+    setLinhaSelecionada(pdv === linhaSelecionada ? -1 : pdv);
   };
 
   const handleRequestSort = (event, property) => {
@@ -225,16 +216,16 @@ const [tabelaData, setTabelaData] = useState([])
           {stableSort(pdvs, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
-              <React.Fragment key={item.pdvs}>
+              <React.Fragment key={item.pdv}>
                 <tr
                   className={index % 2 === 0 ? 'pdvs-linha-branca' : 'pdvs-linha-cinza'}
                 >
                   <td className="pdv-celula">
                     <button
                       className="pdv-botao-expandir"
-                      onClick={() => expandirLinha(item.pdvs)}
+                      onClick={() => expandirLinha(item.pdv)}
                     >
-                      {item.expandir ? '-' : '+'}
+                      {item.pdv === linhaSelecionada ? '-' : '+'}
                     </button>
                   </td>
                   <td className="pdv-celula">{item.pdv}</td>
@@ -251,27 +242,28 @@ const [tabelaData, setTabelaData] = useState([])
                     <span className="pdv-celula-span">PIX</span>{item.pgto}
                   </td>
                 </tr>
-                {item.expandir && (
+                {item.pdv === linhaSelecionada && (
                   <>
                     <tr>
                       <td className="pdv-linha-azul"></td>
-                      <td className="pdv-linha-azul">Ponto de Venda</td>
-                      <td className="pdv-linha-azul">Vendas</td>
+                      <td className="pdv-linha-azul">Classe</td>
+                      <td className="pdv-linha-azul">Qtde (Hoje)</td>
+                      <td className="pdv-linha-azul">Valor (Hoje)</td>
+                      <td className="pdv-linha-azul">Qtde (Total)</td>
+                      <td className="pdv-linha-azul">Valor (Total)</td>
                       <td className="pdv-linha-azul">Cortesias</td>
-                      <td className="pdv-linha-azul">Impressos</td>
-                      <td className="pdv-linha-azul">Cancelados</td>
-                      <td className="pdv-linha-azul">PGTO</td>
-                      <td className="pdv-linha-azul">Valor</td>
+                      <td className="pdv-linha-azul"></td>
                     </tr>
-                    {pdvs.map((row) => (
-                      <tr key={row.pdvs}>
+                    {item.classes.map((row) => (
+                      <tr key={row.classe}>
                         <td className="pdv-conteudo-expandido"></td>
-                        <td className="pdv-conteudo-expandido">{row.classes.classe}</td>
-                        <td className="pdv-conteudo-expandido">{row.classes.quant_hoje}</td>
-                        <td className="pdv-conteudo-expandido">{row.classes.valor_hoje}</td>
-                        <td className="pdv-conteudo-expandido">{row.classes.quant_total}</td>
-                        <td className="pdv-conteudo-expandido">{row.classes.valor_total}</td>
-                        <td className="pdv-conteudo-expandido">{row.classes.cortesias}</td>
+                        <td className="pdv-conteudo-expandido">{row.classe}</td>
+                        <td className="pdv-conteudo-expandido">{row.quant_hoje}</td>
+                        <td className="pdv-conteudo-expandido">{row.valor_hoje}</td>
+                        <td className="pdv-conteudo-expandido">{row.quant_total}</td>
+                        <td className="pdv-conteudo-expandido">{row.valor_total}</td>
+                        <td className="pdv-conteudo-expandido">{row.cortesias}</td>
+                        <td className="pdv-conteudo-expandido"></td>
                       </tr>
                     ))}
                   </>

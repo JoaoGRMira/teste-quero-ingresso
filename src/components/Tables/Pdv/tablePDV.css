@@ -62,9 +62,11 @@
 }
 
 .pdv-celula-pgto .pdv-celula-span {
-  background-color: rgb(215, 215, 215);
+  background-color: rgb(228, 227, 227);
   color: rgb(0, 0, 0);
   border-radius: 4px;
   padding: 1px 1px;
   display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
 }
