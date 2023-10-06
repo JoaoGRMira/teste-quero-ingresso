@@ -48,7 +48,7 @@ const EnhancedTableHead = (props) => {
     { label: 'Vendas', id: 'vendas', numeric: true },
     { label: 'Sangrias', id: 'sangrias', numeric: false },
     { label: 'Saldo', id: 'saldo', numeric: true },
-  ];
+  ];  
 
   return (
     <thead>
@@ -73,7 +73,7 @@ const SortableTableCell = (props) => {
   const { label, numeric, order, onRequestSort } = props;
 
   return (
-    <TableCell className="pdv-cabecalho" align={numeric ? 'right' : 'left'}>
+    <TableCell className="pdv-cabecalho" align={numeric ? 'center' : 'center'}>
       <TableSortLabel
         active={order !== false}
         direction={order === 'asc' ? 'asc' : 'desc'}

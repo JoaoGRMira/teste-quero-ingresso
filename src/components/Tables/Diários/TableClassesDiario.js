@@ -47,31 +47,31 @@ const EnhancedTableHead = (props) => {
       <tr>
       <th className="diario-cabecalho"></th>
         <SortableTableCell
-          label="Data"
+          label={<b>Data</b>}
           numeric={false}
           order={orderBy === 'data' ? order : false}
           onRequestSort={createSortHandler('data')}
         />
         <SortableTableCell
-          label="Prazo p/ evento"
+          label={<b>Prazo p/ evento</b>}
           numeric={false}
           order={orderBy === 'prazo' ? order : false}
           onRequestSort={createSortHandler('prazo')}
         />
         <SortableTableCell
-          label="Venda"
+          label={<b>Venda</b>}
           numeric={true}
           order={orderBy === 'venda' ? order : false}
           onRequestSort={createSortHandler('venda')}
         />
         <SortableTableCell
-          label="Cortesia"
+          label={<b>Cortesia</b>}
           numeric={true}
           order={orderBy === 'cortesia' ? order : false}
           onRequestSort={createSortHandler('cortesia')}
         />
         <SortableTableCell
-          label="Valor"
+          label={<b>Valor</b>}
           numeric={false}
           order={orderBy === 'valor' ? order : false}
           onRequestSort={createSortHandler('valor')}
@@ -85,7 +85,7 @@ const SortableTableCell = (props) => {
   const { label, numeric, order, onRequestSort } = props;
 
   return (
-    <TableCell className="diario-cabecalho" align={numeric ? 'right' : 'left'}>
+    <TableCell className="diario-cabecalho" align={numeric ? 'center' : 'center'}>
       <TableSortLabel
         active={order !== false}
         direction={order === 'asc' ? 'asc' : 'desc'}

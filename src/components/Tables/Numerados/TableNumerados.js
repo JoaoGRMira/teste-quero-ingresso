@@ -48,43 +48,43 @@ const EnhancedTableHead = (props) => {
       <tr>
         <th className="pdv-cabecalho"></th>
         <SortableTableCell
-          label="Classe"
+          label={<b>Classe</b>}
           numeric={false}
           order={orderBy === 'classe' ? order : false}
           onRequestSort={createSortHandler('classe')}
         />
         <SortableTableCell
-          label="Disponibilidade"
+          label={<b>Disponibilidade</b>}
           numeric={false}
           order={orderBy === 'disponibilidade' ? order : false}
           onRequestSort={createSortHandler('disponibilidade')}
         />
         <SortableTableCell
-          label="Estoque inicial"
+          label={<b>Estoque inicial</b>}
           numeric={true}
           order={orderBy === 'estoque' ? order : false}
           onRequestSort={createSortHandler('estoque')}
         />
         <SortableTableCell
-          label="Vendidos(%)"
+          label={<b>Vendidos(%)</b>}
           numeric={false}
           order={orderBy === 'vendidos' ? order : false}
           onRequestSort={createSortHandler('vendidos')}
         />
         <SortableTableCell
-          label="Qtde (Total)"
+          label={<b>Qtde (Total)</b>}
           numeric={true}
           order={orderBy === 'vendidosporcentagem' ? order : false}
           onRequestSort={createSortHandler('vendidosporcentagem')}
         />
         <SortableTableCell
-          label="Saldo(%)"
+          label={<b>Saldo(%)</b>}
           numeric={false}
           order={orderBy === 'saldo' ? order : false}
           onRequestSort={createSortHandler('saldo')}
         />
         <SortableTableCell
-          label="Saldo"
+          label={<b>Saldo</b>}
           numeric={false}
           order={orderBy === 'saldoporcentagem' ? order : false}
           onRequestSort={createSortHandler('saldoporcentagem')}
@@ -99,7 +99,7 @@ const SortableTableCell = (props) => {
   const { label, numeric, order, onRequestSort } = props;
 
   return (
-    <TableCell className="pdv-cabecalho" align={numeric ? 'right' : 'left'}>
+    <TableCell className="pdv-cabecalho" align={numeric ? 'center' : 'center'}>
       <TableSortLabel
         active={order !== false}
         direction={order === 'asc' ? 'asc' : 'desc'}
