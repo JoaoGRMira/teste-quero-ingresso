@@ -11,8 +11,8 @@ const BarChartHorizontal = () => {
     const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
     const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-    console.log(selectedEventCode);
-    console.log(selectedEventCode.eve_cod);
+    //console.log(selectedEventCode);
+    //console.log(selectedEventCode.eve_cod);
 
     React.useEffect(() => {
         if (selectedEventCode && !dataLoaded) {
@@ -47,7 +47,7 @@ const BarChartHorizontal = () => {
         }
     }, [selectedEventCode, dataLoaded]);
 
-    console.log('Classes: ' + classes)
+    //console.log('Classes: ' + classes)
 
     const classeIngressos = classes.map(item => ({
         tipo: item.tipo,

@@ -24,7 +24,7 @@ const Table = () => {
         });
 
         if (response.status === 200) {
-          console.log(response.data)
+          //console.log(response.data)
           setEventos(response.data.eventos);
         } else {
           console.log('Erro na resposta da API:', response);
@@ -52,10 +52,10 @@ const Table = () => {
     }
   };  
 
-  console.log(eventos)
+  //console.log(eventos)
   //console.log(token)
-  console.log(localStorage.getItem('token')) 
-  console.log(localStorage.getItem('login')) 
+  //console.log(localStorage.getItem('token')) 
+  //console.log(localStorage.getItem('login')) 
   //console.log(login)
 
   return (

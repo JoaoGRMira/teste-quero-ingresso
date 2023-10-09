@@ -59,8 +59,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const drawerWidth = 240;
 
-const usuario = 'Usuário';
-
 const defaultTheme = createTheme();
 
 const dataTabela = [
@@ -147,10 +145,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Classes() {
+  const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+   // Recupera o objeto do evento selecionado do localStorage
+   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+ 
+   //console.log(selectedEventCode);
+   //console.log(selectedEventCode.eve_cod);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -270,31 +276,31 @@ export default function Classes() {
               {/* Evento Atual */}
               <Grid item xs={12} md={5} lg={5}>
                 <Title>Relatório Classes</Title>
-                <EventoAtual nomeEvento="Nome do Evento"
-                  dataEvento="01 de janeiro de 2023"
-                  localEvento="Local do Evento"
-                  cidadeEvento="Cidade do Evento" />
+                <EventoAtual nomeEvento={selectedEventCode.eve_nome}
+                  dataEvento={selectedEventCode.eve_data}
+                  localEvento={selectedEventCode.local}
+                  cidadeEvento={selectedEventCode.cidade} />
               </Grid>
               {/* Infos */}
               <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
-                    Total: 0
+                    Total: {selectedEventCode.cortesias_pdv_total + selectedEventCode.vendido_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
-                    Vendas: 0
+                    Vendas: {selectedEventCode.vendido_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
-                    Cortesia: 0
+                    Cortesia: {selectedEventCode.cortesias_pdv_total}
                   </Typography>
                 </div>
               </Grid>
               <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
-                    R$ 0,00
+                    {selectedEventCode.receitas_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">

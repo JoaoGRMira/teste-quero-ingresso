@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './tableClasses.css';
 import { TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
+import Connection from '../../../model';
 
 // Funções de ordenação
 function descendingComparator(a, b, orderBy) {
@@ -46,36 +47,36 @@ const EnhancedTableHead = (props) => {
   return (
     <thead>
       <tr>
-      <th className="classes-cabecalho"></th>
+        <th className="classes-cabecalho"></th>
         <SortableTableCell
-          label={<b>Classe</b>}
+          label={<b>Categoria</b>}
           numeric={false}
-          order={orderBy === 'classe' ? order : false}
-          onRequestSort={createSortHandler('classe')}
+          order={orderBy === 'categoria' ? order : false}
+          onRequestSort={createSortHandler('categoria')}
         />
         <SortableTableCell
           label={<b>Vendas (Qtde)</b>}
           numeric={true}
-          order={orderBy === 'vendas' ? order : false}
-          onRequestSort={createSortHandler('vendas')}
+          order={orderBy === 'vendas_quant' ? order : false}
+          onRequestSort={createSortHandler('vendas_quant')}
         />
         <SortableTableCell
-          label={<b>Cortesia (Qtde)</b>}
+          label={<b>Cortesias (Qtde)</b>}
           numeric={true}
-          order={orderBy === 'cortesia' ? order : false}
-          onRequestSort={createSortHandler('cortesia')}
+          order={orderBy === 'cortesias_quant' ? order : false}
+          onRequestSort={createSortHandler('cortesias_quant')}
         />
         <SortableTableCell
           label={<b>Total (Qtde)</b>}
           numeric={true}
-          order={orderBy === 'qtde' ? order : false}
-          onRequestSort={createSortHandler('qtde')}
+          order={orderBy === 'total_quant' ? order : false}
+          onRequestSort={createSortHandler('total_quant')}
         />
         <SortableTableCell
           label={<b>Valor</b>}
           numeric={false}
-          order={orderBy === 'valor' ? order : false}
-          onRequestSort={createSortHandler('valor')}
+          order={orderBy === 'valor_total' ? order : false}
+          onRequestSort={createSortHandler('valor_total')}
         />
       </tr>
     </thead>
@@ -103,28 +104,72 @@ const SortableTableCell = (props) => {
 };
 
 const TableClasses = () => {
-  const [tabelaData, setTabelaData] = useState([
-    { id: 1, classe: 'CAMAROTE', vendas: 10, cortesia: 0, qtde: 10, valor: 'R$500,00' },
-    { id: 2, classe: 'PISTA', vendas: 30, cortesia: 0, qtde: 30, valor: 'R$700,00' },
-  ]);
+  const [classes, setClasses] = useState([]); // Estado para armazenar dados da rota
+  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
+  const [linhaSelecionada, setLinhaSelecionada] = useState(-1); // Seleciona a linha da tabela
+  const [order, setOrder] = useState('asc'); // Ordenação da tabela (crescente ou decrescente)
+  const [orderBy, setOrderBy] = useState('categoria'); // Tipo de ordenação
+  const [page, setPage] = useState(0); // Paginação
+  const [rowsPerPage, setRowsPerPage] = useState(5); // Número de linhas por página
 
-  const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('classe');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  // Variáveis para salvar a soma total dos valores
+  let totalVendasQuant = 0;
+  let totalCortesiasQuant = 0;
+  let totalTotalQuant = 0;
+  let totalValorTotal = 0;
 
-  const expandirLinha = (id) => {
-    setTabelaData((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
-          return { ...item, expandir: !item.expandir };
+  // Realiza a soma dos valores para salvar o total
+  classes.forEach((item) => {
+    totalVendasQuant += item.vendas_quant;
+    totalCortesiasQuant += item.cortesias_quant;
+    totalTotalQuant += item.total_quant;
+    totalValorTotal += item.valor_total;
+  });
+
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+
+  //console.log(selectedEventCode);
+  //console.log(selectedEventCode.eve_cod);
+
+  useEffect(() => {
+    if (selectedEventCode && !dataLoaded) {
+      const conn = Connection();
+
+      // Acessa o endpoint de tipo de ingresso
+      const fetchClasses = async () => {
+        try {
+          const response = await conn.get(
+            'eventos/classes?evento=' +
+            selectedEventCode.eve_cod,
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          // Se der certo, salva os dados no estado de tipo de ingresso
+          if (response.status === 200) {
+            setClasses(response.data);
+            setDataLoaded(true)
+          } else {
+            console.log('Erro na resposta da API (Tipo Ingresso):', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
         }
-        return item;
-      })
-    );
+      };
 
-    setLinhaSelecionada(id);
+      fetchClasses();
+    }
+  }, [selectedEventCode, dataLoaded]);
+
+  //console.log(classes)
+
+  const expandirLinha = (categoria) => {
+    setLinhaSelecionada(categoria === linhaSelecionada ? -1 : categoria);
   };
 
   const handleRequestSort = (event, property) => {
@@ -151,23 +196,23 @@ const TableClasses = () => {
           onRequestSort={handleRequestSort}
         />
         <tbody>
-          {stableSort(tabelaData, getComparator(order, orderBy))
+          {stableSort(classes, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
-              <React.Fragment key={item.id}>
+              <React.Fragment key={item.categoria}>
                 <tr className={index % 2 === 0 ? 'classes-linha-branca' : 'classes-linha-cinza'}>
                   <td className="classes-celula">
-                    <button className="classes-botao-expandir" onClick={() => expandirLinha(item.id)}>
-                      {item.expandir ? '-' : '+'}
+                    <button className="classes-botao-expandir" onClick={() => expandirLinha(item.categoria)}>
+                      {item.categoria === linhaSelecionada ? '-' : '+'}
                     </button>
                   </td>
-                  <td className="classes-celula">{item.classe}</td>
-                  <td className="classes-celula">{item.vendas}</td>
-                  <td className="classes-celula">{item.cortesia}</td>
-                  <td className="classes-celula">{item.qtde}</td>
-                  <td className="classes-celula">{item.valor}</td>
+                  <td className="classes-celula">{item.categoria}</td>
+                  <td className="classes-celula">{item.vendas_quant}</td>
+                  <td className="classes-celula">{item.cortesias_quant}</td>
+                  <td className="classes-celula">{item.total_quant}</td>
+                  <td className="classes-celula">{item.valor_total}</td>
                 </tr>
-                {item.expandir && (
+                {item.categoria === linhaSelecionada && (
                   <>
                     <tr>
                       <td className="classes-linha-azul">Classe</td>
@@ -177,25 +222,27 @@ const TableClasses = () => {
                       <td className="classes-linha-azul">Total</td>
                       <td className="classes-linha-azul">Valor Total</td>
                     </tr>
-                    <tr>
-                      <td className="classes-conteudo-expandido">{item.classe}</td>
-                      <td className="classes-conteudo-expandido">{item.valor}</td>
-                      <td className="classes-conteudo-expandido">{item.vendas}</td>
-                      <td className="classes-conteudo-expandido">{item.cortesia}</td>
-                      <td className="classes-conteudo-expandido">{item.qtde}</td>
-                      <td className="classes-conteudo-expandido">{item.valor}</td>
-                    </tr>
+                    {item.classes.map((row) => (
+                      <tr key={row.classe}>
+                        <td className="classes-conteudo-expandido">{row.classe}</td>
+                        <td className="classes-conteudo-expandido">{row.valor_ing}</td>
+                        <td className="classes-conteudo-expandido">{row.vendas_quant}</td>
+                        <td className="classes-conteudo-expandido">{row.cortesias_quant}</td>
+                        <td className="classes-conteudo-expandido">{row.total_quant}</td>
+                        <td className="classes-conteudo-expandido">{row.valor_total}</td>
+                      </tr>
+                    ))}
                   </>
                 )}
               </React.Fragment>
             ))}
-            <tr>
+          <tr>
             <td className="classes-rodape"></td>
             <td className="classes-rodape">Total (Vendas + Cortesia)</td>
-            <td className="classes-rodape">0</td>
-            <td className="classes-rodape">0</td>
-            <td className="classes-rodape">0</td>
-            <td className="classes-rodape">R$ 0,00</td>
+            <td className="classes-rodape">{totalVendasQuant}</td>
+            <td className="classes-rodape">{totalCortesiasQuant}</td>
+            <td className="classes-rodape">{totalTotalQuant}</td>
+            <td className="classes-rodape">R$ {totalValorTotal.toFixed(2)}</td>
           </tr>
         </tbody>
       </table>
@@ -204,7 +251,7 @@ const TableClasses = () => {
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={tabelaData.length}
+        count={classes.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

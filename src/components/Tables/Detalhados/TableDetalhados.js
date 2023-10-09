@@ -17,26 +17,7 @@ import FilterButtonPos from '../../Buttons/FilterButtonPos';
 import FilterButtonPdv from '../../Buttons/FilterButtonPdv';
 import SearchBar from '../../Outros/SearchBar';
 import TableSortLabel from '@mui/material/TableSortLabel';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.white,
-    color: theme.palette.common.black,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
+import { format } from 'date-fns';
 
 export default function TableDetalhados() {
   const [orderBy, setOrderBy] = useState('data_compra');
@@ -49,6 +30,41 @@ export default function TableDetalhados() {
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+
+  const StyledTableHeaderCell = styled(TableCell)(({ theme }) => ({
+		[`&.${tableCellClasses.head}`]: {
+			'&:nth-of-type(2)': {
+				minWidth: '150px',
+			},
+			'&:nth-of-type(3)': {
+				minWidth: '200px',
+			},
+      '&:nth-of-type(4)': {
+				minWidth: '100px',
+			},
+      '&:nth-of-type(5)': {
+				minWidth: '150px',
+			},
+      '&:nth-of-type(6)': {
+				minWidth: '200px',
+			},
+      '&:nth-of-type(7)': {
+				minWidth: '100px',
+			},
+      '&:nth-of-type(8)': {
+				minWidth: '150px',
+			},
+      '&:nth-of-type(9)': {
+				minWidth: '150px',
+			},
+      '&:nth-of-type(10)': {
+				minWidth: '150px',
+			},
+      '&:nth-of-type(11)': {
+				minWidth: '200px',
+			},
+		},
+	}));
 
   const handleRequestSort = (property) => () => {
     const isAsc = orderBy === property && order === 'asc';
@@ -96,6 +112,7 @@ export default function TableDetalhados() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  //console.log(detalhes)
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, detalhes.length - page * rowsPerPage);
 
@@ -133,8 +150,8 @@ export default function TableDetalhados() {
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell align='center'>
+                    <TableCell align='center'></TableCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'data_compra'}
                         direction={orderBy === 'data_compra' ? order : 'asc'}
@@ -142,8 +159,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Data da Compra</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'pdv'}
                         direction={orderBy === 'pdv' ? order : 'asc'}
@@ -151,8 +168,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Pdv</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'pos'}
                         direction={orderBy === 'pos' ? order : 'asc'}
@@ -160,8 +177,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Pos</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'numero_pedido'}
                         direction={orderBy === 'numero_pedido' ? order : 'asc'}
@@ -169,8 +186,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Número do Pedido</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'codigo_barras'}
                         direction={orderBy === 'codigo_barras' ? order : 'asc'}
@@ -178,8 +195,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Código de Barras</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'situacao'}
                         direction={orderBy === 'situacao' ? order : 'asc'}
@@ -187,8 +204,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Situação</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'ingresso'}
                         direction={orderBy === 'ingresso' ? order : 'asc'}
@@ -196,8 +213,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Ingresso</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'ingresso_numerado'}
                         direction={orderBy === 'ingresso_numerado' ? order : 'asc'}
@@ -205,8 +222,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Ingresso Numerado</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'valor'}
                         direction={orderBy === 'valor' ? order : 'asc'}
@@ -214,8 +231,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Valor</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'forma_pagamento'}
                         direction={orderBy === 'forma_pagamento' ? order : 'asc'}
@@ -223,8 +240,8 @@ export default function TableDetalhados() {
                       >
                         <strong>Forma de Pagamento</strong>
                       </TableSortLabel>
-                    </TableCell>
-                    <TableCell align='center'>
+                    </StyledTableHeaderCell>
+                    <StyledTableHeaderCell align='center'>
                       <TableSortLabel
                         active={orderBy === 'cod_transacao'}
                         direction={orderBy === 'cod_transacao' ? order : 'asc'}
@@ -232,7 +249,7 @@ export default function TableDetalhados() {
                       >
                         <strong>Cód. da Transação</strong>
                       </TableSortLabel>
-                    </TableCell>
+                    </StyledTableHeaderCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -244,9 +261,9 @@ export default function TableDetalhados() {
                     : detalhes
                   ).map((row) => (
                     <TableRow key={row.tipo}>
-                      <TableCell component="th" scope="row"></TableCell>
-                      <TableCell component="th" scope="row">
-                        {row.data_compra}
+                      <TableCell component="th" scope="row" align='center'></TableCell>
+                      <TableCell component="th" scope="row" align='center'>
+                      {format(new Date(row.data_compra), 'dd/MM/yyyy HH:mm')}
                       </TableCell>
                       <TableCell align='center'>{row.pdv}</TableCell>
                       <TableCell align='center'>{row.pos}</TableCell>
@@ -257,7 +274,7 @@ export default function TableDetalhados() {
                       <TableCell align='center'>{row.ing_num}</TableCell>
                       <TableCell align='center'>{row.valor}</TableCell>
                       <TableCell align='center'>{row.pagamento}</TableCell>
-                      <TableCell align='center'>{}</TableCell>
+                      <TableCell align='center'>{row.cod_pagseguro}</TableCell>
                     </TableRow>
                   ))}
                   {emptyRows > 0 && (
