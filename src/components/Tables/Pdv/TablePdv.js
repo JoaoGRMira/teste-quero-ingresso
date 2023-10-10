@@ -212,7 +212,7 @@ const [tabelaData, setTabelaData] = useState([])
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
         />
-        <tbody> 
+        <tbody>
           {stableSort(pdvs, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
@@ -230,16 +230,41 @@ const [tabelaData, setTabelaData] = useState([])
                   </td>
                   <td className="pdv-celula">{item.pdv}</td>
                   <td className="pdv-celula">{item.quant_hoje}</td>
-                  <td className="pdv-celula">{item.valor_hoje}</td>
+                  <td className="pdv-celula">
+                    {parseFloat(item.valor_hoje).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}
+                  </td>
                   <td className="pdv-celula">{item.quant_total}</td>
-                  <td className="pdv-celula">{item.valor_total}</td>
+                  <td className="pdv-celula">
+                    {parseFloat(item.valor_total).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}
+                  </td>
                   <td className="pdv-celula">{item.cortesias}</td>
                   <td className="pdv-celula-pgto">
-                    <span className="pdv-celula-span">DIN</span>{item.pgto}<br/>
-                    <span className="pdv-celula-span">CCR</span>{item.pgto}<br/>
-                    <span className="pdv-celula-span">DEB</span>{item.pgto}<br/>
-                    <span className="pdv-celula-span">BOL</span>{item.pgto}<br/>
-                    <span className="pdv-celula-span">PIX</span>{item.pgto}
+                    <span className="pdv-celula-span">DIN</span>
+                    {parseFloat(item.meios_pgto.dinheiro).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}<br/>
+                    <span className="pdv-celula-span">CCR</span>
+                    {parseFloat(item.meios_pgto.credito).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}<br/>
+                    <span className="pdv-celula-span">DEB</span>
+                    {parseFloat(item.meios_pgto.debito).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}<br/>
+                    <span className="pdv-celula-span">PIX</span>
+                    {parseFloat(item.meios_pgto.pix).toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}
                   </td>
                 </tr>
                 {item.pdv === linhaSelecionada && (
@@ -259,9 +284,19 @@ const [tabelaData, setTabelaData] = useState([])
                         <td className="pdv-conteudo-expandido"></td>
                         <td className="pdv-conteudo-expandido">{row.classe}</td>
                         <td className="pdv-conteudo-expandido">{row.quant_hoje}</td>
-                        <td className="pdv-conteudo-expandido">{row.valor_hoje}</td>
+                        <td className="pdv-celula">
+                          {parseFloat(row.valor_hoje).toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
+                        </td>
                         <td className="pdv-conteudo-expandido">{row.quant_total}</td>
-                        <td className="pdv-conteudo-expandido">{row.valor_total}</td>
+                        <td className="pdv-celula">
+                          {parseFloat(row.valor_total).toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
+                        </td>
                         <td className="pdv-conteudo-expandido">{row.cortesias}</td>
                         <td className="pdv-conteudo-expandido"></td>
                       </tr>
