@@ -86,10 +86,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Diarios() {
+  const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+   // Recupera o objeto do evento selecionado do localStorage
+   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+ 
+   //console.log(selectedEventCode);
+   //console.log(selectedEventCode.eve_cod);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -209,16 +217,16 @@ export default function Diarios() {
               {/* Evento Atual */}
               <Grid item xs={12} md={10} lg={10}>
                 <Title>Relatório Diário</Title>
-                <EventoAtual nomeEvento="Nome do Evento"
-                  dataEvento="01 de janeiro de 2023"
-                  localEvento="Local do Evento"
-                  cidadeEvento="Cidade do Evento" />
+                <EventoAtual nomeEvento={selectedEventCode.eve_nome}
+                  dataEvento={selectedEventCode.eve_data}
+                  localEvento={selectedEventCode.local}
+                  cidadeEvento={selectedEventCode.cidade} />
               </Grid>
 
               <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
-                    R$ 0,00
+                    {selectedEventCode.receitas_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">
