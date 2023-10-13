@@ -8,46 +8,20 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
-import Chart from '../../components/Outros/Chart';
-import Deposits from '../../components/Outros/Deposits';
-import Orders from '../../components/Outros/Orders';
 import Title from '../../components/Outros/Title';
 import DownloadButton from '../../components/Buttons/DownloadButton';
-import FilterButton from '../../components/Buttons/FilterButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import EventIcon from '@mui/icons-material/Event';
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import PeopleIcon from '@mui/icons-material/People';
-import HistoryIcon from '@mui/icons-material/History';
-import Accordion from '../../components/Buttons/Accordion';
-import ContainerCharts from '../../components/Charts/ContainerCharts';
-import DonutChart from '../../components/Charts/DonutChart';
-import BarChartHorizontal from '../../components/Charts/BarChartHorizontal';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
-import LoteChart from '../../components/Charts/LoteChart';
-import VpTChart from '../../components/Charts/VpTChart';
-import PeriodicChart from '../../components/Charts/PeriodicChart';
-import TimeChart from '../../components/Charts/TimeChart';
-import Ranking from '../../components/Tables/Charts/Ranking';
-import CustomizedTables from '../../components/Tables/Charts/Table';
 import SearchBar from '../../components/Outros/SearchBar';
 import TableNumerados from '../../components/Tables/Numerados/TableNumerados';
-import ExpandableButton from '../../components/Buttons/Accordion';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import Connection from '../../model';
 
 function Copyright(props) {
   return (
@@ -62,70 +36,9 @@ function Copyright(props) {
   );
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.white,
-      color: theme.palette.common.black,
-  },
-  [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-      border: 0,
-  },
-}));
-
 const drawerWidth = 240;
 
-const usuario = 'Usuário';
-
 const defaultTheme = createTheme();
-
-const dataTabela = [
-  { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
-  { tipo: 'Venda', qtde: 30, porcentagem: 60 },
-  { tipo: 'Total', qtde: 40, porcentagem: 80 },
-];
-
-const dataVendas = [
-  { tipo: 'Vendas', quantidade: 100 },
-  { tipo: 'Cortesias', quantidade: 50 },
-];
-
-const dataVpT = [
-  { tipo: 'Vendas', Vendas: 50 },
-  { tipo: 'Cortesias', Cortesias: 0 },
-];
-
-const dataPeriodic = [
-  { periodo: '4', quantidade: 100 },
-  { periodo: '3', quantidade: 50 },
-  { periodo: '2', quantidade: 25 },
-  { periodo: '1', quantidade: 65 },
-];
-
-const dataTime = [
-  { horario: '12:00', quantidade: 100 },
-  { horario: '13:00', quantidade: 50 },
-  { horario: '14:00', quantidade: 25 },
-  { horario: '15:00', quantidade: 65 },
-];
-
-const tipoIngressos = [
-  { tipo: 'Camarote', Camarote: 100 },
-  { tipo: 'Pista', Pista: 50 },
-];
-
-const lote = [
-  { tipo: '1° Lote', quantidade: 100 },
-];
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -172,6 +85,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Numerados() {
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+  const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
@@ -295,31 +212,31 @@ export default function Numerados() {
               {/* Evento Atual */}
               <Grid item xs={12} md={5} lg={5}>
                 <Title>Relatório Numerados</Title>
-                <EventoAtual nomeEvento="Nome do Evento"
-                  dataEvento="01 de janeiro de 2023"
-                  localEvento="Local do Evento"
-                  cidadeEvento="Cidade do Evento" />
+                <EventoAtual nomeEvento={selectedEventCode.eve_nome}
+                        dataEvento={selectedEventCode.eve_data}
+                        localEvento={selectedEventCode.local}
+                        cidadeEvento={selectedEventCode.cidade} />
               </Grid>
               {/* Infos */}
               <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
-                    Total: 0
+                    Total: {selectedEventCode.cortesias_pdv_total + selectedEventCode.vendido_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
-                    Vendas: 0
+                    Vendas: {selectedEventCode.vendido_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
-                    Cortesia: 0
+                    Cortesia: {selectedEventCode.cortesias_pdv_total}
                   </Typography>
                 </div>
               </Grid>
               <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
-                    R$ 0,00
+                  {selectedEventCode.receitas_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">

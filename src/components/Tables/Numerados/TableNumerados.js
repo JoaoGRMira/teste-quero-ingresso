@@ -5,6 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
+import Connection from '../../../model';
 
 // Funções de ordenação
 function descendingComparator(a, b, orderBy) {
@@ -56,14 +57,14 @@ const EnhancedTableHead = (props) => {
         <SortableTableCell
           label={<b>Disponibilidade</b>}
           numeric={false}
-          order={orderBy === 'disponibilidade' ? order : false}
-          onRequestSort={createSortHandler('disponibilidade')}
+          order={orderBy === 'disp' ? order : false}
+          onRequestSort={createSortHandler('disp')}
         />
         <SortableTableCell
           label={<b>Estoque inicial</b>}
           numeric={true}
-          order={orderBy === 'estoque' ? order : false}
-          onRequestSort={createSortHandler('estoque')}
+          order={orderBy === 'estq_inicial' ? order : false}
+          onRequestSort={createSortHandler('estq_inicial')}
         />
         <SortableTableCell
           label={<b>Vendidos(%)</b>}
@@ -74,8 +75,8 @@ const EnhancedTableHead = (props) => {
         <SortableTableCell
           label={<b>Qtde (Total)</b>}
           numeric={true}
-          order={orderBy === 'vendidosporcentagem' ? order : false}
-          onRequestSort={createSortHandler('vendidosporcentagem')}
+          order={orderBy === 'vendidos_perc' ? order : false}
+          onRequestSort={createSortHandler('vendidos_perc')}
         />
         <SortableTableCell
           label={<b>Saldo(%)</b>}
@@ -86,8 +87,8 @@ const EnhancedTableHead = (props) => {
         <SortableTableCell
           label={<b>Saldo</b>}
           numeric={false}
-          order={orderBy === 'saldoporcentagem' ? order : false}
-          onRequestSort={createSortHandler('saldoporcentagem')}
+          order={orderBy === 'saldo_perc' ? order : false}
+          onRequestSort={createSortHandler('saldo_perc')}
         />
       </tr>
     </thead>
@@ -115,338 +116,88 @@ const SortableTableCell = (props) => {
 };
 
 const TableNumerados = () => {
-  const [tabelaData, setTabelaData] = useState([
-    {
-        id: 1,
-        classe: 'PRIVATIVO AZUL',
-        disponibilidade: 'Parcial',
-        estoque: 300,
-        vendidos: 100,
-        vendidosporcentagem: '40%',
-        saldo: 10,
-        saldoporcentagem: '10%',
-        expandir: false,
-        subTable: [
-          {
-            id: 1,
-            grupo: 'Privativo 1',
-            disponibilidade: 'Disponível',
-            estoque: 200,
-            vendidos: 0,
-            vendidosporcentagem: '25%',
-            saldo: 5,
-            saldoporcentagem: '5%',
-            expandir: false,
-            subSubTable: [
-              {
-                id: 1,
-                numeracao: 'Priv 1 - Ing 1',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-              {
-                id: 2,
-                numeracao: 'Priv 1 - Ing 2',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-              {
-                id: 3,
-                numeracao: 'Priv 1 - Ing 3',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-            ],
-          },
-          {
-            id: 2,
-            grupo: 'Privativo 2',
-            disponibilidade: 'Disponível',
-            estoque: 250,
-            vendidos: 0,
-            vendidosporcentagem: '30%',
-            saldo: 7,
-            saldoporcentagem: '10%',
-            expandir: false,
-            subSubTable: [
-              {
-                id: 1,
-                numeracao: 'Priv 2 - Ing 1',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-              {
-                id: 2,
-                numeracao: 'Priv 2 - Ing 2',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-              {
-                id: 3,
-                numeracao: 'Priv 2 - Ing 3',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-            ],
-          },
-          {
-            id: 3,
-            grupo: 'Privativo 3',
-            disponibilidade: 'Vendido',
-            estoque: 180,
-            vendidos: 0,
-            vendidosporcentagem: '33%',
-            saldo: 8,
-            saldoporcentagem: '20%',
-            expandir: false,
-            subSubTable: [
-              {
-                id: 1,
-                numeracao: 'Priv 3 - Ing 1',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-              {
-                id: 2,
-                numeracao: 'Priv 3 - Ing 2',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-              },
-              {
-                id: 3,
-                numeracao: 'Priv 3 - Ing 3',
-                situacao: 'Disponível',
-                vendido: 'Não',
-                codbarras: '-',
-                qtdevendidos: 0,
-                valorvenda: 3,
-                tipoingresso: 'Inteira',
-                pdv: '-',
-            },
-        ],
-      },
-    ],
-  },
-      
-  {
-    id: 2,
-    classe: 'PRIVATIVO ROSA',
-    disponibilidade: 'Parcial',
-    estoque: 500,
-    vendidos: 30,
-    vendidosporcentagem: '70%',
-    saldo: 10,
-    saldoporcentagem: '10%',
-    expandir: false,
-    subTable: [
-      {
-        id: 1,
-        grupo: 'Privativo 1',
-        disponibilidade: 'Disponível',
-        estoque: 300,
-        vendidos: 0,
-        vendidosporcentagem: '40%',
-        saldo: 10,
-        saldoporcentagem: '10%',
-        expandir: false,
-        subSubTable: [
-          {
-            id: 1,
-            numeracao: 'Priv 1 - Ing 1',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-          {
-            id: 2,
-            numeracao: 'Priv 1 - Ing 2',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-          {
-            id: 3,
-            numeracao: 'Priv 1 - Ing 3',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-        ],
-      },
-      {
-        id: 2,
-        grupo: 'Privativo 2',
-        disponibilidade: 'Vendido',
-        estoque: 150,
-        vendidos: 0,
-        vendidosporcentagem: '50%',
-        saldo: 5,
-        saldoporcentagem: '10%',
-        expandir: false,
-        subSubTable: [
-          {
-            id: 1,
-            numeracao: 'Priv 2 - Ing 1',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-          {
-            id: 2,
-            numeracao: 'Priv 2 - Ing 2',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-          {
-            id: 3,
-            numeracao: 'Priv 2 - Ing 3',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-        ],
-      },
-      {
-        id: 3,
-        grupo: 'Privativo 3',
-        disponibilidade: 'Disponível',
-        estoque: 50,
-        vendidos: 0,
-        vendidosporcentagem: '30%',
-        saldo: 5,
-        saldoporcentagem: '10%',
-        expandir: false,
-        subSubTable: [
-          {
-            id: 1,
-            numeracao: 'Priv 3 - Ing 1',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-          {
-            id: 2,
-            numeracao: 'Priv 3 - Ing 2',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-          {
-            id: 3,
-            numeracao: 'Priv 3 - Ing 3',
-            situacao: 'Disponível',
-            vendido: 'Não',
-            codbarras: '-',
-            qtdevendidos: 0,
-            valorvenda: 3,
-            tipoingresso: 'Inteira',
-            pdv: '-',
-          },
-        ],
-      },
-    ],
-  }  
-  ]);
-
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+  const [dados, setDados] = React.useState([]); // Estado para armazenar dados da rota
+  const [dataLoaded, setDataLoaded] = React.useState(false); // Estado para controlar se os dados foram carregados
   const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
   const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('pdv');
+  const [orderBy, setOrderBy] = useState('classe');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const expandirLinha = (id, subId, subSubId) => {
-    setTabelaData((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
-          if (!subId) {
+    // Variáveis para salvar a soma total dos valores
+    let estoque = 0;
+    let porcentagem_vendas = 0;
+    let vendidos_total = 0;
+    let porcentagem_saldo = 0;
+    let saldo_total = 0;
+  
+    // Realiza a soma dos valores para salvar o total
+    dados.forEach((item) => {
+      estoque += item.estq_inicial;
+      porcentagem_vendas += item.vendidos_perc;
+      vendidos_total += item.vendidos;
+      porcentagem_saldo += item.saldo_perc;
+      saldo_total += item.saldo;
+    });
+
+  React.useEffect(() => {
+    if (selectedEventCode && !dataLoaded) {
+      const conn = Connection();
+  
+      // Acessa o endpoint de tipo de ingresso
+      const fetchDados = async () => {
+        try {
+          const response = await conn.get(
+            'eventos/numerados?evento=' +
+              selectedEventCode.eve_cod,
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+  
+          // Se der certo, salva os dados no estado de tipo de ingresso
+          if (response.status === 200) {
+            setDados(response.data);
+            console.log(response.data)
+            setDataLoaded(true)
+          } else {
+            console.log('Erro na resposta da API (Tipo Ingresso):', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+        }
+      };
+
+      fetchDados();
+    }
+  }, [selectedEventCode, dataLoaded]);
+
+  console.log(dados)
+
+  const expandirLinha = (classe, grupo, numerado) => {
+    setDados((dados) =>
+      dados.map((item) => {
+        if (item.classe === classe) {
+          if (!grupo) {
             return { ...item, expandir: !item.expandir };
           }
 
           return {
             ...item,
-            subTable: item.subTable.map((subItem) => {
-              if (subItem.id === subId) {
-                if (!subSubId) {
+            grupos: item.grupos.map((subItem) => {
+              if (subItem.grupo === grupo) {
+                if (!numerado) {
                   return { ...subItem, expandir: !subItem.expandir };
                 }
 
                 return {
                   ...subItem,
-                  subSubTable: subItem.subSubTable.map((subSubItem) => {
-                    if (subSubItem.id === subSubId) {
+                  numerados: subItem.numerados.map((subSubItem) => {
+                    if (subSubItem.numerado === numerado) {
                       return { ...subSubItem, expandir: !subSubItem.expandir };
                     }
                     return subSubItem;
@@ -459,7 +210,7 @@ const TableNumerados = () => {
         }
         return item;
       })
-    );
+    )
   };
 
   const handleRequestSort = (event, property) => {
@@ -486,28 +237,28 @@ const TableNumerados = () => {
           onRequestSort={handleRequestSort}
         />
         <tbody>
-          {stableSort(tabelaData, getComparator(order, orderBy))
+          {stableSort(dados, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
-              <React.Fragment key={item.id}>
+              <React.Fragment key={item.classe}>
                 <tr className={index % 2 === 0 ? 'numerados-linha-branca' : 'numerados-linha-cinza'}>
                   <td className="numerados-celula">
                     <button
                       className="numerados-botao-expandir"
-                      onClick={() => expandirLinha(item.id)}
+                      onClick={() => expandirLinha(item.classe)}
                     >
                       {item.expandir ? '-' : '+'}
                     </button>
                   </td>
                   <td className="numerados-celula">{item.classe}</td>
-                  <td className={`numerados-celula ${item.disponibilidade === 'Disponível' ? 'disponivel-cell' : ''} ${item.disponibilidade === 'Parcial' ? 'parcial-cell' : ''} ${item.disponibilidade === 'Vendido' ? 'vendido-cell' : ''}`}>
-                    {item.disponibilidade}
+                  <td className={`numerados-celula ${item.disp === 'Disponível' ? 'disponivel-cell' : ''} ${item.disp === 'Parcial' ? 'parcial-cell' : ''} ${item.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
+                    {item.disp}
                   </td>
-                  <td className="numerados-celula">{item.estoque}</td>
+                  <td className="numerados-celula">{item.estq_inicial}</td>
+                  <td className="numerados-celula">{item.vendidos_perc}</td>
                   <td className="numerados-celula">{item.vendidos}</td>
-                  <td className="numerados-celula">{item.vendidosporcentagem}</td>
+                  <td className="numerados-celula">{item.saldo_perc}</td>
                   <td className="numerados-celula">{item.saldo}</td>
-                  <td className="numerados-celula">{item.saldoporcentagem}</td>
                 </tr>
                 {item.expandir && (
                   <>
@@ -521,26 +272,26 @@ const TableNumerados = () => {
                       <td className="numerados-linha-azul">Saldo</td>
                       <td className="numerados-linha-azul">Saldo (%)</td>
                     </tr>
-                    {item.subTable.map((subItem) => (
-                      <React.Fragment key={subItem.id}>
+                    {item.grupos.map((subItem) => (
+                      <React.Fragment key={subItem.grupo}>
                         <tr>
                           <td className="numerados-celula">
                             <button
                               className="numerados-botao-expandir2"
-                              onClick={() => expandirLinha(item.id, subItem.id)}
+                              onClick={() => expandirLinha(item.classe, subItem.grupo)}
                             >
                               {subItem.expandir ? '-' : '+'}
                             </button>
                           </td>
                           <td className="numerados-conteudo-expandido">{subItem.grupo}</td>
-                          <td className={`numerados-conteudo-expandido ${subItem.disponibilidade === 'Disponível' ? 'disponivel-cell' : ''} ${subItem.disponibilidade === 'Parcial' ? 'parcial-cell' : ''} ${subItem.disponibilidade === 'Vendido' ? 'vendido-cell' : ''}`}>
-                            {subItem.disponibilidade}
+                          <td className={`numerados-conteudo-expandido ${subItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
+                            {subItem.disp}
                           </td>
-                          <td className="numerados-conteudo-expandido">{subItem.estoque}</td>
+                          <td className="numerados-conteudo-expandido">{subItem.estq_inicial}</td>
                           <td className="numerados-conteudo-expandido">{subItem.vendidos}</td>
-                          <td className="numerados-conteudo-expandido">{subItem.vendidosporcentagem}</td>
+                          <td className="numerados-conteudo-expandido">{subItem.vendidos_perc}</td>
                           <td className="numerados-conteudo-expandido">{subItem.saldo}</td>
-                          <td className="numerados-conteudo-expandido">{subItem.saldoporcentagem}</td>
+                          <td className="numerados-conteudo-expandido">{subItem.saldo_perc}</td>
                         </tr>
                         {subItem.expandir && (
                           <>
@@ -554,17 +305,17 @@ const TableNumerados = () => {
                               <td className="numerados-linha-azul">Tipo de Ingresso</td>
                               <td className="numerados-linha-azul">Pdv</td>
                             </tr>
-                            {subItem.subSubTable.map((subSubItem) => (
-                              <tr key={subSubItem.id}>
-                                <td className="numerados-conteudo-expandido">{subSubItem.numeracao}</td>
-                                <td className={`numerados-conteudo-expandido ${subSubItem.situacao === 'Disponível' ? 'disponivel-cell' : ''} ${subSubItem.situacao === 'Parcial' ? 'parcial-cell' : ''} ${subSubItem.situacao === 'Vendido' ? 'vendido-cell' : ''}`}>
-                                  {subSubItem.situacao}
+                            {subItem.numerados.map((subSubItem) => (
+                              <tr key={subSubItem.numerado}>
+                                <td className="numerados-conteudo-expandido">{subSubItem.numerado}</td>
+                                <td className={`numerados-conteudo-expandido ${subSubItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subSubItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subSubItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
+                                  {subSubItem.disp}
                                 </td>
-                                <td className="numerados-conteudo-expandido">{subSubItem.vendido}</td>
-                                <td className="numerados-conteudo-expandido">{subSubItem.codbarras}</td>
-                                <td className="numerados-conteudo-expandido">{subSubItem.qtdevendidos}</td>
-                                <td className="numerados-conteudo-expandido">{subSubItem.valorvenda}</td>
-                                <td className="numerados-conteudo-expandido">{subSubItem.tipoingresso}</td>
+                                <td className="numerados-conteudo-expandido">{subSubItem.vendido ? 'Sim' : 'Não'}</td>
+                                <td className="numerados-conteudo-expandido">{subSubItem.cod_barras}</td>
+                                <td className="numerados-conteudo-expandido">{subSubItem.quant_vendido}</td>
+                                <td className="numerados-conteudo-expandido">{subSubItem.valor_venda}</td>
+                                <td className="numerados-conteudo-expandido">{subSubItem.tipo}</td>
                                 <td className="numerados-conteudo-expandido">{subSubItem.pdv}</td>
                               </tr>
                             ))}
@@ -580,11 +331,11 @@ const TableNumerados = () => {
             <td className="numerados-rodape">Total</td>
             <td className="numerados-rodape"></td>
             <td className="numerados-rodape"></td>
-            <td className="numerados-rodape">800</td>
-            <td className="numerados-rodape">130</td>
-            <td className="numerados-rodape">55%</td>
-            <td className="numerados-rodape">20</td>
-            <td className="numerados-rodape">20%</td>
+            <td className="numerados-rodape">{estoque}</td>
+            <td className="numerados-rodape">-</td>
+            <td className="numerados-rodape">{vendidos_total}</td>
+            <td className="numerados-rodape">-</td>
+            <td className="numerados-rodape">{saldo_total}</td>
           </tr>
         </tbody>
       </table>
@@ -593,7 +344,7 @@ const TableNumerados = () => {
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={tabelaData.length}
+        count={dados.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
