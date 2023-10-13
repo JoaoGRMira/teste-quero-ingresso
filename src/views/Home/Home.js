@@ -14,7 +14,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
 import Title from '../../components/Outros/Title';
 import DownloadButton from '../../components/Buttons/DownloadButton';
-import FilterButton from '../../components/Buttons/FilterButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
 import EventIcon from '@mui/icons-material/Event';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -34,7 +33,6 @@ import FaturamentoChart from '../../components/Charts/FaturamentoChart';
 import PeriodicChart from '../../components/Charts/PeriodicChart';
 import TimeChart from '../../components/Charts/TimeChart';
 import Ranking from '../../components/Tables/Charts/Ranking';
-import CustomizedTables from '../../components/Tables/Charts/Table';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
@@ -45,7 +43,6 @@ import { useToken } from '../../model/tokenContext';
 import Connection from '../../model';
 import './home.css'
 import { CircularProgress } from '@mui/material';
-import TableVendas from '../../components/Tables/Charts/TableVendas';
 
 // Rodapé com copyright
 function Copyright(props) {
@@ -70,36 +67,6 @@ const defaultTheme = createTheme();
 const dataVpT = [
   { tipo: 'Vendas', Vendas: 50 },
   { tipo: 'Cortesias', Cortesias: 0 },
-];
-
-const dataPeriodic = [
-  { periodo: '1', Venda: 100, Cortesia: 50, Total: 150, Acumulado: 65 },
-  { periodo: '2', Venda: 200, Cortesia: 100, Total: 300, Acumulado: 165 },
-  { periodo: '3', Venda: 150, Cortesia: 75, Total: 225, Acumulado: 240 },
-  { periodo: '4', Venda: 300, Cortesia: 150, Total: 450, Acumulado: 390 },
-];
-
-const dataTime = [
-  { horario: '12:00', PDV: 0, WEB: 80 },
-  { horario: '13:00', PDV: 2, WEB: 160 },
-  { horario: '14:00', PDV: 6, WEB: 150 },
-  { horario: '15:00', PDV: 15, WEB: 155 },
-];
-
-const tipoIngressos = [
-  { tipo: 'Camarote', Camarote: 100 },
-  { tipo: 'Pista', Pista: 50 },
-];
-
-const faturamento = [
-  { tipo: 'Dinheiro', Dinheiro: 90 },
-  { tipo: 'Crédito', Crédito: 50 },
-  { tipo: 'Débito', Débito: 70 },
-  { tipo: 'Pix', Pix: 50 },
-];
-
-const lote = [
-  { tipo: '1° Lote', quantidade: 100 },
 ];
 
 // Configuração do MUI
@@ -148,7 +115,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Home() {
-  const { token } = useToken(); // Recupera o token salvo no login
+  //const { token } = useToken(); // Recupera o token salvo no login
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const [infos, setInfos] = useState([]); // Estado para armazenar dados da rota
