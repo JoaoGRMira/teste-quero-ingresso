@@ -1,11 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './tableDiario.css';
 import { TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
+import Connection from '../../../model';
 
+const TablePDVsDiario = () => {
+  const [diarios, setDiarios] = useState([]); // Estado para armazenar dados da rota
+  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
+
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+
+  //console.log(selectedEventCode);
+  //console.log(selectedEventCode.eve_cod);
+
+  useEffect(() => {
+    if (selectedEventCode && !dataLoaded) {
+      const conn = Connection();
+  
+      // Acessa o endpoint de tipo de ingresso
+      const fetchDiarios = async () => {
+        try {
+          const response = await conn.get(
+            'eventos/diarios?evento=' +
+              selectedEventCode.eve_cod + '&filtro=pdvs',
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+  
+          // Se der certo, salva os dados no estado de tipo de ingresso
+          if (response.status === 200) {
+            setDiarios(response.data);
+            setDataLoaded(true)
+          } else {
+            console.log('Erro na resposta da API (Tipo Ingresso):', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+        }
+      };
+
+      fetchDiarios();
+    }
+  }, [selectedEventCode, dataLoaded]);
+
+// Funções de ordenação
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -53,25 +99,25 @@ const EnhancedTableHead = (props) => {
         />
         <SortableTableCell
           label={<b>Prazo p/ evento</b>}
-          numeric={false}
+          numeric={true}
           order={orderBy === 'prazo' ? order : false}
           onRequestSort={createSortHandler('prazo')}
         />
         <SortableTableCell
-          label={<b>Venda</b>}
+          label={<b>Vendidos</b>}
           numeric={true}
-          order={orderBy === 'venda' ? order : false}
-          onRequestSort={createSortHandler('venda')}
+          order={orderBy === 'vendidos' ? order : false}
+          onRequestSort={createSortHandler('vendidos')}
         />
         <SortableTableCell
-          label={<b>Cortesia</b>}
+          label={<b>Cortesias</b>}
           numeric={true}
-          order={orderBy === 'cortesia' ? order : false}
-          onRequestSort={createSortHandler('cortesia')}
+          order={orderBy === 'cortesias' ? order : false}
+          onRequestSort={createSortHandler('cortesias')}
         />
         <SortableTableCell
           label={<b>Valor</b>}
-          numeric={false}
+          numeric={true}
           order={orderBy === 'valor' ? order : false}
           onRequestSort={createSortHandler('valor')}
         />
@@ -101,11 +147,12 @@ const SortableTableCell = (props) => {
   );
 };
 
-const TablePDVsDiario = () => {
-  const [tabelaData, setTabelaData] = useState([
+const [tabelaData, setTabelaData] = useState([])
+/*const TablePDVsDiario = () => {
+  
     { id: 1, data: '03/05/2023', prazo: '29 dias', venda: 31, cortesia: 0, valor: 'R$ 300,00' },
     { id: 2, data: '25/01/2023', prazo: '12 dias', venda: 15, cortesia: 0, valor: 'R$ 200,00' },
-  ]);
+  ;*/
 
   const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
   const [order, setOrder] = useState('asc');
@@ -113,17 +160,8 @@ const TablePDVsDiario = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const expandirLinha = (id) => {
-    setTabelaData((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
-          return { ...item, expandir: !item.expandir };
-        }
-        return item;
-      })
-    );
-
-    setLinhaSelecionada(id);
+  const expandirLinha = (data) => {
+    setLinhaSelecionada(data === linhaSelecionada ? -1 : data);
   };
 
   const handleRequestSort = (event, property) => {
@@ -141,14 +179,15 @@ const TablePDVsDiario = () => {
     setPage(0);
   };
 
-  function createData(pdv, vendas, cortesias, total) {
-    return { pdv, vendas, cortesias, total };
+  function createData(nome, vendas, cortesias, total) {
+    return { nome, vendas, cortesias, total };
   }
 
-  const rows = [
+  const [rows, setRows] = useState([])
+  /*const rows = [
     createData('Loja Virtual', 51, 0, 'R$ 680,00'),
     createData('Loja Física', 17, 0, 'R$ 350,00'),
-  ];
+  ];*/
 
   return (
     <TableContainer>
@@ -159,44 +198,44 @@ const TablePDVsDiario = () => {
           onRequestSort={handleRequestSort}
         />
         <tbody>
-          {stableSort(tabelaData, getComparator(order, orderBy))
+          {stableSort(diarios, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
-              <React.Fragment key={item.id}>
+              <React.Fragment key={item.data}>
                 <tr
                   className={index % 2 === 0 ? 'diario-linha-branca' : 'diario-linha-cinza'}
                 >
                   <td className="diario-celula">
                     <button
                       className="diario-botao-expandir"
-                      onClick={() => expandirLinha(item.id)}
+                      onClick={() => expandirLinha(item.data)}
                     >
-                      {item.expandir ? '-' : '+'}
+                      {item.data === linhaSelecionada ? '-' : '+'}
                     </button>
                   </td>
                   <td className="diario-celula">{item.data}</td>
                   <td className="diario-celula">{item.prazo}</td>
-                  <td className="diario-celula">{item.venda}</td>
-                  <td className="diario-celula">{item.cortesia}</td>
+                  <td className="diario-celula">{item.vendidos}</td>
+                  <td className="diario-celula">{item.cortesias}</td>
                   <td className="diario-celula">{item.valor}</td>
                 </tr>
-                {item.expandir && (
+                {item.data === linhaSelecionada && (
                   <>
                     <tr>
                       <td className="diario-linha-azul"></td>
-                      <td className="diario-linha-azul">PDV</td>
+                      <td className="diario-linha-azul">Nome</td>
                       <td className="diario-linha-azul">Ingressos Vendidos</td>
                       <td className="diario-linha-azul">Cortesias Emitidas</td>
-                      <td className="diario-linha-azul">Total Vendidos (R$)</td>
+                      <td className="diario-linha-azul">Total Vendidos</td>
                       <td className="diario-linha-azul"></td>
                     </tr>
-                    {rows.map((row) => (
-                      <tr>
+                    {item.vendas.map((row) => (
+                      <tr key={row.nome}>
                         <td className="diario-conteudo-expandido"></td>
-                        <td className="diario-conteudo-expandido">{row.pdv}</td>
-                        <td className="diario-conteudo-expandido">{row.vendas}</td>
+                        <td className="diario-conteudo-expandido">{row.nome}</td>
+                        <td className="diario-conteudo-expandido">{row.vendidos}</td>
                         <td className="diario-conteudo-expandido">{row.cortesias}</td>
-                        <td className="diario-conteudo-expandido">{row.total}</td>
+                        <td className="diario-conteudo-expandido">{row.valor}</td>
                         <td className="diario-conteudo-expandido"></td>
                       </tr>
                     ))}
@@ -211,7 +250,7 @@ const TablePDVsDiario = () => {
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={tabelaData.length}
+        count={diarios.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
