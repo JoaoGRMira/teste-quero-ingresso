@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './tableSangria.css';
 import { TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
+import Connection from '../../../model';
+import { format } from 'date-fns';
 
 // Funções de ordenação
 function descendingComparator(a, b, orderBy) {
@@ -91,28 +93,61 @@ const SortableTableCell = (props) => {
 };
 
 const TableSangria = () => {
+  const [sangria, setSangria] = useState([]); // Estado para armazenar dados da rota
+  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
+
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+
+  //console.log(selectedEventCode);
+  //console.log(selectedEventCode.eve_cod);
   const [tabelaData, setTabelaData] = useState([
     { id: 1, pdv: 'Loja Virtual', vendas: 'R$ 850,00', sangrias: 'R$ 0,00', saldo: 'R$ 850,00' },
     { id: 2, pdv: 'Loja Física', vendas: 'R$ 1.350,00', sangrias: 'R$ 0,00', saldo: 'R$ 1.350,00' },
   ]);
 
+  useEffect(() => {
+    if (selectedEventCode && !dataLoaded) {
+      const conn = Connection();
+  
+      // Acessa o endpoint de tipo de ingresso
+      const fetchSangria = async () => {
+        try {
+          const response = await conn.get(
+            'eventos/sangrias?evento=' +
+              selectedEventCode.eve_cod,
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+  
+          // Se der certo, salva os dados no estado de tipo de ingresso
+          if (response.status === 200) {
+            setSangria(response.data);
+            setDataLoaded(true)
+          } else {
+            console.log('Erro na resposta da API (Tipo Ingresso):', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+        }
+      };
+
+      fetchSangria();
+    }
+  }, [selectedEventCode, dataLoaded]);
+
   const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
   const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('pdv');
+  const [orderBy, setOrderBy] = useState('nome');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const expandirLinha = (id) => {
-    setTabelaData((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
-          return { ...item, expandir: !item.expandir };
-        }
-        return item;
-      })
-    );
-
-    setLinhaSelecionada(id);
+  const expandirLinha = (nome) => {
+    setLinhaSelecionada(nome === linhaSelecionada ? -1 : nome);
   };
 
   const handleRequestSort = (event, property) => {
@@ -148,40 +183,40 @@ const TableSangria = () => {
           onRequestSort={handleRequestSort}
         />
         <tbody>
-          {stableSort(tabelaData, getComparator(order, orderBy))
+          {stableSort(sangria, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
-              <React.Fragment key={item.id}>
+              <React.Fragment key={item.nome}>
                 <tr className={index % 2 === 0 ? 'sangria-linha-branca' : 'sangria-linha-cinza'}>
                   <td className="sangria-celula">
                     <button
                       className="sangria-botao-expandir"
-                      onClick={() => expandirLinha(item.id)}
+                      onClick={() => expandirLinha(item.nome)}
                     >
-                      {item.expandir ? '-' : '+'}
+                      {item.nome === linhaSelecionada ? '-' : '+'}
                     </button>
                   </td>
-                  <td className="sangria-celula">{item.pdv}</td>
-                  <td className="sangria-celula">{item.vendas}</td>
-                  <td className="sangria-celula">{item.sangrias}</td>
-                  <td className="sangria-celula">{item.saldo}</td>
+                  <td className="sangria-celula">{item.nome}</td>
+                  <td className="sangria-celula">{item.valor_vendas}</td>
+                  <td className="sangria-celula">{item.valor_sangrias}</td>
+                  <td className="sangria-celula">{item.valor_saldo}</td>
                 </tr>
-                {item.expandir && (
+                {item.nome === linhaSelecionada && (
                   <>
                     <tr>
-                      <td className="sangria-linha-azul">Classe</td>
+                      <td className="sangria-linha-azul"></td>
+                      <td className="sangria-linha-azul">Data</td>
+                      <td className="sangria-linha-azul">Usuário</td>
                       <td className="sangria-linha-azul">Valor</td>
-                      <td className="sangria-linha-azul">Vendido</td>
-                      <td className="sangria-linha-azul">Cortesia</td>
-                      <td className="sangria-linha-azul">Valor Total</td>
+                      <td className="sangria-linha-azul"></td>
                     </tr>
-                    {rows.map((row) => (
-                      <tr key={row.classe}>
-                        <td className="sangria-conteudo-expandido">{row.classe}</td>
+                    {item.sangrias.map((row) => (
+                      <tr key={row.data}>
+                        <td className="sangria-conteudo-expandido"></td>
+                        <td className="sangria-conteudo-expandido">{format(new Date(row.data), 'dd/MM/yyyy HH:mm')}</td>
+                        <td className="sangria-conteudo-expandido">{row.usuario}</td>
                         <td className="sangria-conteudo-expandido">{row.valor}</td>
-                        <td className="sangria-conteudo-expandido">{row.vendas}</td>
-                        <td className="sangria-conteudo-expandido">{row.cortesia}</td>
-                        <td className="sangria-conteudo-expandido">{row.vTotal}</td>
+                        <td className="sangria-conteudo-expandido"></td>
                       </tr>
                     ))}
                   </>
@@ -195,7 +230,7 @@ const TableSangria = () => {
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={tabelaData.length}
+        count={sangria.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
