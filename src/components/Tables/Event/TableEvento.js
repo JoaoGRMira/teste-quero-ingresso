@@ -59,6 +59,8 @@ const Table = () => {
 
   const paginatedEventos = eventos.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
+  const paginatedEventosMobile = eventos.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
   return (
     <div className="table-responsive">
       {/* Desktop */}
@@ -137,13 +139,13 @@ const Table = () => {
       <div className="table-container">
         <table className="mobile-table">
           <tbody>
+          {paginatedEventosMobile.map((evento, index) => (
+              <React.Fragment key={index}>
             <tr>
               <th></th>
               <th className="title">Nome</th>
               <th className="title">Data do Evento</th>
             </tr>
-            {eventos.map((evento, index) => (
-              <React.Fragment key={index}>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
                   onClick={() => handleEventClick(evento.eve_cod)}
