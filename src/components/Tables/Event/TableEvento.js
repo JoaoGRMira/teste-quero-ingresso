@@ -4,13 +4,16 @@ import "./tableStyle.css";
 import Connection from '../../../model/index';
 import { useToken } from '../../../model/tokenContext';
 import { useLogin } from '../../../model/loginContext';
+import TablePagination from '@mui/material/TablePagination';
 
 const Table = () => {
   const { token } = useToken();
   const { login } = useLogin();
   const navigate = useNavigate();
-  const [eventos, setEventos] = useState([]); // Estado para armazenar os dados de eventos
+  const [eventos, setEventos] = useState([]);
   const [selectedEventCode, setSelectedEventCode] = useState(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     const conn = Connection();
@@ -18,13 +21,11 @@ const Table = () => {
       try {
         const response = await conn.get('eventos', {
           headers: {
-            //'token': token
             'token': localStorage.getItem('token')
           }
         });
 
         if (response.status === 200) {
-          //console.log(response.data)
           setEventos(response.data.eventos);
         } else {
           console.log('Erro na resposta da API:', response);
@@ -38,25 +39,25 @@ const Table = () => {
   }, [token]);
 
   const handleEventClick = (eventCode) => {
-    // Encontre o evento selecionado nos dados do estado 'eventos'
     const selectedEvent = eventos.find(evento => evento.eve_cod === eventCode);
-  
-    // Verifique se encontrou o evento
+
     if (selectedEvent) {
       setSelectedEventCode(eventCode);
-  
-      // Salve os dados do evento selecionado no Local Storage
       localStorage.setItem('selectedEvent', JSON.stringify(selectedEvent));
-  
       navigate('/home');
     }
-  };  
+  };
 
-  //console.log(eventos)
-  //console.log(token)
-  //console.log(localStorage.getItem('token')) 
-  //console.log(localStorage.getItem('login')) 
-  //console.log(login)
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const paginatedEventos = eventos.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
   return (
     <div className="table-responsive">
@@ -99,8 +100,8 @@ const Table = () => {
           </tr>
         </thead>
         <tbody role="rowgroup">
-          {eventos.map((evento, index) => (
-            <tr key={index} role="row" onClick={() => handleEventClick(evento.eve_cod)}>
+          {paginatedEventos.map((evento, index) => (
+          <tr key={index} role="row" onClick={() => handleEventClick(evento.eve_cod)}>
               <td data-title="Nome">
                 <span className="nome">{evento.eve_nome}</span> <br />
                 <span className="local">{evento.local}</span>
@@ -234,6 +235,18 @@ const Table = () => {
           </tbody>
         </table>
       </div>
+      <TablePagination
+        labelRowsPerPage="Linhas por página:"
+        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={eventos.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+      />
     </div>
   );
 };

@@ -107,11 +107,11 @@ export default function Eventos() {
               <Grid item xs={12}>
                 <StyledContainer sx={{ boxShadow: 2 }}>
                   <Grid container spacing={3}>
-                    <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+                    <Grid item xs={12} md={9} lg={9} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                       <FilterEventos />
                     </Grid>
-                    <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                      <SearchBar label="Informe o nome do evento" />
+                    <Grid item xs={12} md={3} lg={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                      <SearchBar />
                     </Grid>
                     <Grid item xs={12}>
                       <TableEvento />

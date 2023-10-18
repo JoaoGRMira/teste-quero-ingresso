@@ -13,7 +13,7 @@ export default function FilterEventos() {
   };
 
   return (
-    <Box sx={{ minWidth: 220, marginRight:'7px' }}>
+    <Box sx={{ width: '250px', marginRight:'7px' }}>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Eventos</InputLabel>
         <Select

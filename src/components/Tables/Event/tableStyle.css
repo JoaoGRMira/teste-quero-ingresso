@@ -101,7 +101,8 @@
   .mobile-table th,
   .mobile-table td {
     border: 1px solid #ccc;
-    padding: 15px;
+    padding: 6px;
+    text-align: center;
   }
 
   .mobile-table tbody td {
