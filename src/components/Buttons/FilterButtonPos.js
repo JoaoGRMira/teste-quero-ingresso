@@ -5,29 +5,27 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterButtonPos() {
-  const [pos, setPos] = React.useState('');
-
-  const handleChange = (event) => {
-    setPos(event.target.value);
-  };
-
+export default function FilterButtonPos({ posOptions, selectedPos, onChange }) {
   return (
-    <Box sx={{ minWidth: 120, marginRight:'7px' }}>
+    <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Pos</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={pos}
+          value={selectedPos}
           label="Pos"
-          onChange={handleChange}
-          sx={{ height: '39px'}}
+          onChange={onChange}
+          sx={{ height: '39px' }}
         >
-          <MenuItem value={10}>000-000-002</MenuItem>
-          <MenuItem value={20}>1171649445</MenuItem>
+          {posOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
   );
 }
+
