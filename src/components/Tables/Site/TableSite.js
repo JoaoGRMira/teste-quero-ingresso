@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,32 +10,119 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { Container, Grid } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import Connection from '../../../model';
+import { format } from 'date-fns';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
     fontWeight: 'bold',
+    textAlign: 'center',
+    '&:nth-of-type(1)': {
+      minWidth: '150px',
+    },
+    '&:nth-of-type(2)': {
+      minWidth: '100px',
+    },
+    '&:nth-of-type(3)': {
+      minWidth: '100px',
+    },
+    '&:nth-of-type(4)': {
+      minWidth: '200px',
+    },
+    '&:nth-of-type(5)': {
+      minWidth: '200px',
+    },
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    textAlign: 'center',
   },
 }));
-
-function createData(pedido, data, hora, status, comprador, rg, nominado, email, telefone, qtde, ingresso, valor) {
-  return { pedido, data, hora, status, comprador, rg, nominado, email, telefone, qtde, ingresso, valor };
-}
-
-const rows = [
-  createData('10001', '10/02/2023', '10:02:23', 'APROVADO', 'Comprador 1', '100011111', 'Comprador 1', 'comprador1@gmail.com', 910000001, 2, '2X PISTA', 'R$ 200,00'),
-  createData('10002', '20/03/2023', '20:03:27', 'APROVADO', 'Comprador 2', '200022222', 'Comprador 2', 'comprador2@gmail.com', 920000002, 3, '3X CAMAROTE', 'R$ 400,00'),
-];
 
 export default function TableSite() {
   const [orderBy, setOrderBy] = useState('data'); // Defina a coluna padrão para ordenar
   const [order, setOrder] = useState('asc'); // Defina a ordem padrão para ordenar
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
+  const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint 
+  const [filtros, setFiltros] = useState([]); //estado para armazenar dados da rota de filtros
+
+    //recupera e salva os dados do localStorage para preencher dados salvos no login
+    const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+    const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+
+    useEffect(() => {
+      if (selectedEventCode && !dataLoaded) {
+        const conn = Connection();
+    
+        //acessa o endpoint de filtros
+        const fetchFiltros = async () => {
+          try {
+            const response = await conn.get(
+              'eventos/site/filtros?cat=' +
+                selectedEventCode.categoria,
+              {
+                headers: {
+                  'token': localStorage.getItem('token')
+                }
+              }
+            );
+    
+            //se der certo, salva os dados no estado de filtros
+            if (response.status === 200) {
+              setFiltros(response.data);
+              setDataLoaded(true)
+            } else {
+              console.log('Erro na resposta da API:', response);
+            }
+          } catch (error) {
+            console.error('Erro na solicitação GET:', error);
+          }
+        };
+  
+        fetchFiltros();
+      }
+    }, [selectedEventCode, dataLoaded]);
+
+    console.log(filtros)
+
+  useEffect(() => {
+    if (selectedEventCode && !dataLoaded) {
+      const conn = Connection(); //conecta com o servidor backend
+
+      const fetchSite = async () => {
+        try {
+          const response = await conn.post(
+            'eventos/site', //faz a requisição na rota especificada
+            {
+              cat: selectedEventCode.categoria, //passa a categoria do evento
+            },
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          if (response.status === 200) {
+            setSite(response.data.ingressos);
+            setDataLoaded(true);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação POST:', error);
+        }
+      };
+      fetchSite();
+    }
+  }, [selectedEventCode, dataLoaded]);
+
+  //console.log(selectedEventCode.categoria)
+  //console.log(site)
 
   const handleRequestSort = (property) => () => {
     const isAsc = orderBy === property && order === 'asc';
@@ -52,7 +139,7 @@ export default function TableSite() {
     setPage(0);
   };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, site.length - page * rowsPerPage);
 
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -138,18 +225,18 @@ export default function TableSite() {
                 </StyledTableCell>
                 <StyledTableCell>
                   <TableSortLabel
-                    active={orderBy === 'qtde'}
-                    direction={orderBy === 'qtde' ? order : 'asc'}
-                    onClick={handleRequestSort('qtde')}
+                    active={orderBy === 'quant'}
+                    direction={orderBy === 'quant' ? order : 'asc'}
+                    onClick={handleRequestSort('quant')}
                   >
                     <strong>Qtde</strong>
                   </TableSortLabel>
                 </StyledTableCell>
                 <StyledTableCell>
                   <TableSortLabel
-                    active={orderBy === 'ingresso'}
-                    direction={orderBy === 'ingresso' ? order : 'asc'}
-                    onClick={handleRequestSort('ingresso')}
+                    active={orderBy === 'ingressos'}
+                    direction={orderBy === 'ingressos' ? order : 'asc'}
+                    onClick={handleRequestSort('ingressos')}
                   >
                     <strong>Ingresso</strong>
                   </TableSortLabel>
@@ -167,18 +254,18 @@ export default function TableSite() {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? stableSort(rows, (a, b) => {
+                ? stableSort(site, (a, b) => {
                   const isAsc = order === 'asc';
                   return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
                 }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : rows
+                : site
               ).map((row) => (
                 <TableRow key={row.pedido}>
                   <StyledTableCell component="th" scope="row">
                     {row.pedido}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    {row.data} <br /> {row.hora}
+                  {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     {row.status}
@@ -196,10 +283,10 @@ export default function TableSite() {
                     {row.telefone}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    {row.qtde}
+                    {row.quant}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    {row.ingresso}
+                    {row.ingressos}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     {row.valor}
@@ -219,7 +306,7 @@ export default function TableSite() {
           labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
           rowsPerPageOptions={[5, 10, 20]}
           component="div"
-          count={rows.length}
+          count={site.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
