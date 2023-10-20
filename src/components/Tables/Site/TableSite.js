@@ -48,46 +48,10 @@ export default function TableSite() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint 
-  const [filtros, setFiltros] = useState([]); //estado para armazenar dados da rota de filtros
 
     //recupera e salva os dados do localStorage para preencher dados salvos no login
     const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
     const selectedEventCode = JSON.parse(selectedEventCodeJSON);
-
-    useEffect(() => {
-      if (selectedEventCode && !dataLoaded) {
-        const conn = Connection();
-    
-        //acessa o endpoint de filtros
-        const fetchFiltros = async () => {
-          try {
-            const response = await conn.get(
-              'eventos/site/filtros?cat=' +
-                selectedEventCode.categoria,
-              {
-                headers: {
-                  'token': localStorage.getItem('token')
-                }
-              }
-            );
-    
-            //se der certo, salva os dados no estado de filtros
-            if (response.status === 200) {
-              setFiltros(response.data);
-              setDataLoaded(true)
-            } else {
-              console.log('Erro na resposta da API:', response);
-            }
-          } catch (error) {
-            console.error('Erro na solicitação GET:', error);
-          }
-        };
-  
-        fetchFiltros();
-      }
-    }, [selectedEventCode, dataLoaded]);
-
-    console.log(filtros)
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {

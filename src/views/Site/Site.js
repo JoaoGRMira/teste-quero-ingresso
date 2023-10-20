@@ -23,6 +23,7 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import Connection from '../../model';
 
 function Copyright(props) {
   return (
@@ -87,17 +88,69 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Site() {
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
-  const [open, setOpen] = React.useState(false); // inicia o menu fechado
+  const [status, setStatus] = React.useState(''); //estado para armazenar o valor selecionado no FilterButtonStatus
+  const [dataLoaded, setDataLoaded] = React.useState(false); //estado para controlar se os dados foram carregados ou não
+  const [filtros, setFiltros] = React.useState([]); //estado para armazenar dados da rota de filtros
+  const [open, setOpen] = React.useState(false); //inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-   // Recupera o objeto do evento selecionado do localStorage
-   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
-   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
- 
-   //console.log(selectedEventCode);
-   //console.log(selectedEventCode.eve_cod);
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+
+  React.useEffect(() => {
+    if (selectedEventCode && !dataLoaded) {
+      const conn = Connection();
+
+      //acessa o endpoint de filtros
+      const fetchFiltros = async () => {
+        try {
+          const response = await conn.get(
+            'eventos/site/filtros?cat=' +
+            selectedEventCode.categoria,
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          //se der certo, salva os dados no estado de filtros
+          if (response.status === 200) {
+            setFiltros(response.data);
+            setDataLoaded(true)
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+
+      fetchFiltros();
+    }
+  }, [selectedEventCode, dataLoaded]);
+
+  console.log(filtros)
+
+  const uniqueStatusOptions = filtros.status.map((filtro) => ({
+    value: filtro,
+    label: filtro,
+  }))
+    .filter((option, index, self) => {
+      return index === self.findIndex((o) => o.label === option.label);
+    });
+
+  console.log(uniqueStatusOptions)
+
+    const handleChangeStatus = (event) => {
+      setStatus(event.target.value); //atualiza o estado status com a opção selecionada
+    };
+  
+  //console.log(selectedEventCode);
+  //console.log(selectedEventCode.eve_cod);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -128,14 +181,14 @@ export default function Site() {
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
               >
                 <Link href='/eventos' sx={{
-                textDecoration: 'none',
-                '&:visited': {
-                  color: 'inherit',
-                },
-              }}>
-                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                  textDecoration: 'none',
+                  '&:visited': {
+                    color: 'inherit',
+                  },
+                }}>
+                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                     Home
-                    </Typography>
+                  </Typography>
                 </Link>
               </IconButton>
             </Box>
@@ -189,7 +242,7 @@ export default function Site() {
               display: open ? 'block' : 'none',
             }}
           >
-            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> {}
+            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> { }
               {mainListItems}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {secondaryListItems}
@@ -225,15 +278,15 @@ export default function Site() {
               {/* Infos */}
               <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize='14px'>
                     Total: {selectedEventCode.cortesias_pdv_total + selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Vendas: {selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Cortesia: {selectedEventCode.cortesias_pdv_total}
                   </Typography>
                 </div>
@@ -255,16 +308,19 @@ export default function Site() {
               </Grid>
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
                 <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>          
+                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
                     <SearchBar label="Buscar cliente" />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <FilterButtonStatus />
+                    <FilterButtonStatus statusOptions={uniqueStatusOptions}
+                      selectedStatus={status}
+                      onChange={handleChangeStatus} //passa a função handleChangePdv como callback para atualizar o estado pdv
+                    />
                     <FilterButtonIngresso />
                     <DownloadButton />
                   </Grid>
                   <Grid item xs={12}>
-                    <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />
+                    <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
                   </Grid>
                   <Grid item xs={12}>
                     <TableSite />
