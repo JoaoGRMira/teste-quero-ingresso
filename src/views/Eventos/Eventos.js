@@ -102,7 +102,7 @@ export default function Eventos() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
+          <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)', marginBottom:"20px" }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <StyledContainer sx={{ boxShadow: 2 }}>

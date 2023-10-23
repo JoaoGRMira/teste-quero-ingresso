@@ -4,7 +4,6 @@ import "./tableStyle.css";
 import Connection from '../../../model/index';
 import { useToken } from '../../../model/tokenContext';
 import { useLogin } from '../../../model/loginContext';
-import TablePagination from '@mui/material/TablePagination';
 
 const Table = () => {
   const { token } = useToken();
@@ -12,8 +11,6 @@ const Table = () => {
   const navigate = useNavigate();
   const [eventos, setEventos] = useState([]);
   const [selectedEventCode, setSelectedEventCode] = useState(null);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     const conn = Connection();
@@ -47,19 +44,6 @@ const Table = () => {
       navigate('/home');
     }
   };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const paginatedEventos = eventos.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
-
-  const paginatedEventosMobile = eventos.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
   return (
     <div className="table-responsive">
@@ -102,8 +86,8 @@ const Table = () => {
           </tr>
         </thead>
         <tbody role="rowgroup">
-          {paginatedEventos.map((evento, index) => (
-          <tr key={index} role="row" onClick={() => handleEventClick(evento.eve_cod)}>
+          {eventos.map((evento, index) => (
+            <tr key={index} role="row" onClick={() => handleEventClick(evento.eve_cod)}>
               <td data-title="Nome">
                 <span className="nome">{evento.eve_nome}</span> <br />
                 <span className="local">{evento.local}</span>
@@ -139,13 +123,13 @@ const Table = () => {
       <div className="table-container">
         <table className="mobile-table">
           <tbody>
-          {paginatedEventosMobile.map((evento, index) => (
+            {eventos.map((evento, index) => (
               <React.Fragment key={index}>
-            <tr>
-              <th></th>
-              <th className="title">Nome</th>
-              <th className="title">Data do Evento</th>
-            </tr>
+                <tr>
+                  <th></th>
+                  <th className="title">Nome</th>
+                  <th className="title">Data do Evento</th>
+                </tr>
                 <tr
                   className={`evento-row ${index % 2 === 0 ? "event-odd" : "event-even"}`}
                   onClick={() => handleEventClick(evento.eve_cod)}
@@ -237,18 +221,6 @@ const Table = () => {
           </tbody>
         </table>
       </div>
-      <TablePagination
-        labelRowsPerPage="Linhas por página:"
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={eventos.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
-      />
     </div>
   );
 };
