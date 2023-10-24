@@ -241,12 +241,14 @@ const Table = () => {
           </tbody>
         </table>
       </div>
-      <button onClick={handleIncrement}>
-        +
-      </button>
-      <button onClick={handleDecrement} disabled={page === 1}>
-        -
-      </button>
+      <div className="pagination-container">
+        <button onClick={handleIncrement} className="pagination-button">
+          +
+        </button>
+        <button onClick={handleDecrement} className="pagination-button" disabled={page === 1}>
+          -
+        </button>
+      </div>
     </div>
   );
 };

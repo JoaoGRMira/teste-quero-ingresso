@@ -1,3 +1,27 @@
+.pagination-container {
+  text-align: right;
+}
+
+.pagination-button {
+  background-color: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 17px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: #024893;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
 .dropdown {
   border: 1px solid rgb(223, 223, 223);
   border-radius: 5px;
@@ -115,11 +139,11 @@
   }
 
   .mobile-table .event-odd {
-    background-color: #ffffff; /* White color for odd events */
+    background-color: #ffffff;
   }
 
   .mobile-table .event-even {
-    background-color: #f2f2f2; /* Light color for even events */
+    background-color: #f2f2f2;
   }
 
   .title {
