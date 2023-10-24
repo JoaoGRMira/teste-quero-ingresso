@@ -10,13 +10,13 @@ const Table = () => {
   const { login } = useLogin();
   const navigate = useNavigate();
   const [eventos, setEventos] = useState([]);
+  const [page, setPage] = useState(1);
   const [selectedEventCode, setSelectedEventCode] = useState(null);
 
-  useEffect(() => {
-    const conn = Connection();
-    const fetchEventos = async () => {
+  const conn = Connection();
+    const fetchEventos = async (page) => {
       try {
-        const response = await conn.get('eventos', {
+        const response = await conn.get(`eventos?p=${page}&tipo=0`, {
           headers: {
             'token': localStorage.getItem('token')
           }
@@ -32,8 +32,12 @@ const Table = () => {
       }
     };
 
-    fetchEventos();
-  }, [token]);
+  useEffect(() => {
+    fetchEventos(page);
+    console.log('fetch evento')
+  }, [page]);
+
+  console.log(page)
 
   const handleEventClick = (eventCode) => {
     const selectedEvent = eventos.find(evento => evento.eve_cod === eventCode);
@@ -44,6 +48,22 @@ const Table = () => {
       navigate('/home');
     }
   };
+
+  const handleIncrement = () => {
+    const newPage = page + 1
+    setPage(newPage)
+    fetchEventos(newPage)
+    console.log('fetch aumento')
+  }
+
+  const handleDecrement = () => {
+    const newPage = page - 1
+    if (newPage >= 1) {
+      setPage(newPage);
+      fetchEventos(newPage);
+      console.log('fetch decremento');
+    }
+  }
 
   return (
     <div className="table-responsive">
@@ -221,6 +241,12 @@ const Table = () => {
           </tbody>
         </table>
       </div>
+      <button onClick={handleIncrement}>
+        +
+      </button>
+      <button onClick={handleDecrement} disabled={page === 1}>
+        -
+      </button>
     </div>
   );
 };
