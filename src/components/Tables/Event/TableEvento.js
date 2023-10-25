@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./tableStyle.css";
 import Connection from '../../../model/index';
-import { useToken } from '../../../model/tokenContext';
-import { useLogin } from '../../../model/loginContext';
 
 const Table = () => {
-  const { token } = useToken();
-  const { login } = useLogin();
   const navigate = useNavigate();
   const [eventos, setEventos] = useState([]);
+  const [data, setData] = useState();
   const [page, setPage] = useState(1);
   const [selectedEventCode, setSelectedEventCode] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const conn = Connection();
     const fetchEventos = async (page) => {
@@ -23,7 +21,9 @@ const Table = () => {
         });
 
         if (response.status === 200) {
-          setEventos(response.data.eventos);
+          setData(response.data);
+          setEventos(response.data.eventos)
+          setDataLoaded(true);
         } else {
           console.log('Erro na resposta da API:', response);
         }
@@ -33,11 +33,11 @@ const Table = () => {
     };
 
   useEffect(() => {
+    if (!dataLoaded) {
     fetchEventos(page);
     console.log('fetch evento')
-  }, [page]);
-
-  console.log(page)
+  }
+  }, [page, dataLoaded]);
 
   const handleEventClick = (eventCode) => {
     const selectedEvent = eventos.find(evento => evento.eve_cod === eventCode);
@@ -53,7 +53,6 @@ const Table = () => {
     const newPage = page + 1
     setPage(newPage)
     fetchEventos(newPage)
-    console.log('fetch aumento')
   }
 
   const handleDecrement = () => {
@@ -61,7 +60,6 @@ const Table = () => {
     if (newPage >= 1) {
       setPage(newPage);
       fetchEventos(newPage);
-      console.log('fetch decremento');
     }
   }
 
@@ -241,14 +239,17 @@ const Table = () => {
           </tbody>
         </table>
       </div>
+      {data && data.total && (
       <div className="pagination-container">
-        <button onClick={handleIncrement} className="pagination-button">
-          +
-        </button>
         <button onClick={handleDecrement} className="pagination-button" disabled={page === 1}>
           -
         </button>
+        <span>{page}</span>
+        <button onClick={handleIncrement} className="pagination-button" disabled={page === data.total}>
+          +
+        </button>
       </div>
+      )}
     </div>
   );
 };
