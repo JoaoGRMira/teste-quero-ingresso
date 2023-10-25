@@ -120,7 +120,6 @@ export default function Home() {
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const [infos, setInfos] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
-  localStorage.clear('eventoSelecionado')
 
   // inicia o menu fechado
   const toggleDrawer = () => {
