@@ -6,11 +6,20 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function FilterEventos() {
-  const [eventos, setEventos] = React.useState('');
+  const [eventos, setEventos] = React.useState(
+    localStorage.getItem('eventoSelecionado') || '2'
+  );
 
   const handleChange = (event) => {
-    setEventos(event.target.value);
+    const selectedValue = event.target.value;
+    setEventos(selectedValue);
+
+    // Salvar o valor no localStorage.
+    localStorage.setItem('eventoSelecionado', selectedValue);
+    window.location.reload()
   };
+
+  console.log(localStorage.getItem('eventoSelecionado'))
 
   return (
     <Box sx={{ width: '250px', marginRight:'7px' }}>
@@ -24,8 +33,9 @@ export default function FilterEventos() {
           onChange={handleChange}
           sx={{ height: '39px'}}
         >
-          <MenuItem value={10}>Eventos ativos</MenuItem>
-          <MenuItem value={20}>Eventos encerrados</MenuItem>
+          <MenuItem value={1}>Todos</MenuItem>
+          <MenuItem value={0}>Eventos ativos</MenuItem>
+          <MenuItem value={2}>Eventos encerrados</MenuItem>
         </Select>
       </FormControl>
     </Box>

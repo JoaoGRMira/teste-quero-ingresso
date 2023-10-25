@@ -14,7 +14,7 @@ const Table = () => {
   const conn = Connection();
     const fetchEventos = async (page) => {
       try {
-        const response = await conn.get(`eventos?p=${page}&tipo=0`, {
+        const response = await conn.get(`eventos?p=${page}&tipo=${localStorage.getItem('eventoSelecionado')}`, {
           headers: {
             'token': localStorage.getItem('token')
           }
