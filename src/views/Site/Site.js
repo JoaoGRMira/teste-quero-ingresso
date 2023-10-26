@@ -23,6 +23,7 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import Connection from '../../model';
 
 function Copyright(props) {
   return (
@@ -88,16 +89,96 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Site() {
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
+  const [dataLoadedStatus, setDataLoadedStatus] = React.useState(false); //estado para controlar se os dados foram carregados ou não
+  const [dataLoadedIngresso, setDataLoadedIngresso] = React.useState(false); //estado para controlar se os dados foram carregados ou não
+  const [filtroStatus, setFiltroStatus] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [filtroIngresso, setFiltroIngresso] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [status, setStatus] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
+  const [ingresso, setIngresso] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonIngresso
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-   // Recupera o objeto do evento selecionado do localStorage
-   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
-   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
- 
-   //console.log(selectedEventCode);
-   //console.log(selectedEventCode.eve_cod);
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+
+  console.log(selectedEventCode.categoria);
+  //console.log(selectedEventCode.eve_cod);
+
+  //requisição get dos filtros de status
+  React.useEffect(() => {
+    if (selectedEventCode && !dataLoadedStatus) {
+      const conn = Connection(); //conecta com o servidor backend
+
+      const fetchFiltroStatus = async () => {
+        try {
+          const response = await conn.get(
+            `eventos/site/filtros?cat=${selectedEventCode.categoria}`, //faz a requisição na rota especificada
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          if (response.status === 200) {
+            setFiltroStatus(response.data.status);
+            setDataLoadedStatus(true);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+      fetchFiltroStatus();
+    }
+  }, [selectedEventCode, dataLoadedStatus]);
+
+  //console.log(selectedEventCode.categoria)
+  //console.log(filtroStatus)
+
+  //requisição get dos filtros de ingresso
+  React.useEffect(() => {
+    if (selectedEventCode && !dataLoadedIngresso) {
+      const conn = Connection(); //conecta com o servidor backend
+
+      const fetchFiltroIngresso = async () => {
+        try {
+          const response = await conn.get(
+            `eventos/site/filtros?cat=${selectedEventCode.categoria}`, //faz a requisição na rota especificada
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          if (response.status === 200) {
+            setFiltroIngresso(response.data.ingressos);
+            setDataLoadedIngresso(true);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+      fetchFiltroIngresso();
+    }
+  }, [selectedEventCode, dataLoadedIngresso]);
+
+  //console.log(selectedEventCode.categoria)
+  //console.log(filtroIngresso)
+
+  const handleChangeStatus = (event) => {
+    setStatus(event.target.value); // Atualiza o estado pdv com a opção selecionada
+  };
+
+  const handleChangeIngresso = (event) => {
+    setIngresso(event.target.value); // Atualiza o estado pdv com a opção selecionada
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -128,14 +209,14 @@ export default function Site() {
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
               >
                 <Link href='/eventos' sx={{
-                textDecoration: 'none',
-                '&:visited': {
-                  color: 'inherit',
-                },
-              }}>
-                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                  textDecoration: 'none',
+                  '&:visited': {
+                    color: 'inherit',
+                  },
+                }}>
+                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                     Home
-                    </Typography>
+                  </Typography>
                 </Link>
               </IconButton>
             </Box>
@@ -189,7 +270,7 @@ export default function Site() {
               display: open ? 'block' : 'none',
             }}
           >
-            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> {}
+            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> { }
               {mainListItems}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {secondaryListItems}
@@ -225,15 +306,15 @@ export default function Site() {
               {/* Infos */}
               <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize='14px'>
                     Total: {selectedEventCode.cortesias_pdv_total + selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Vendas: {selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Cortesia: {selectedEventCode.cortesias_pdv_total}
                   </Typography>
                 </div>
@@ -255,16 +336,30 @@ export default function Site() {
               </Grid>
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
                 <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>          
+                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
                     <SearchBar label="Buscar cliente" />
                   </Grid>
                   <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <FilterButtonStatus />
-                    <FilterButtonIngresso />
+                    <FilterButtonStatus
+                      statusOptions={filtroStatus.map((filtro) => ({
+                        value: filtro,
+                        label: filtro,
+                      }))}
+                      selectedStatus={status}
+                      onChange={handleChangeStatus}
+                    />
+                    <FilterButtonIngresso
+                      ingressoOptions={filtroIngresso.map((filtro) => ({
+                        value: filtro,
+                        label: filtro,
+                      }))}
+                      selectedIngresso={ingresso}
+                      onChange={handleChangeIngresso}
+                    />
                     <DownloadButton />
                   </Grid>
                   <Grid item xs={12}>
-                    <Divider sx={{ my: 1, mx:-2, backgroundColor: 'var(--grey-shadow)' }} />
+                    <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
                   </Grid>
                   <Grid item xs={12}>
                     <TableSite />

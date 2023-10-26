@@ -5,27 +5,24 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterButtonStatus() {
-  const [status, setStatus] = React.useState('');
-
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-  };
-
+export default function FilterButtonStatus({ statusOptions, selectedStatus, onChange }) {
   return (
-    <Box sx={{ minWidth: 120, marginRight:'7px' }}>
+    <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Status</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={status}
-          label="Status"
-          onChange={handleChange}
-          sx={{ height: '39px'}}
+          value={selectedStatus}
+          label="Pdv"
+          onChange={onChange}
+          sx={{ height: '39px' }}
         >
-          <MenuItem value={10}>Aprovado</MenuItem>
-          <MenuItem value={20}>Estornado</MenuItem>
+          {statusOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>

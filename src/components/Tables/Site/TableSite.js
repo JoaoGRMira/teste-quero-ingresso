@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import { CircularProgress, Container, Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Connection from '../../../model';
 import { format } from 'date-fns';
@@ -49,9 +49,9 @@ export default function TableSite() {
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint 
 
-  //recupera e salva os dados do localStorage para preencher dados salvos no login
-  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
-  const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+    //recupera e salva os dados do localStorage para preencher dados salvos no login
+    const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+    const selectedEventCode = JSON.parse(selectedEventCodeJSON);
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
@@ -118,177 +118,166 @@ export default function TableSite() {
   }
 
   return (
-    <div>
-      {dataLoaded ? (
-        <div>
-          <Container>
-            <Grid item xs={12}>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'pedido'}
-                          direction={orderBy === 'pedido' ? order : 'asc'}
-                          onClick={handleRequestSort('pedido')}
-                        >
-                          <strong>Pedido</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'data'}
-                          direction={orderBy === 'data' ? order : 'asc'}
-                          onClick={handleRequestSort('data')}
-                        >
-                          <strong>Data</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'status'}
-                          direction={orderBy === 'status' ? order : 'asc'}
-                          onClick={handleRequestSort('status')}
-                        >
-                          <strong>Status</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'comprador'}
-                          direction={orderBy === 'comprador' ? order : 'asc'}
-                          onClick={handleRequestSort('comprador')}
-                        >
-                          <strong>Comprador</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'nominado'}
-                          direction={orderBy === 'nominado' ? order : 'asc'}
-                          onClick={handleRequestSort('nominado')}
-                        >
-                          <strong>Nominado</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'email'}
-                          direction={orderBy === 'email' ? order : 'asc'}
-                          onClick={handleRequestSort('email')}
-                        >
-                          <strong>Email</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'telefone'}
-                          direction={orderBy === 'telefone' ? order : 'asc'}
-                          onClick={handleRequestSort('telefone')}
-                        >
-                          <strong>Telefone</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'quant'}
-                          direction={orderBy === 'quant' ? order : 'asc'}
-                          onClick={handleRequestSort('quant')}
-                        >
-                          <strong>Qtde</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'ingressos'}
-                          direction={orderBy === 'ingressos' ? order : 'asc'}
-                          onClick={handleRequestSort('ingressos')}
-                        >
-                          <strong>Ingresso</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'valor'}
-                          direction={orderBy === 'valor' ? order : 'asc'}
-                          onClick={handleRequestSort('valor')}
-                        >
-                          <strong>Valor</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {(rowsPerPage > 0
-                      ? stableSort(site, (a, b) => {
-                        const isAsc = order === 'asc';
-                        return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
-                      }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      : site
-                    ).map((row) => (
-                      <TableRow key={row.pedido}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.pedido}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.status}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.comprador}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.nominado}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.email}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.telefone}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.quant}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.ingressos}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.valor}
-                        </StyledTableCell>
-                      </TableRow>
-                    ))}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 53 * emptyRows }}>
-                        <StyledTableCell colSpan={12} />
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                labelRowsPerPage="Linhas por página:"
-                labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-                rowsPerPageOptions={[5, 10, 20]}
-                component="div"
-                count={site.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
-              />
-            </Grid>
-          </Container>
-        </div>
-      ) : (
-        // Renderizar um indicador de carregamento enquanto os dados são buscados
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <CircularProgress />
-        </div>
-      )}
-    </div>
+    <Container>
+      <Grid item xs={12}>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'pedido'}
+                    direction={orderBy === 'pedido' ? order : 'asc'}
+                    onClick={handleRequestSort('pedido')}
+                  >
+                    <strong>Pedido</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'data'}
+                    direction={orderBy === 'data' ? order : 'asc'}
+                    onClick={handleRequestSort('data')}
+                  >
+                    <strong>Data</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'status'}
+                    direction={orderBy === 'status' ? order : 'asc'}
+                    onClick={handleRequestSort('status')}
+                  >
+                    <strong>Status</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'comprador'}
+                    direction={orderBy === 'comprador' ? order : 'asc'}
+                    onClick={handleRequestSort('comprador')}
+                  >
+                    <strong>Comprador</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'nominado'}
+                    direction={orderBy === 'nominado' ? order : 'asc'}
+                    onClick={handleRequestSort('nominado')}
+                  >
+                    <strong>Nominado</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'email'}
+                    direction={orderBy === 'email' ? order : 'asc'}
+                    onClick={handleRequestSort('email')}
+                  >
+                    <strong>Email</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'telefone'}
+                    direction={orderBy === 'telefone' ? order : 'asc'}
+                    onClick={handleRequestSort('telefone')}
+                  >
+                    <strong>Telefone</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'quant'}
+                    direction={orderBy === 'quant' ? order : 'asc'}
+                    onClick={handleRequestSort('quant')}
+                  >
+                    <strong>Qtde</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'ingressos'}
+                    direction={orderBy === 'ingressos' ? order : 'asc'}
+                    onClick={handleRequestSort('ingressos')}
+                  >
+                    <strong>Ingresso</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <TableSortLabel
+                    active={orderBy === 'valor'}
+                    direction={orderBy === 'valor' ? order : 'asc'}
+                    onClick={handleRequestSort('valor')}
+                  >
+                    <strong>Valor</strong>
+                  </TableSortLabel>
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? stableSort(site, (a, b) => {
+                  const isAsc = order === 'asc';
+                  return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
+                }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : site
+              ).map((row) => (
+                <TableRow key={row.pedido}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.pedido}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                  {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.status}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.comprador}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.nominado}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.email}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.telefone}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.quant}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.ingressos}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {row.valor}
+                  </StyledTableCell>
+                </TableRow>
+              ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <StyledTableCell colSpan={12} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          labelRowsPerPage="Linhas por página:"
+          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+          rowsPerPageOptions={[5, 10, 20]}
+          component="div"
+          count={site.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
+        />
+      </Grid>
+    </Container>
   );
 }
