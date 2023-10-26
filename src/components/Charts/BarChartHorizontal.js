@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import * as React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import Connection from '../../model';
 
 const BarChartHorizontal = () => {

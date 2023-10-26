@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
-import { Container, Divider, Grid } from '@mui/material';
+import { CircularProgress, Container, Divider, Grid } from '@mui/material';
 import DownloadButton from '../../Buttons/DownloadButton';
 import FilterButtonTipo from '../../Buttons/FilterButtonTipo';
 import FilterButtonSituacao from '../../Buttons/FilterButtonSituacao';
@@ -124,7 +124,7 @@ export default function TableDetalhados() {
   const handleChangeTipo = (event) => {
     setTipo(event.target.value); //atualiza o estado tipo com a opção selecionada
   };
-  
+
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection(); //conecta com o servidor backend
@@ -199,12 +199,12 @@ export default function TableDetalhados() {
               selectedPos={pos}
               onChange={handleChangePos} //passa a função handleChangePos como callback para atualizar o estado pos
             />
-            <FilterButtonSituacao 
+            <FilterButtonSituacao
               situacaoOptions={uniqueSituacaoOptions}
               selectedSituacao={situacao}
               onChange={handleChangeSituacao} //passa a função handleChangeSituacao como callback para atualizar o estado pos
             />
-            <FilterButtonTipo 
+            <FilterButtonTipo
               tipoOptions={uniqueTipoOptions}
               selectedTipo={tipo}
               onChange={handleChangeTipo} //passa a função handleChangeTipo como callback para atualizar o estado tipo
@@ -215,145 +215,156 @@ export default function TableDetalhados() {
             <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
           </Grid>
           <Grid item xs={12}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align='center'></TableCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'data_compra'}
-                        direction={orderBy === 'data_compra' ? order : 'asc'}
-                        onClick={handleRequestSort('data_compra')}
-                      >
-                        <strong>Data da Compra</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'pdv'}
-                        direction={orderBy === 'pdv' ? order : 'asc'}
-                        onClick={handleRequestSort('pdv')}
-                      >
-                        <strong>Pdv</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'pos'}
-                        direction={orderBy === 'pos' ? order : 'asc'}
-                        onClick={handleRequestSort('pos')}
-                      >
-                        <strong>Pos</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'numero_pedido'}
-                        direction={orderBy === 'numero_pedido' ? order : 'asc'}
-                        onClick={handleRequestSort('numero_pedido')}
-                      >
-                        <strong>Número do Pedido</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'codigo_barras'}
-                        direction={orderBy === 'codigo_barras' ? order : 'asc'}
-                        onClick={handleRequestSort('codigo_barras')}
-                      >
-                        <strong>Código de Barras</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'situacao'}
-                        direction={orderBy === 'situacao' ? order : 'asc'}
-                        onClick={handleRequestSort('situacao')}
-                      >
-                        <strong>Situação</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'ingresso'}
-                        direction={orderBy === 'ingresso' ? order : 'asc'}
-                        onClick={handleRequestSort('ingresso')}
-                      >
-                        <strong>Ingresso</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'ingresso_numerado'}
-                        direction={orderBy === 'ingresso_numerado' ? order : 'asc'}
-                        onClick={handleRequestSort('ingresso_numerado')}
-                      >
-                        <strong>Ingresso Numerado</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'valor'}
-                        direction={orderBy === 'valor' ? order : 'asc'}
-                        onClick={handleRequestSort('valor')}
-                      >
-                        <strong>Valor</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'forma_pagamento'}
-                        direction={orderBy === 'forma_pagamento' ? order : 'asc'}
-                        onClick={handleRequestSort('forma_pagamento')}
-                      >
-                        <strong>Forma de Pagamento</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                    <StyledTableHeaderCell align='center'>
-                      <TableSortLabel
-                        active={orderBy === 'cod_transacao'}
-                        direction={orderBy === 'cod_transacao' ? order : 'asc'}
-                        onClick={handleRequestSort('cod_transacao')}
-                      >
-                        <strong>Cód. da Transação</strong>
-                      </TableSortLabel>
-                    </StyledTableHeaderCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {(rowsPerPage > 0
-                    ? stableSort(detalhes, (a, b) => {
-                      const isAsc = order === 'asc';
-                      return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
-                    }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    : detalhes
-                  ).map((row) => (
-                    <TableRow key={row.tipo}>
-                      <TableCell component="th" scope="row" align='center'></TableCell>
-                      <TableCell component="th" scope="row" align='center'>
-                        {format(new Date(row.data_compra), 'dd/MM/yyyy HH:mm')}
-                      </TableCell>
-                      <TableCell align='center'>{row.pdv}</TableCell>
-                      <TableCell align='center'>{row.pos}</TableCell>
-                      <TableCell align='center'>{row.pedido}</TableCell>
-                      <TableCell align='center'>{row.cod_barras}</TableCell>
-                      <TableCell align='center'>{row.situacao}</TableCell>
-                      <TableCell align='center'>{row.ing}</TableCell>
-                      <TableCell align='center'>{row.ing_num}</TableCell>
-                      <TableCell align='center'>{row.valor}</TableCell>
-                      <TableCell align='center'>{row.pagamento}</TableCell>
-                      <TableCell align='center'>{row.cod_pagseguro}</TableCell>
-                    </TableRow>
-                  ))}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <div>
+              {dataLoaded ? (
+                <div>
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align='center'></TableCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'data_compra'}
+                              direction={orderBy === 'data_compra' ? order : 'asc'}
+                              onClick={handleRequestSort('data_compra')}
+                            >
+                              <strong>Data da Compra</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'pdv'}
+                              direction={orderBy === 'pdv' ? order : 'asc'}
+                              onClick={handleRequestSort('pdv')}
+                            >
+                              <strong>Pdv</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'pos'}
+                              direction={orderBy === 'pos' ? order : 'asc'}
+                              onClick={handleRequestSort('pos')}
+                            >
+                              <strong>Pos</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'numero_pedido'}
+                              direction={orderBy === 'numero_pedido' ? order : 'asc'}
+                              onClick={handleRequestSort('numero_pedido')}
+                            >
+                              <strong>Número do Pedido</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'codigo_barras'}
+                              direction={orderBy === 'codigo_barras' ? order : 'asc'}
+                              onClick={handleRequestSort('codigo_barras')}
+                            >
+                              <strong>Código de Barras</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'situacao'}
+                              direction={orderBy === 'situacao' ? order : 'asc'}
+                              onClick={handleRequestSort('situacao')}
+                            >
+                              <strong>Situação</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'ingresso'}
+                              direction={orderBy === 'ingresso' ? order : 'asc'}
+                              onClick={handleRequestSort('ingresso')}
+                            >
+                              <strong>Ingresso</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'ingresso_numerado'}
+                              direction={orderBy === 'ingresso_numerado' ? order : 'asc'}
+                              onClick={handleRequestSort('ingresso_numerado')}
+                            >
+                              <strong>Ingresso Numerado</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'valor'}
+                              direction={orderBy === 'valor' ? order : 'asc'}
+                              onClick={handleRequestSort('valor')}
+                            >
+                              <strong>Valor</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'forma_pagamento'}
+                              direction={orderBy === 'forma_pagamento' ? order : 'asc'}
+                              onClick={handleRequestSort('forma_pagamento')}
+                            >
+                              <strong>Forma de Pagamento</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'cod_transacao'}
+                              direction={orderBy === 'cod_transacao' ? order : 'asc'}
+                              onClick={handleRequestSort('cod_transacao')}
+                            >
+                              <strong>Cód. da Transação</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {(rowsPerPage > 0
+                          ? stableSort(detalhes, (a, b) => {
+                            const isAsc = order === 'asc';
+                            return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
+                          }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                          : detalhes
+                        ).map((row) => (
+                          <TableRow key={row.tipo}>
+                            <TableCell component="th" scope="row" align='center'></TableCell>
+                            <TableCell component="th" scope="row" align='center'>
+                              {format(new Date(row.data_compra), 'dd/MM/yyyy HH:mm')}
+                            </TableCell>
+                            <TableCell align='center'>{row.pdv}</TableCell>
+                            <TableCell align='center'>{row.pos}</TableCell>
+                            <TableCell align='center'>{row.pedido}</TableCell>
+                            <TableCell align='center'>{row.cod_barras}</TableCell>
+                            <TableCell align='center'>{row.situacao}</TableCell>
+                            <TableCell align='center'>{row.ing}</TableCell>
+                            <TableCell align='center'>{row.ing_num}</TableCell>
+                            <TableCell align='center'>{row.valor}</TableCell>
+                            <TableCell align='center'>{row.pagamento}</TableCell>
+                            <TableCell align='center'>{row.cod_pagseguro}</TableCell>
+                          </TableRow>
+                        ))}
+                        {emptyRows > 0 && (
+                          <TableRow style={{ height: 53 * emptyRows }}>
+                            <TableCell colSpan={6} />
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </div>
+              ) : (
+                // Renderizar um indicador de carregamento enquanto os dados são buscados
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                  <CircularProgress />
+                </div>
+              )}
+            </div>
             <TablePagination
               labelRowsPerPage="Linhas por página:"
               labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
-import { Box, Container, Divider, Grid, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { format } from 'date-fns';
 
 export default function Ranking() {
   const [orderBy, setOrderBy] = useState('nome');
@@ -107,7 +105,7 @@ export default function Ranking() {
           fontSize="14px"
           fontWeight="bold"
         >
-          Ranking de PDVs (Com movimentação) <a href='/'>[Detalhes]</a>
+          Ranking de PDVs (Com movimentação)
         </Typography>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">

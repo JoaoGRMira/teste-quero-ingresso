@@ -21,7 +21,6 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import Connection from '../../model';
 
 function Copyright(props) {
   return (

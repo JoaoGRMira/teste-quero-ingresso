@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,24 +12,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
 import Title from '../../components/Outros/Title';
-import DownloadButton from '../../components/Buttons/DownloadButton';
-import FilterButton from '../../components/Buttons/FilterButton';
-import FilterButtonPdv from '../../components/Buttons/FilterButtonPdv';
-import FilterButtonPos from '../../components/Buttons/FilterButtonPos';
-import FilterButtonSituacao from '../../components/Buttons/FilterButtonSituacao';
-import FilterButtonTipo from '../../components/Buttons/FilterButtonTipo';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
-import SearchBar from '../../components/Outros/SearchBar';
 import TableDetalhados from '../../components/Tables/Detalhados/TableDetalhados';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import Fab from '@mui/material/Fab';
-import Connection from '../../model';
 
 function Copyright(props) {
   return (

@@ -14,8 +14,6 @@ import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItem
 import Title from '../../components/Outros/Title';
 import DownloadButton from '../../components/Buttons/DownloadButton';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import { TableRow, TableCell, TableContainer } from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
 import SearchBar from '../../components/Outros/SearchBar';
 import TableClasses from '../../components/Tables/Classes/TableClasses';
 import List from '@mui/material/List';
@@ -37,68 +35,9 @@ function Copyright(props) {
   );
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.white,
-      color: theme.palette.common.black,
-  },
-  [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-      border: 0,
-  },
-}));
-
 const drawerWidth = 240;
 
 const defaultTheme = createTheme();
-
-const dataTabela = [
-  { tipo: 'Cortesia', qtde: 10, porcentagem: 20 },
-  { tipo: 'Venda', qtde: 30, porcentagem: 60 },
-  { tipo: 'Total', qtde: 40, porcentagem: 80 },
-];
-
-const dataVendas = [
-  { tipo: 'Vendas', quantidade: 100 },
-  { tipo: 'Cortesias', quantidade: 50 },
-];
-
-const dataVpT = [
-  { tipo: 'Vendas', Vendas: 50 },
-  { tipo: 'Cortesias', Cortesias: 0 },
-];
-
-const dataPeriodic = [
-  { periodo: '4', quantidade: 100 },
-  { periodo: '3', quantidade: 50 },
-  { periodo: '2', quantidade: 25 },
-  { periodo: '1', quantidade: 65 },
-];
-
-const dataTime = [
-  { horario: '12:00', quantidade: 100 },
-  { horario: '13:00', quantidade: 50 },
-  { horario: '14:00', quantidade: 25 },
-  { horario: '15:00', quantidade: 65 },
-];
-
-const tipoIngressos = [
-  { tipo: 'Camarote', Camarote: 100 },
-  { tipo: 'Pista', Pista: 50 },
-];
-
-const lote = [
-  { tipo: '1° Lote', quantidade: 100 },
-];
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',

@@ -14,7 +14,6 @@ import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItem
 import Title from '../../components/Outros/Title';
 import EventoAtual from '../../components/Outros/EventoAtual';
 import DownloadButton from '../../components/Buttons/DownloadButton';
-import FilterButton from '../../components/Buttons/FilterButton';
 import SearchBar from '../../components/Outros/SearchBar';
 import TablePdv from '../../components/Tables/Pdv/TablePdv';
 import List from '@mui/material/List';

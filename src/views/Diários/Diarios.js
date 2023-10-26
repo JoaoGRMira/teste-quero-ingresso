@@ -37,8 +37,6 @@ function Copyright(props) {
 
 const drawerWidth = 240;
 
-const usuario = 'Usuário';
-
 const defaultTheme = createTheme();
 
 const AppBar = styled(MuiAppBar, {

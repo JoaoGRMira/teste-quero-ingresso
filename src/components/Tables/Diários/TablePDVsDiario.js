@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './tableDiario.css';
-import { TableContainer } from '@mui/material';
+import { CircularProgress, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
@@ -21,20 +21,20 @@ const TablePDVsDiario = () => {
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
-  
+
       // Acessa o endpoint de tipo de ingresso
       const fetchDiarios = async () => {
         try {
           const response = await conn.get(
             'eventos/diarios?evento=' +
-              selectedEventCode.eve_cod + '&filtro=pdvs',
+            selectedEventCode.eve_cod + '&filtro=pdvs',
             {
               headers: {
                 'token': localStorage.getItem('token')
               }
             }
           );
-  
+
           // Se der certo, salva os dados no estado de tipo de ingresso
           if (response.status === 200) {
             setDiarios(response.data);
@@ -51,108 +51,101 @@ const TablePDVsDiario = () => {
     }
   }, [selectedEventCode, dataLoaded]);
 
-// Funções de ordenação
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
+  // Funções de ordenação
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
     }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
 
-const EnhancedTableHead = (props) => {
-  const { order, orderBy, onRequestSort } = props;
+  function getComparator(order, orderBy) {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
 
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
+
+  const EnhancedTableHead = (props) => {
+    const { order, orderBy, onRequestSort } = props;
+
+    const createSortHandler = (property) => (event) => {
+      onRequestSort(event, property);
+    };
+
+    return (
+      <thead>
+        <tr>
+          <th className="diario-cabecalho"></th>
+          <SortableTableCell
+            label={<b>Data</b>}
+            numeric={false}
+            order={orderBy === 'data' ? order : false}
+            onRequestSort={createSortHandler('data')}
+          />
+          <SortableTableCell
+            label={<b>Prazo p/ evento</b>}
+            numeric={true}
+            order={orderBy === 'prazo' ? order : false}
+            onRequestSort={createSortHandler('prazo')}
+          />
+          <SortableTableCell
+            label={<b>Vendidos</b>}
+            numeric={true}
+            order={orderBy === 'vendidos' ? order : false}
+            onRequestSort={createSortHandler('vendidos')}
+          />
+          <SortableTableCell
+            label={<b>Cortesias</b>}
+            numeric={true}
+            order={orderBy === 'cortesias' ? order : false}
+            onRequestSort={createSortHandler('cortesias')}
+          />
+          <SortableTableCell
+            label={<b>Valor</b>}
+            numeric={true}
+            order={orderBy === 'valor' ? order : false}
+            onRequestSort={createSortHandler('valor')}
+          />
+        </tr>
+      </thead>
+    );
   };
 
-  return (
-    <thead>
-      <tr>
-        <th className="diario-cabecalho"></th>
-        <SortableTableCell
-          label={<b>Data</b>}
-          numeric={false}
-          order={orderBy === 'data' ? order : false}
-          onRequestSort={createSortHandler('data')}
-        />
-        <SortableTableCell
-          label={<b>Prazo p/ evento</b>}
-          numeric={true}
-          order={orderBy === 'prazo' ? order : false}
-          onRequestSort={createSortHandler('prazo')}
-        />
-        <SortableTableCell
-          label={<b>Vendidos</b>}
-          numeric={true}
-          order={orderBy === 'vendidos' ? order : false}
-          onRequestSort={createSortHandler('vendidos')}
-        />
-        <SortableTableCell
-          label={<b>Cortesias</b>}
-          numeric={true}
-          order={orderBy === 'cortesias' ? order : false}
-          onRequestSort={createSortHandler('cortesias')}
-        />
-        <SortableTableCell
-          label={<b>Valor</b>}
-          numeric={true}
-          order={orderBy === 'valor' ? order : false}
-          onRequestSort={createSortHandler('valor')}
-        />
-      </tr>
-    </thead>
-  );
-};
+  const SortableTableCell = (props) => {
+    const { label, numeric, order, onRequestSort } = props;
 
-const SortableTableCell = (props) => {
-  const { label, numeric, order, onRequestSort } = props;
-
-  return (
-    <TableCell className="diario-cabecalho" align={numeric ? 'center' : 'center'}>
-      <TableSortLabel
-        active={order !== false}
-        direction={order === 'asc' ? 'asc' : 'desc'}
-        onClick={onRequestSort}
-      >
-        {label}
-        {order !== false ? (
-          <span style={visuallyHidden}>
-            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-          </span>
-        ) : null}
-      </TableSortLabel>
-    </TableCell>
-  );
-};
-
-const [tabelaData, setTabelaData] = useState([])
-/*const TablePDVsDiario = () => {
-  
-    { id: 1, data: '03/05/2023', prazo: '29 dias', venda: 31, cortesia: 0, valor: 'R$ 300,00' },
-    { id: 2, data: '25/01/2023', prazo: '12 dias', venda: 15, cortesia: 0, valor: 'R$ 200,00' },
-  ;*/
+    return (
+      <TableCell className="diario-cabecalho" align={numeric ? 'center' : 'center'}>
+        <TableSortLabel
+          active={order !== false}
+          direction={order === 'asc' ? 'asc' : 'desc'}
+          onClick={onRequestSort}
+        >
+          {label}
+          {order !== false ? (
+            <span style={visuallyHidden}>
+              {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+            </span>
+          ) : null}
+        </TableSortLabel>
+      </TableCell>
+    );
+  };
 
   const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
   const [order, setOrder] = useState('asc');
@@ -179,85 +172,86 @@ const [tabelaData, setTabelaData] = useState([])
     setPage(0);
   };
 
-  function createData(nome, vendas, cortesias, total) {
-    return { nome, vendas, cortesias, total };
-  }
-
-  const [rows, setRows] = useState([])
-  /*const rows = [
-    createData('Loja Virtual', 51, 0, 'R$ 680,00'),
-    createData('Loja Física', 17, 0, 'R$ 350,00'),
-  ];*/
-
   return (
-    <TableContainer>
-      <table className="diario-tabela">
-        <EnhancedTableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-        />
-        <tbody>
-          {stableSort(diarios, getComparator(order, orderBy))
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((item, index) => (
-              <React.Fragment key={item.data}>
-                <tr
-                  className={index % 2 === 0 ? 'diario-linha-branca' : 'diario-linha-cinza'}
-                >
-                  <td className="diario-celula">
-                    <button
-                      className="diario-botao-expandir"
-                      onClick={() => expandirLinha(item.data)}
-                    >
-                      {item.data === linhaSelecionada ? '-' : '+'}
-                    </button>
-                  </td>
-                  <td className="diario-celula">{item.data}</td>
-                  <td className="diario-celula">{item.prazo}</td>
-                  <td className="diario-celula">{item.vendidos}</td>
-                  <td className="diario-celula">{item.cortesias}</td>
-                  <td className="diario-celula">{item.valor}</td>
-                </tr>
-                {item.data === linhaSelecionada && (
-                  <>
-                    <tr>
-                      <td className="diario-linha-azul"></td>
-                      <td className="diario-linha-azul">Nome</td>
-                      <td className="diario-linha-azul">Ingressos Vendidos</td>
-                      <td className="diario-linha-azul">Cortesias Emitidas</td>
-                      <td className="diario-linha-azul">Total Vendidos</td>
-                      <td className="diario-linha-azul"></td>
-                    </tr>
-                    {item.vendas.map((row) => (
-                      <tr key={row.nome}>
-                        <td className="diario-conteudo-expandido"></td>
-                        <td className="diario-conteudo-expandido">{row.nome}</td>
-                        <td className="diario-conteudo-expandido">{row.vendidos}</td>
-                        <td className="diario-conteudo-expandido">{row.cortesias}</td>
-                        <td className="diario-conteudo-expandido">{row.valor}</td>
-                        <td className="diario-conteudo-expandido"></td>
+    <div>
+      {dataLoaded ? (
+        <div>
+          <TableContainer>
+            <table className="diario-tabela">
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+              <tbody>
+                {stableSort(diarios, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item, index) => (
+                    <React.Fragment key={item.data}>
+                      <tr
+                        className={index % 2 === 0 ? 'diario-linha-branca' : 'diario-linha-cinza'}
+                      >
+                        <td className="diario-celula">
+                          <button
+                            className="diario-botao-expandir"
+                            onClick={() => expandirLinha(item.data)}
+                          >
+                            {item.data === linhaSelecionada ? '-' : '+'}
+                          </button>
+                        </td>
+                        <td className="diario-celula">{item.data}</td>
+                        <td className="diario-celula">{item.prazo}</td>
+                        <td className="diario-celula">{item.vendidos}</td>
+                        <td className="diario-celula">{item.cortesias}</td>
+                        <td className="diario-celula">{item.valor}</td>
                       </tr>
-                    ))}
-                  </>
-                )}
-              </React.Fragment>
-            ))}
-        </tbody>
-      </table>
-      <TablePagination
-        labelRowsPerPage="Linhas por página:"
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={diarios.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
-      />
-    </TableContainer>
+                      {item.data === linhaSelecionada && (
+                        <>
+                          <tr>
+                            <td className="diario-linha-azul"></td>
+                            <td className="diario-linha-azul">Nome</td>
+                            <td className="diario-linha-azul">Ingressos Vendidos</td>
+                            <td className="diario-linha-azul">Cortesias Emitidas</td>
+                            <td className="diario-linha-azul">Total Vendidos</td>
+                            <td className="diario-linha-azul"></td>
+                          </tr>
+                          {item.vendas.map((row) => (
+                            <tr key={row.nome}>
+                              <td className="diario-conteudo-expandido"></td>
+                              <td className="diario-conteudo-expandido">{row.nome}</td>
+                              <td className="diario-conteudo-expandido">{row.vendidos}</td>
+                              <td className="diario-conteudo-expandido">{row.cortesias}</td>
+                              <td className="diario-conteudo-expandido">{row.valor}</td>
+                              <td className="diario-conteudo-expandido"></td>
+                            </tr>
+                          ))}
+                        </>
+                      )}
+                    </React.Fragment>
+                  ))}
+              </tbody>
+            </table>
+            <TablePagination
+              labelRowsPerPage="Linhas por página:"
+              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={diarios.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+            />
+          </TableContainer>
+        </div>
+      ) : (
+        // Renderizar um indicador de carregamento enquanto os dados são buscados
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CircularProgress />
+        </div>
+      )}
+    </div>
   );
 };
 

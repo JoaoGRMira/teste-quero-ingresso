@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
-import { useToken } from '../../model/tokenContext';
 import Connection from '../../model';
 
 const DonutChart = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './tableSangria.css';
-import { TableContainer } from '@mui/material';
+import { CircularProgress, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
@@ -50,7 +50,7 @@ const EnhancedTableHead = (props) => {
     { label: 'Vendas', id: 'vendas', numeric: true },
     { label: 'Sangrias', id: 'sangrias', numeric: false },
     { label: 'Saldo', id: 'saldo', numeric: true },
-  ];  
+  ];
 
   return (
     <thead>
@@ -102,28 +102,24 @@ const TableSangria = () => {
 
   //console.log(selectedEventCode);
   //console.log(selectedEventCode.eve_cod);
-  const [tabelaData, setTabelaData] = useState([
-    { id: 1, pdv: 'Loja Virtual', vendas: 'R$ 850,00', sangrias: 'R$ 0,00', saldo: 'R$ 850,00' },
-    { id: 2, pdv: 'Loja Física', vendas: 'R$ 1.350,00', sangrias: 'R$ 0,00', saldo: 'R$ 1.350,00' },
-  ]);
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
-  
+
       // Acessa o endpoint de tipo de ingresso
       const fetchSangria = async () => {
         try {
           const response = await conn.get(
             'eventos/sangrias?evento=' +
-              selectedEventCode.eve_cod,
+            selectedEventCode.eve_cod,
             {
               headers: {
                 'token': localStorage.getItem('token')
               }
             }
           );
-  
+
           // Se der certo, salva os dados no estado de tipo de ingresso
           if (response.status === 200) {
             setSangria(response.data);
@@ -165,79 +161,81 @@ const TableSangria = () => {
     setPage(0);
   };
 
-  function createData(classe, valor, vendas, cortesia, total, vTotal) {
-    return { classe, valor, vendas, cortesia, total, vTotal };
-  }
-
-  const rows = [
-    createData('CAMAROTE', 'R$70,00', 24, 0, 24, 'R$ 1.680,00'),
-    createData('PISTA', 'R$50,00', 27, 0, 27, 'R$ 1.350,00'),
-  ];
-
   return (
-    <TableContainer>
-      <table className="pdv-tabela">
-        <EnhancedTableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-        />
-        <tbody>
-          {stableSort(sangria, getComparator(order, orderBy))
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((item, index) => (
-              <React.Fragment key={item.nome}>
-                <tr className={index % 2 === 0 ? 'sangria-linha-branca' : 'sangria-linha-cinza'}>
-                  <td className="sangria-celula">
-                    <button
-                      className="sangria-botao-expandir"
-                      onClick={() => expandirLinha(item.nome)}
-                    >
-                      {item.nome === linhaSelecionada ? '-' : '+'}
-                    </button>
-                  </td>
-                  <td className="sangria-celula">{item.nome}</td>
-                  <td className="sangria-celula">{item.valor_vendas}</td>
-                  <td className="sangria-celula">{item.valor_sangrias}</td>
-                  <td className="sangria-celula">{item.valor_saldo}</td>
-                </tr>
-                {item.nome === linhaSelecionada && (
-                  <>
-                    <tr>
-                      <td className="sangria-linha-azul"></td>
-                      <td className="sangria-linha-azul">Data</td>
-                      <td className="sangria-linha-azul">Usuário</td>
-                      <td className="sangria-linha-azul">Valor</td>
-                      <td className="sangria-linha-azul"></td>
-                    </tr>
-                    {item.sangrias.map((row) => (
-                      <tr key={row.data}>
-                        <td className="sangria-conteudo-expandido"></td>
-                        <td className="sangria-conteudo-expandido">{format(new Date(row.data), 'dd/MM/yyyy HH:mm')}</td>
-                        <td className="sangria-conteudo-expandido">{row.usuario}</td>
-                        <td className="sangria-conteudo-expandido">{row.valor}</td>
-                        <td className="sangria-conteudo-expandido"></td>
+    <div>
+      {dataLoaded ? (
+        <div>
+          <TableContainer>
+            <table className="pdv-tabela">
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+              <tbody>
+                {stableSort(sangria, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item, index) => (
+                    <React.Fragment key={item.nome}>
+                      <tr className={index % 2 === 0 ? 'sangria-linha-branca' : 'sangria-linha-cinza'}>
+                        <td className="sangria-celula">
+                          <button
+                            className="sangria-botao-expandir"
+                            onClick={() => expandirLinha(item.nome)}
+                          >
+                            {item.nome === linhaSelecionada ? '-' : '+'}
+                          </button>
+                        </td>
+                        <td className="sangria-celula">{item.nome}</td>
+                        <td className="sangria-celula">{item.valor_vendas}</td>
+                        <td className="sangria-celula">{item.valor_sangrias}</td>
+                        <td className="sangria-celula">{item.valor_saldo}</td>
                       </tr>
-                    ))}
-                  </>
-                )}
-              </React.Fragment>
-            ))}
-        </tbody>
-      </table>
-      <TablePagination
-        labelRowsPerPage="Linhas por página:"
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={sangria.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
-      />
-    </TableContainer>
+                      {item.nome === linhaSelecionada && (
+                        <>
+                          <tr>
+                            <td className="sangria-linha-azul"></td>
+                            <td className="sangria-linha-azul">Data</td>
+                            <td className="sangria-linha-azul">Usuário</td>
+                            <td className="sangria-linha-azul">Valor</td>
+                            <td className="sangria-linha-azul"></td>
+                          </tr>
+                          {item.sangrias.map((row) => (
+                            <tr key={row.data}>
+                              <td className="sangria-conteudo-expandido"></td>
+                              <td className="sangria-conteudo-expandido">{format(new Date(row.data), 'dd/MM/yyyy HH:mm')}</td>
+                              <td className="sangria-conteudo-expandido">{row.usuario}</td>
+                              <td className="sangria-conteudo-expandido">{row.valor}</td>
+                              <td className="sangria-conteudo-expandido"></td>
+                            </tr>
+                          ))}
+                        </>
+                      )}
+                    </React.Fragment>
+                  ))}
+              </tbody>
+            </table>
+            <TablePagination
+              labelRowsPerPage="Linhas por página:"
+              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={sangria.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+            />
+          </TableContainer>
+        </div>
+      ) : (
+        // Renderizar um indicador de carregamento enquanto os dados são buscados
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CircularProgress />
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './tableClasses.css';
-import { TableContainer } from '@mui/material';
+import { CircularProgress, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
@@ -188,77 +188,88 @@ const TableClasses = () => {
   };
 
   return (
-    <TableContainer>
-      <table className="classes-tabela">
-        <EnhancedTableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-        />
-        <tbody>
-          {stableSort(classes, getComparator(order, orderBy))
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((item, index) => (
-              <React.Fragment key={item.categoria}>
-                <tr className={index % 2 === 0 ? 'classes-linha-branca' : 'classes-linha-cinza'}>
-                  <td className="classes-celula">
-                    <button className="classes-botao-expandir" onClick={() => expandirLinha(item.categoria)}>
-                      {item.categoria === linhaSelecionada ? '-' : '+'}
-                    </button>
-                  </td>
-                  <td className="classes-celula">{item.categoria}</td>
-                  <td className="classes-celula">{item.vendas_quant}</td>
-                  <td className="classes-celula">{item.cortesias_quant}</td>
-                  <td className="classes-celula">{item.total_quant}</td>
-                  <td className="classes-celula">{item.valor_total}</td>
-                </tr>
-                {item.categoria === linhaSelecionada && (
-                  <>
-                    <tr>
-                      <td className="classes-linha-azul">Classe</td>
-                      <td className="classes-linha-azul">Valor</td>
-                      <td className="classes-linha-azul">Vendido</td>
-                      <td className="classes-linha-azul">Cortesia</td>
-                      <td className="classes-linha-azul">Total</td>
-                      <td className="classes-linha-azul">Valor Total</td>
-                    </tr>
-                    {item.classes.map((row) => (
-                      <tr key={row.classe}>
-                        <td className="classes-conteudo-expandido">{row.classe}</td>
-                        <td className="classes-conteudo-expandido">{row.valor_ing}</td>
-                        <td className="classes-conteudo-expandido">{row.vendas_quant}</td>
-                        <td className="classes-conteudo-expandido">{row.cortesias_quant}</td>
-                        <td className="classes-conteudo-expandido">{row.total_quant}</td>
-                        <td className="classes-conteudo-expandido">{row.valor_total}</td>
+    <div>
+      {dataLoaded ? (
+        <div>
+          <TableContainer>
+            <table className="classes-tabela">
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+              <tbody>
+                {stableSort(classes, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item, index) => (
+                    <React.Fragment key={item.categoria}>
+                      <tr className={index % 2 === 0 ? 'classes-linha-branca' : 'classes-linha-cinza'}>
+                        <td className="classes-celula">
+                          <button className="classes-botao-expandir" onClick={() => expandirLinha(item.categoria)}>
+                            {item.categoria === linhaSelecionada ? '-' : '+'}
+                          </button>
+                        </td>
+                        <td className="classes-celula">{item.categoria}</td>
+                        <td className="classes-celula">{item.vendas_quant}</td>
+                        <td className="classes-celula">{item.cortesias_quant}</td>
+                        <td className="classes-celula">{item.total_quant}</td>
+                        <td className="classes-celula">{item.valor_total}</td>
                       </tr>
-                    ))}
-                  </>
-                )}
-              </React.Fragment>
-            ))}
-          <tr>
-            <td className="classes-rodape"></td>
-            <td className="classes-rodape">Total (Vendas + Cortesia)</td>
-            <td className="classes-rodape">{totalVendasQuant}</td>
-            <td className="classes-rodape">{totalCortesiasQuant}</td>
-            <td className="classes-rodape">{totalTotalQuant}</td>
-            <td className="classes-rodape">R$ {totalValorTotal.toFixed(2)}</td>
-          </tr>
-        </tbody>
-      </table>
-      <TablePagination
-        labelRowsPerPage="Linhas por página:"
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={classes.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
-      />
-    </TableContainer>
+                      {item.categoria === linhaSelecionada && (
+                        <>
+                          <tr>
+                            <td className="classes-linha-azul">Classe</td>
+                            <td className="classes-linha-azul">Valor</td>
+                            <td className="classes-linha-azul">Vendido</td>
+                            <td className="classes-linha-azul">Cortesia</td>
+                            <td className="classes-linha-azul">Total</td>
+                            <td className="classes-linha-azul">Valor Total</td>
+                          </tr>
+                          {item.classes.map((row) => (
+                            <tr key={row.classe}>
+                              <td className="classes-conteudo-expandido">{row.classe}</td>
+                              <td className="classes-conteudo-expandido">{row.valor_ing}</td>
+                              <td className="classes-conteudo-expandido">{row.vendas_quant}</td>
+                              <td className="classes-conteudo-expandido">{row.cortesias_quant}</td>
+                              <td className="classes-conteudo-expandido">{row.total_quant}</td>
+                              <td className="classes-conteudo-expandido">{row.valor_total}</td>
+                            </tr>
+                          ))}
+                        </>
+                      )}
+                    </React.Fragment>
+                  ))}
+                <tr>
+                  <td className="classes-rodape"></td>
+                  <td className="classes-rodape">Total (Vendas + Cortesia)</td>
+                  <td className="classes-rodape">{totalVendasQuant}</td>
+                  <td className="classes-rodape">{totalCortesiasQuant}</td>
+                  <td className="classes-rodape">{totalTotalQuant}</td>
+                  <td className="classes-rodape">R$ {totalValorTotal.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+            <TablePagination
+              labelRowsPerPage="Linhas por página:"
+              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={classes.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+            />
+          </TableContainer>
+        </div>
+      ) : (
+        // Renderizar um indicador de carregamento enquanto os dados são buscados
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CircularProgress />
+        </div>
+      )}
+    </div>
   );
 };
 
