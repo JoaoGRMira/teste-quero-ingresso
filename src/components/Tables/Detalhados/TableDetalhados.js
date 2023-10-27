@@ -25,44 +25,13 @@ export default function TableDetalhados() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
-  const [detalhes, setDetalhes] = useState([]); //estado para salvar os dados retornados pelo endpoint 
-  const [pdv, setPdv] = React.useState(''); //estado para armazenar o valor selecionado no FilterButtonPdv
-  const [pos, setPos] = React.useState(''); //estado para armazenar o valor selecionado no FilterButtonPos
-  const [situacao, setSituacao] = React.useState(''); //estado para armazenar o valor selecionado no FilterButtonSituacao
-  const [tipo, setTipo] = React.useState(''); //estado para armazenar o valor selecionado no FilterButtonTipo
-
-  const uniquePdvOptions = detalhes.map((detalhe) => ({
-    value: detalhe.pdv,
-    label: detalhe.pdv,
-  }))
-    .filter((option, index, self) => {
-      // Filtra apenas as opções únicas com base no nome (label)
-      return index === self.findIndex((o) => o.label === option.label);
-    });
-
-  const uniquePosOptions = detalhes.map((detalhe) => ({
-    value: detalhe.pos,
-    label: detalhe.pos,
-  }))
-    .filter((option, index, self) => {
-      return index === self.findIndex((o) => o.label === option.label);
-    });
-
-  const uniqueSituacaoOptions = detalhes.map((detalhe) => ({
-    value: detalhe.situacao,
-    label: detalhe.situacao,
-  }))
-    .filter((option, index, self) => {
-      return index === self.findIndex((o) => o.label === option.label);
-    });
-
-  const uniqueTipoOptions = detalhes.map((detalhe) => ({
-    value: detalhe.ing,
-    label: detalhe.ing,
-  }))
-    .filter((option, index, self) => {
-      return index === self.findIndex((o) => o.label === option.label);
-    });
+  const [dataLoadedFiltros, setDataLoadedFiltros] = useState(false); //estado para controlar se os dados foram carregados ou não
+  const [detalhes, setDetalhes] = useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [filtros, setFiltros] = useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [pdv, setPdv] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
+  const [pos, setPos] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonPos
+  const [situacao, setSituacao] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonSituacao
+  const [tipo, setTipo] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonTipo
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -109,22 +78,7 @@ export default function TableDetalhados() {
     setOrderBy(property);
   };
 
-  const handleChangePdv = (event) => {
-    setPdv(event.target.value); //atualiza o estado pdv com a opção selecionada
-  };
-
-  const handleChangePos = (event) => {
-    setPos(event.target.value); //atualiza o estado pos com a opção selecionada
-  };
-
-  const handleChangeSituacao = (event) => {
-    setSituacao(event.target.value); //atualiza o estado situacao com a opção selecionada
-  };
-
-  const handleChangeTipo = (event) => {
-    setTipo(event.target.value); //atualiza o estado tipo com a opção selecionada
-  };
-
+  //requisição dos dados detalhados
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection(); //conecta com o servidor backend
@@ -135,6 +89,12 @@ export default function TableDetalhados() {
             'eventos/detalhados', //faz a requisição na rota especificada
             {
               evento: selectedEventCode.eve_cod, //passa o id do evento
+              filtros: {
+                pdv: pdv,
+                pos: pos,
+                situacao: situacao,
+                tipo: tipo
+              },
             },
             {
               headers: {
@@ -155,7 +115,39 @@ export default function TableDetalhados() {
       };
       fetchDetalhes();
     }
-  }, [selectedEventCode, dataLoaded]);
+  }, [selectedEventCode, dataLoaded, pdv, pos, situacao, tipo]);
+
+  //requisição dos filtros
+  useEffect(() => {
+    if (selectedEventCode && !dataLoadedFiltros) {
+      const conn = Connection(); //conecta com o servidor backend
+
+      const fetchFiltros = async () => {
+        try {
+          const response = await conn.get(
+            'eventos/detalhados/filtros?evento=' + selectedEventCode.eve_cod, //faz a requisição na rota especificada
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          if (response.status === 200) {
+            setFiltros(response.data);
+            setDataLoadedFiltros(true);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+      fetchFiltros();
+    }
+  }, [selectedEventCode, dataLoadedFiltros]);
+
+  console.log(filtros)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -165,6 +157,23 @@ export default function TableDetalhados() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleChangePdv = (event) => {
+    setPdv(event.target.value); // Atualiza o estado pdv com a opção selecionada
+  };
+
+  const handleChangeSituacao = (event) => {
+    setSituacao(event.target.value); // Atualiza o estado situacao situacao com a opção selecionada
+  };
+
+  const handleChangePos = (event) => {
+    setPos(event.target.value); // Atualiza o estado pos situacao com a opção selecionada
+  };
+
+  const handleChangeTipo = (event) => {
+    setTipo(event.target.value); // Atualiza o estado tipo situacao com a opção selecionada
+  };
+
   //console.log(detalhes)
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, detalhes.length - page * rowsPerPage);
@@ -184,40 +193,52 @@ export default function TableDetalhados() {
   return (
     <React.Fragment>
       <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
-        <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
-          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-            <SearchBar label="Informe o nome do PDV, o POS série" />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap' }}>
-            <FilterButtonPdv
-              pdvOptions={uniquePdvOptions}
-              selectedPdv={pdv}
-              onChange={handleChangePdv} //passa a função handleChangePdv como callback para atualizar o estado pdv
-            />
-            <FilterButtonPos
-              posOptions={uniquePosOptions}
-              selectedPos={pos}
-              onChange={handleChangePos} //passa a função handleChangePos como callback para atualizar o estado pos
-            />
-            <FilterButtonSituacao
-              situacaoOptions={uniqueSituacaoOptions}
-              selectedSituacao={situacao}
-              onChange={handleChangeSituacao} //passa a função handleChangeSituacao como callback para atualizar o estado pos
-            />
-            <FilterButtonTipo
-              tipoOptions={uniqueTipoOptions}
-              selectedTipo={tipo}
-              onChange={handleChangeTipo} //passa a função handleChangeTipo como callback para atualizar o estado tipo
-            />
-            <DownloadButton />
-          </Grid>
-          <Grid item xs={12}>
-            <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
-          </Grid>
-          <Grid item xs={12}>
+        <div>
+          {dataLoaded && dataLoadedFiltros ? (
             <div>
-              {dataLoaded ? (
-                <div>
+              <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
+                <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <SearchBar label="Informe o nome do PDV, o POS série" />
+                </Grid>
+                <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <FilterButtonPdv
+                      pdvOptions={filtros.pdv.map((filtro) => ({
+                      value: filtro,
+                      label: filtro,
+                    }))}
+                    selectedPdv={pdv}
+                    onChange={handleChangePdv}
+                  />
+                  <FilterButtonPos 
+                    posOptions={filtros.pos.map((filtro) => ({
+                    value: filtro,
+                    label: filtro,
+                  }))}
+                    selectedPos={pos}
+                    onChange={handleChangePos}
+                  />
+                  <FilterButtonSituacao 
+                    situacaoOptions={filtros.situacao.map((filtro) => ({
+                    value: filtro,
+                    label: filtro,
+                  }))}
+                    selectedSituacao={situacao}
+                    onChange={handleChangeSituacao}
+                  />
+                  <FilterButtonTipo 
+                    tipoOptions={filtros.tipo.map((filtro) => ({
+                    value: filtro,
+                    label: filtro,
+                  }))}
+                    selectedTipo={tipo}
+                    onChange={handleChangeTipo}
+                  />
+                  <DownloadButton />
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
+                </Grid>
+                <Grid item xs={12}>
                   <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 700 }} aria-label="customized table">
                       <TableHead>
@@ -357,28 +378,28 @@ export default function TableDetalhados() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                </div>
-              ) : (
-                // Renderizar um indicador de carregamento enquanto os dados são buscados
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                  <CircularProgress />
-                </div>
-              )}
+                  <TablePagination
+                    labelRowsPerPage="Linhas por página:"
+                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+                    rowsPerPageOptions={[5, 10, 20]}
+                    component="div"
+                    count={detalhes.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
+                  />
+                </Grid>
+              </Grid>
             </div>
-            <TablePagination
-              labelRowsPerPage="Linhas por página:"
-              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 20]}
-              component="div"
-              count={detalhes.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
-            />
-          </Grid>
-        </Grid>
+          ) : (
+            // Renderizar um indicador de carregamento enquanto os dados são buscados
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              <CircularProgress />
+            </div>
+          )}
+        </div>
       </Container>
     </React.Fragment>
   );

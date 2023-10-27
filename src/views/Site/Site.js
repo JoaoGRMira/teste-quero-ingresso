@@ -173,11 +173,11 @@ export default function Site() {
   //console.log(filtroIngresso)
 
   const handleChangeStatus = (event) => {
-    setStatus(event.target.value); // Atualiza o estado pdv com a opção selecionada
+    setStatus(event.target.value); // Atualiza o estado status com a opção selecionada
   };
 
   const handleChangeIngresso = (event) => {
-    setIngresso(event.target.value); // Atualiza o estado pdv com a opção selecionada
+    setIngresso(event.target.value); // Atualiza o estado ingresso com a opção selecionada
   };
 
   return (

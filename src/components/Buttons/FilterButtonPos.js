@@ -28,4 +28,3 @@ export default function FilterButtonPos({ posOptions, selectedPos, onChange }) {
     </Box>
   );
 }
-

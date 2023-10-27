@@ -9,12 +9,12 @@ export default function FilterButtonSituacao({ situacaoOptions, selectedSituacao
   return (
     <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
-        <InputLabel id="demo-simple-select-label">Situação</InputLabel>
+        <InputLabel id="demo-simple-select-label">Situacao</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={selectedSituacao}
-          label="Situação"
+          label="Situacao"
           onChange={onChange}
           sx={{ height: '39px' }}
         >
