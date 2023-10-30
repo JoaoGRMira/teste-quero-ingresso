@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./tableStyle.css";
 import Connection from '../../../model/index';
+import SearchBar from '../../Outros/SearchBar';
+import FilterEventos from '../../Buttons/FilterEventos';
+import Grid from '@mui/material/Grid';
 import { CircularProgress } from '@mui/material';
 
 const Table = () => {
@@ -11,11 +14,12 @@ const Table = () => {
   const [page, setPage] = useState(1);
   const [selectedEventCode, setSelectedEventCode] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const conn = Connection();
   const fetchEventos = async (page) => {
     try {
-      const response = await conn.get(`eventos?p=${page}&tipo=${localStorage.getItem('eventoSelecionado')}`, {
+      const response = await conn.get(`eventos?p=${page}&busca=${searchQuery}&tipo=${localStorage.getItem('eventoSelecionado')}`, {
         headers: {
           'token': localStorage.getItem('token')
         }
@@ -64,8 +68,23 @@ const Table = () => {
     }
   }
 
+  const handleSearch = (query) => {
+    const searchQuery = query.trim() === '' ? '' : query;
+    setSearchQuery(searchQuery);
+    setPage(1);
+    setDataLoaded(false);
+  };
+
   return (
     <div>
+      <Grid container spacing={3} sx={{marginBottom: '20px'}}>
+        <Grid item xs={12} md={9} lg={9} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <FilterEventos />
+        </Grid>
+        <Grid item xs={12} md={3} lg={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <SearchBar label="Buscar Eventos" onSearch={handleSearch} />
+        </Grid>
+      </Grid>
       {dataLoaded ? (
         <div>
           <div className="table-responsive">

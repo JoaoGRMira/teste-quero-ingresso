@@ -1,49 +1,33 @@
-import React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
+import React, { useState } from 'react';
+import { TextField, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  border: '1px solid #ccc',
-}));
+function SearchBar(props) {
+  const [searchText, setSearchText] = useState('');
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+  const handleChange = (event) => {
+    setSearchText(event.target.value);
+  };
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+  const handleSearch = () => {
+    props.onSearch(searchText);
+  };
 
-function SearchBar() {
   return (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
+    <div>
+      <TextField
+        label={props.label}
+        variant="outlined"
+        value={searchText}
+        onChange={handleChange}
+        size='small'
         placeholder="Buscar…"
-        inputProps={{ 'aria-label': 'search' }}
+        sx={{ width: '24ch' }}
       />
-    </Search>
+      <Button variant="contained" onClick={handleSearch} sx={{ width: '2ch', height: '39px', borderRadius: 0 }}>
+        <SearchIcon />
+      </Button>
+    </div>
   );
 }
 

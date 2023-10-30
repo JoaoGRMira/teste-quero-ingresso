@@ -106,17 +106,7 @@ export default function Eventos() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <StyledContainer sx={{ boxShadow: 2 }}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={9} lg={9} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                      <FilterEventos />
-                    </Grid>
-                    <Grid item xs={12} md={3} lg={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                      <SearchBar />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TableEvento />
-                    </Grid>
-                  </Grid>
+                  <TableEvento />
                 </StyledContainer>
               </Grid>
             </Grid>
