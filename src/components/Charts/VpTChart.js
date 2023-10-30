@@ -6,7 +6,7 @@ const VpTChart = ({ data }) => {
     return (
         <React.Fragment>
             <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5, fontSize: '14px' }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                Vendas por Tipo de Ingresso <a href='/'>[Detalhes]</a>
+                Vendas por Tipo de Ingresso
             </Typography>
             <ResponsiveContainer width="100%" height={250}>
                 <BarChart width={1000} height={250} data={data} layout="vertical">

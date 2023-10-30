@@ -336,31 +336,6 @@ export default function Site() {
               </Grid>
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
                 <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <SearchBar label="Buscar cliente" />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <FilterButtonStatus
-                      statusOptions={filtroStatus.map((filtro) => ({
-                        value: filtro,
-                        label: filtro,
-                      }))}
-                      selectedStatus={status}
-                      onChange={handleChangeStatus}
-                    />
-                    <FilterButtonIngresso
-                      ingressoOptions={filtroIngresso.map((filtro) => ({
-                        value: filtro,
-                        label: filtro,
-                      }))}
-                      selectedIngresso={ingresso}
-                      onChange={handleChangeIngresso}
-                    />
-                    <DownloadButton />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
-                  </Grid>
                   <Grid item xs={12}>
                     <TableSite />
                   </Grid>

@@ -62,7 +62,7 @@ const BarChartHorizontal = () => {
     return (
         <React.Fragment>
             <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5, fontSize: '14px' }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                Classes <a href='/'>[Detalhes]</a>
+                Classes
             </Typography>
             <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={classeIngressos} layout="vertical">

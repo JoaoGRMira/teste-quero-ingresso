@@ -62,7 +62,7 @@ const FaturamentoChart = () => {
     return (
         <React.Fragment>
             <Typography component='h2' variant="subtitle1" sx={{ p: 1, mb: 2, mt: 5, fontSize: '14px' }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom>
-                Faturamento por meio de pagamento <a href='/'>[Detalhes]</a>
+                Faturamento por meio de pagamento
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart width={1000} height={250} data={pagamentos} layout="vertical" barSize={20}>

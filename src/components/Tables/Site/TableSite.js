@@ -8,10 +8,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import { Container, Grid } from '@mui/material';
+import { Container, Divider, Grid } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Connection from '../../../model';
 import { format } from 'date-fns';
+import SearchBar from '../../Outros/SearchBar';
+import FilterButtonStatus from '../../Buttons/FilterButtonStatus';
+import FilterButtonIngresso from '../../Buttons/FilterButtonIngresso';
+import DownloadButton from '../../Buttons/DownloadButton';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,11 +51,17 @@ export default function TableSite() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
-  const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint 
+  const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [dataLoadedStatus, setDataLoadedStatus] = React.useState(false); //estado para controlar se os dados foram carregados ou não
+  const [dataLoadedIngresso, setDataLoadedIngresso] = React.useState(false); //estado para controlar se os dados foram carregados ou não
+  const [filtroStatus, setFiltroStatus] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [filtroIngresso, setFiltroIngresso] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [status, setStatus] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
+  const [ingresso, setIngresso] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonIngresso
 
-    //recupera e salva os dados do localStorage para preencher dados salvos no login
-    const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
-    const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+  //recupera e salva os dados do localStorage para preencher dados salvos no login
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON);
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
@@ -88,6 +98,80 @@ export default function TableSite() {
   //console.log(selectedEventCode.categoria)
   //console.log(site)
 
+  //requisição get dos filtros de status
+  React.useEffect(() => {
+    if (selectedEventCode && !dataLoadedStatus) {
+      const conn = Connection(); //conecta com o servidor backend
+
+      const fetchFiltroStatus = async () => {
+        try {
+          const response = await conn.get(
+            `eventos/site/filtros?cat=${selectedEventCode.categoria}`, //faz a requisição na rota especificada
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          if (response.status === 200) {
+            setFiltroStatus(response.data.status);
+            setDataLoadedStatus(true);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+      fetchFiltroStatus();
+    }
+  }, [selectedEventCode, dataLoadedStatus]);
+
+  //console.log(selectedEventCode.categoria)
+  //console.log(filtroStatus)
+
+  //requisição get dos filtros de ingresso
+  React.useEffect(() => {
+    if (selectedEventCode && !dataLoadedIngresso) {
+      const conn = Connection(); //conecta com o servidor backend
+
+      const fetchFiltroIngresso = async () => {
+        try {
+          const response = await conn.get(
+            `eventos/site/filtros?cat=${selectedEventCode.categoria}`, //faz a requisição na rota especificada
+            {
+              headers: {
+                'token': localStorage.getItem('token')
+              }
+            }
+          );
+
+          if (response.status === 200) {
+            setFiltroIngresso(response.data.ingressos);
+            setDataLoadedIngresso(true);
+          } else {
+            console.log('Erro na resposta da API:', response);
+          }
+        } catch (error) {
+          console.error('Erro na solicitação GET:', error);
+        }
+      };
+      fetchFiltroIngresso();
+    }
+  }, [selectedEventCode, dataLoadedIngresso]);
+
+  //console.log(selectedEventCode.categoria)
+  //console.log(filtroIngresso)
+
+  const handleChangeStatus = (event) => {
+    setStatus(event.target.value); // Atualiza o estado status com a opção selecionada
+  };
+
+  const handleChangeIngresso = (event) => {
+    setIngresso(event.target.value); // Atualiza o estado ingresso com a opção selecionada
+  };
+
   const handleRequestSort = (property) => () => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -119,6 +203,33 @@ export default function TableSite() {
 
   return (
     <Container>
+      <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
+          <SearchBar label="Buscar cliente" />
+        </Grid>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          <FilterButtonStatus
+            statusOptions={filtroStatus.map((filtro) => ({
+              value: filtro,
+              label: filtro,
+            }))}
+            selectedStatus={status}
+            onChange={handleChangeStatus}
+          />
+          <FilterButtonIngresso
+            ingressoOptions={filtroIngresso.map((filtro) => ({
+              value: filtro,
+              label: filtro,
+            }))}
+            selectedIngresso={ingresso}
+            onChange={handleChangeIngresso}
+          />
+          <DownloadButton />
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
+      </Grid>
       <Grid item xs={12}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -229,7 +340,7 @@ export default function TableSite() {
                     {row.pedido}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                  {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
+                    {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     {row.status}

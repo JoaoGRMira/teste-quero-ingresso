@@ -147,7 +147,7 @@ export default function TableDetalhados() {
     }
   }, [selectedEventCode, dataLoadedFiltros]);
 
-  console.log(filtros)
+  //console.log(filtros)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -163,15 +163,15 @@ export default function TableDetalhados() {
   };
 
   const handleChangeSituacao = (event) => {
-    setSituacao(event.target.value); // Atualiza o estado situacao situacao com a opção selecionada
+    setSituacao(event.target.value); // Atualiza o estado situacao com a opção selecionada
   };
 
   const handleChangePos = (event) => {
-    setPos(event.target.value); // Atualiza o estado pos situacao com a opção selecionada
+    setPos(event.target.value); // Atualiza o estado pos com a opção selecionada
   };
 
   const handleChangeTipo = (event) => {
-    setTipo(event.target.value); // Atualiza o estado tipo situacao com a opção selecionada
+    setTipo(event.target.value); // Atualiza o estado tipo com a opção selecionada
   };
 
   //console.log(detalhes)

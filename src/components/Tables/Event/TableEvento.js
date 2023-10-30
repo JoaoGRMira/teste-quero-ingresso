@@ -15,11 +15,12 @@ const Table = () => {
   const [selectedEventCode, setSelectedEventCode] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [eventFilter, setEventFilter] = useState('1');
 
   const conn = Connection();
   const fetchEventos = async (page) => {
     try {
-      const response = await conn.get(`eventos?p=${page}&busca=${searchQuery}&tipo=${localStorage.getItem('eventoSelecionado')}`, {
+      const response = await conn.get(`eventos?p=${page}&busca=${searchQuery}&tipo=${eventFilter}`, {
         headers: {
           'token': localStorage.getItem('token')
         }
@@ -75,11 +76,17 @@ const Table = () => {
     setDataLoaded(false);
   };
 
+  const handleEventFilterChange = (value) => {
+    setEventFilter(value);
+    setPage(1);
+    setDataLoaded(false);
+  };
+
   return (
     <div>
       <Grid container spacing={3} sx={{marginBottom: '20px'}}>
         <Grid item xs={12} md={9} lg={9} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-          <FilterEventos />
+        <FilterEventos eventFilter={eventFilter} onEventFilterChange={handleEventFilterChange} />
         </Grid>
         <Grid item xs={12} md={3} lg={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <SearchBar label="Buscar Eventos" onSearch={handleSearch} />

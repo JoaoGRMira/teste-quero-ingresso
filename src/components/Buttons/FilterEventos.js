@@ -5,21 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterEventos() {
-  const [eventos, setEventos] = React.useState(
-    localStorage.getItem('eventoSelecionado') || '2'
-  );
-
+export default function FilterEventos({ eventFilter, onEventFilterChange }) {
   const handleChange = (event) => {
     const selectedValue = event.target.value;
-    setEventos(selectedValue);
-
-    // Salvar o valor no localStorage.
-    localStorage.setItem('eventoSelecionado', selectedValue);
-    window.location.reload()
+    onEventFilterChange(selectedValue);
   };
-
-  console.log(localStorage.getItem('eventoSelecionado'))
 
   return (
     <Box sx={{ width: '250px', marginRight:'7px' }}>
@@ -28,7 +18,7 @@ export default function FilterEventos() {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={eventos}
+          value={eventFilter}
           label="Eventos"
           onChange={handleChange}
           sx={{ height: '39px'}}
