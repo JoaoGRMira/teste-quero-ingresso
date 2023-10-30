@@ -11,7 +11,7 @@ export default function FilterButtonPdv({ onPdvFilterChange, pdvOptions, selecte
     onPdvFilterChange(selectedValue);
   };
   return (
-    <Box sx={{ minWidth: 120, marginRight: '7px' }}>
+    <Box sx={{ minWidth: 120, maxWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Pdv</InputLabel>
         <Select
@@ -22,6 +22,7 @@ export default function FilterButtonPdv({ onPdvFilterChange, pdvOptions, selecte
           onChange={handleChange}
           sx={{ height: '39px' }}
         >
+          <MenuItem>Selecione...</MenuItem>
           {pdvOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}

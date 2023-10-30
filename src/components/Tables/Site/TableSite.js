@@ -97,10 +97,10 @@ export default function TableSite() {
       };
       fetchSite();
     }
-  }, [selectedEventCode, dataLoaded]);
+  }, [selectedEventCode, dataLoaded, statusFilter, ingressoFilter]);
 
   //console.log(selectedEventCode.categoria)
-  //console.log(site)
+  console.log(site)
 
   //requisição get dos filtros de status
   React.useEffect(() => {

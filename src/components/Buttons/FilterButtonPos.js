@@ -11,7 +11,7 @@ export default function FilterButtonPos({ onPosFilterChange, posOptions, selecte
     onPosFilterChange(selectedValue);
   };
   return (
-    <Box sx={{ minWidth: 120, marginRight: '7px' }}>
+    <Box sx={{ minWidth: 120, maxWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Pos</InputLabel>
         <Select
@@ -22,6 +22,7 @@ export default function FilterButtonPos({ onPosFilterChange, posOptions, selecte
           onChange={handleChange}
           sx={{ height: '39px' }}
         >
+          <MenuItem>Selecione...</MenuItem>
           {posOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
