@@ -5,7 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterButtonPos({ posOptions, selectedPos, onChange }) {
+export default function FilterButtonPos({ onPosFilterChange, posOptions, selectedPos }) {
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    onPosFilterChange(selectedValue);
+  };
   return (
     <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
@@ -15,7 +19,7 @@ export default function FilterButtonPos({ posOptions, selectedPos, onChange }) {
           id="demo-simple-select"
           value={selectedPos}
           label="Pos"
-          onChange={onChange}
+          onChange={handleChange}
           sx={{ height: '39px' }}
         >
           {posOptions.map((option) => (

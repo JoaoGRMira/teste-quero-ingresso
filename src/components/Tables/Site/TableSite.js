@@ -56,8 +56,8 @@ export default function TableSite() {
   const [dataLoadedIngresso, setDataLoadedIngresso] = React.useState(false); //estado para controlar se os dados foram carregados ou não
   const [filtroStatus, setFiltroStatus] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
   const [filtroIngresso, setFiltroIngresso] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
-  const [status, setStatus] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
-  const [ingresso, setIngresso] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonIngresso
+  const [statusFilter, setStatusFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
+  const [ingressoFilter, setIngressoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonIngresso
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -73,6 +73,10 @@ export default function TableSite() {
             'eventos/site', //faz a requisição na rota especificada
             {
               cat: selectedEventCode.categoria, //passa a categoria do evento
+              filtros: {
+                status: statusFilter,
+                ingresso: ingressoFilter
+              }
             },
             {
               headers: {
@@ -164,12 +168,14 @@ export default function TableSite() {
   //console.log(selectedEventCode.categoria)
   //console.log(filtroIngresso)
 
-  const handleChangeStatus = (event) => {
-    setStatus(event.target.value); // Atualiza o estado status com a opção selecionada
+  const handleStatusFilterChange = (value) => {
+    setStatusFilter(value); // Atualiza o estado statusFilter com a opção selecionada
+    setDataLoaded(false);
   };
 
-  const handleChangeIngresso = (event) => {
-    setIngresso(event.target.value); // Atualiza o estado ingresso com a opção selecionada
+  const handleIngressoFilterChange = (value) => {
+    setIngressoFilter(value); // Atualiza o estado ingressoFilter com a opção selecionada
+    setDataLoaded(false);
   };
 
   const handleRequestSort = (property) => () => {
@@ -213,16 +219,16 @@ export default function TableSite() {
               value: filtro,
               label: filtro,
             }))}
-            selectedStatus={status}
-            onChange={handleChangeStatus}
+            selectedStatus={statusFilter}
+            onStatusFilterChange={handleStatusFilterChange}
           />
           <FilterButtonIngresso
             ingressoOptions={filtroIngresso.map((filtro) => ({
               value: filtro,
               label: filtro,
             }))}
-            selectedIngresso={ingresso}
-            onChange={handleChangeIngresso}
+            selectedIngresso={ingressoFilter}
+            onIngressoFilterChange={handleIngressoFilterChange}
           />
           <DownloadButton />
         </Grid>

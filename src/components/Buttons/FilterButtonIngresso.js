@@ -5,7 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterButtonIngresso({ ingressoOptions, selectedIngresso, onChange }) {
+export default function FilterButtonIngresso({ ingressoOptions, selectedIngresso, onIngressoFilterChange }) {
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    onIngressoFilterChange(selectedValue);
+  };
   return (
     <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
@@ -14,8 +18,8 @@ export default function FilterButtonIngresso({ ingressoOptions, selectedIngresso
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={selectedIngresso}
-          label="Pdv"
-          onChange={onChange}
+          label="Ingresso"
+          onChange={handleChange}
           sx={{ height: '39px' }}
         >
           {ingressoOptions.map((option) => (

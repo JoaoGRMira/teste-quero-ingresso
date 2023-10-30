@@ -5,7 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterButtonPdv({ pdvOptions, selectedPdv, onChange }) {
+export default function FilterButtonPdv({ onPdvFilterChange, pdvOptions, selectedPdv }) {
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    onPdvFilterChange(selectedValue);
+  };
   return (
     <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
@@ -15,7 +19,7 @@ export default function FilterButtonPdv({ pdvOptions, selectedPdv, onChange }) {
           id="demo-simple-select"
           value={selectedPdv}
           label="Pdv"
-          onChange={onChange}
+          onChange={handleChange}
           sx={{ height: '39px' }}
         >
           {pdvOptions.map((option) => (

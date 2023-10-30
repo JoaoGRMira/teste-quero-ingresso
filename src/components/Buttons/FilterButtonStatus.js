@@ -5,7 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterButtonStatus({ statusOptions, selectedStatus, onChange }) {
+export default function FilterButtonStatus({ statusOptions, selectedStatus, onStatusFilterChange }) {
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    onStatusFilterChange(selectedValue);
+  };
   return (
     <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
@@ -14,8 +18,8 @@ export default function FilterButtonStatus({ statusOptions, selectedStatus, onCh
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={selectedStatus}
-          label="Pdv"
-          onChange={onChange}
+          label="Status"
+          onChange={handleChange}
           sx={{ height: '39px' }}
         >
           {statusOptions.map((option) => (

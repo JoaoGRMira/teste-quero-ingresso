@@ -28,10 +28,10 @@ export default function TableDetalhados() {
   const [dataLoadedFiltros, setDataLoadedFiltros] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [detalhes, setDetalhes] = useState([]); //estado para salvar os dados retornados pelo endpoint
   const [filtros, setFiltros] = useState([]); //estado para salvar os dados retornados pelo endpoint
-  const [pdv, setPdv] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
-  const [pos, setPos] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonPos
-  const [situacao, setSituacao] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonSituacao
-  const [tipo, setTipo] = React.useState(''); // Estado para armazenar o valor selecionado no FilterButtonTipo
+  const [pdvFilter, setPdvFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonPdv
+  const [posFilter, setPosFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonPos
+  const [situacaoFilter, setSituacaoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonSituacao
+  const [tipoFilter, setTipoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonTipo
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -90,10 +90,10 @@ export default function TableDetalhados() {
             {
               evento: selectedEventCode.eve_cod, //passa o id do evento
               filtros: {
-                pdv: pdv,
-                pos: pos,
-                situacao: situacao,
-                tipo: tipo
+                pdv: pdvFilter,
+                pos: posFilter,
+                situacao: situacaoFilter,
+                tipo: tipoFilter
               },
             },
             {
@@ -115,7 +115,7 @@ export default function TableDetalhados() {
       };
       fetchDetalhes();
     }
-  }, [selectedEventCode, dataLoaded, pdv, pos, situacao, tipo]);
+  }, [selectedEventCode, dataLoaded, pdvFilter, posFilter, situacaoFilter, tipoFilter]);
 
   //requisição dos filtros
   useEffect(() => {
@@ -158,20 +158,24 @@ export default function TableDetalhados() {
     setPage(0);
   };
 
-  const handleChangePdv = (event) => {
-    setPdv(event.target.value); // Atualiza o estado pdv com a opção selecionada
+  const handlePdvFilterChange = (value) => {
+    setPdvFilter(value); // Atualiza o estado pdvFilter com a opção selecionada
+    setDataLoaded(false);
   };
 
-  const handleChangeSituacao = (event) => {
-    setSituacao(event.target.value); // Atualiza o estado situacao com a opção selecionada
+  const handlePosFilterChange = (value) => {
+    setPosFilter(value); // Atualiza o estado posFilter com a opção selecionada
+    setDataLoaded(false);
   };
 
-  const handleChangePos = (event) => {
-    setPos(event.target.value); // Atualiza o estado pos com a opção selecionada
+  const handleSituacaoFilterChange = (value) => {
+    setSituacaoFilter(value); // Atualiza o estado situacaoFilter com a opção selecionada
+    setDataLoaded(false);
   };
 
-  const handleChangeTipo = (event) => {
-    setTipo(event.target.value); // Atualiza o estado tipo com a opção selecionada
+  const handleTipoFilterChange = (value) => {
+    setTipoFilter(value); // Atualiza o estado tipoFilter com a opção selecionada
+    setDataLoaded(false);
   };
 
   //console.log(detalhes)
@@ -206,32 +210,32 @@ export default function TableDetalhados() {
                       value: filtro,
                       label: filtro,
                     }))}
-                    selectedPdv={pdv}
-                    onChange={handleChangePdv}
+                    selectedPdv={pdvFilter}
+                    onPdvFilterChange={handlePdvFilterChange}
                   />
                   <FilterButtonPos 
                     posOptions={filtros.pos.map((filtro) => ({
                     value: filtro,
                     label: filtro,
                   }))}
-                    selectedPos={pos}
-                    onChange={handleChangePos}
+                    selectedPos={posFilter}
+                    onPosFilterChange={handlePosFilterChange}
                   />
                   <FilterButtonSituacao 
                     situacaoOptions={filtros.situacao.map((filtro) => ({
                     value: filtro,
                     label: filtro,
                   }))}
-                    selectedSituacao={situacao}
-                    onChange={handleChangeSituacao}
+                    selectedSituacao={situacaoFilter}
+                    onSituacaoFilterChange={handleSituacaoFilterChange}
                   />
                   <FilterButtonTipo 
                     tipoOptions={filtros.tipo.map((filtro) => ({
                     value: filtro,
                     label: filtro,
                   }))}
-                    selectedTipo={tipo}
-                    onChange={handleChangeTipo}
+                    selectedTipo={tipoFilter}
+                    onTipoFilterChange={handleTipoFilterChange}
                   />
                   <DownloadButton />
                 </Grid>

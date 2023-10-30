@@ -5,7 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function FilterButtonSituacao({ situacaoOptions, selectedSituacao, onChange }) {
+export default function FilterButtonSituacao({ situacaoOptions, selectedSituacao, onSituacaoFilterChange }) {
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    onSituacaoFilterChange(selectedValue);
+  };
   return (
     <Box sx={{ minWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
@@ -15,7 +19,7 @@ export default function FilterButtonSituacao({ situacaoOptions, selectedSituacao
           id="demo-simple-select"
           value={selectedSituacao}
           label="Situacao"
-          onChange={onChange}
+          onChange={handleChange}
           sx={{ height: '39px' }}
         >
           {situacaoOptions.map((option) => (
