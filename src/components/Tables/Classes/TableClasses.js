@@ -5,6 +5,9 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
+import DownloadButton from '../../Buttons/DownloadButton';
+import SearchBar from '../../Outros/SearchBar';
+import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
 
 // Funções de ordenação
@@ -111,6 +114,7 @@ const TableClasses = () => {
   const [orderBy, setOrderBy] = useState('categoria'); // Tipo de ordenação
   const [page, setPage] = useState(0); // Paginação
   const [rowsPerPage, setRowsPerPage] = useState(5); // Número de linhas por página
+  const [searchQuery, setSearchQuery] = useState(''); // Busca
 
   // Variáveis para salvar a soma total dos valores
   let totalVendasQuant = 0;
@@ -118,55 +122,69 @@ const TableClasses = () => {
   let totalTotalQuant = 0;
   let totalValorTotal = 0;
 
-  // Realiza a soma dos valores para salvar o total
-  classes.forEach((item) => {
-    totalVendasQuant += item.vendas_quant;
-    totalCortesiasQuant += item.cortesias_quant;
-    totalTotalQuant += item.total_quant;
-    totalValorTotal += item.valor_total;
-  });
+  // Função para realizar a soma dos valores
+  const calculateTotalValues = () => {
+    totalVendasQuant = 0;
+    totalCortesiasQuant = 0;
+    totalTotalQuant = 0;
+    totalValorTotal = 0;
+
+    classes.forEach((item) => {
+      totalVendasQuant += item.vendas_quant;
+      totalCortesiasQuant += item.cortesias_quant;
+      totalTotalQuant += item.total_quant;
+      totalValorTotal += item.valor_total;
+    });
+  };
 
   // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-  //console.log(selectedEventCode);
-  //console.log(selectedEventCode.eve_cod);
-
-  useEffect(() => {
+  const fetchClasses = async () => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
 
-      // Acessa o endpoint de tipo de ingresso
-      const fetchClasses = async () => {
-        try {
-          const response = await conn.get(
-            'eventos/classes?evento=' +
-            selectedEventCode.eve_cod,
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
+      try {
+        const response = await conn.get(
+          `eventos/classes?evento=${selectedEventCode.eve_cod}&busca=${searchQuery}`,
+          {
+            headers: {
+              'token': localStorage.getItem('token')
             }
-          );
-
-          // Se der certo, salva os dados no estado de tipo de ingresso
-          if (response.status === 200) {
-            setClasses(response.data);
-            setDataLoaded(true)
-          } else {
-            console.log('Erro na resposta da API (Tipo Ingresso):', response);
           }
-        } catch (error) {
-          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
-        }
-      };
+        );
 
+        if (response.status === 200) {
+          const filteredClasses = response.data.filter((item) => {
+            return item.categoria.toLowerCase().includes(searchQuery.toLowerCase());
+          });
+          setClasses(filteredClasses);
+          calculateTotalValues();
+          setDataLoaded(true);
+        } else {
+          console.log('Erro na resposta da API (Tipo Ingresso):', response);
+        }
+      } catch (error) {
+        console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchClasses();
+  }, [selectedEventCode, dataLoaded, searchQuery]);
+
+  const handleSearch = (query) => {
+    const searchQuery = query.trim() === '' ? '' : query;
+    setSearchQuery(searchQuery);
+    setPage(0);
+    setDataLoaded(false);
+
+    if (searchQuery === '') {
       fetchClasses();
     }
-  }, [selectedEventCode, dataLoaded]);
-
-  //console.log(classes)
+  };
 
   const expandirLinha = (categoria) => {
     setLinhaSelecionada(categoria === linhaSelecionada ? -1 : categoria);
@@ -189,6 +207,14 @@ const TableClasses = () => {
 
   return (
     <div>
+      <Grid container sx={{ py: 2 }}>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '5px' }}>
+          <SearchBar label="Buscar Classe" onSearch={(query) => handleSearch(query)} />
+        </Grid>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>                  
+          <DownloadButton />
+        </Grid>
+      </Grid>
       {dataLoaded ? (
         <div>
           <TableContainer>
