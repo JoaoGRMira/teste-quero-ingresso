@@ -5,51 +5,69 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
+import DownloadButton from '../../Buttons/DownloadButton';
+import SearchBar from '../../Outros/SearchBar';
+import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
 
 const TablePDV = () => {
   const [pdvs, setPdvs] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('pdv');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-  //console.log(selectedEventCode);
-  //console.log(selectedEventCode.eve_cod);
+  const fetchPdvs = async () => {
+    const conn = Connection();
+
+    try {
+      const response = await conn.get(
+        `eventos/pdvs?evento=${selectedEventCode.eve_cod}&busca=${searchQuery}`,
+        {
+          headers: {
+            'token': localStorage.getItem('token')
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        const filteredPdvs = response.data.filter((item) => {
+          return item.pdv.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+        setPdvs(filteredPdvs);
+        setDataLoaded(true);
+
+      } else {
+        console.log('Erro na resposta da API (Tipo Ingresso):', response);
+      }
+    } catch (error) {
+      console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+    }
+  };
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
-      const conn = Connection();
-
-      // Acessa o endpoint de tipo de ingresso
-      const fetchPdvs = async () => {
-        try {
-          const response = await conn.get(
-            'eventos/pdvs?evento=' +
-            selectedEventCode.eve_cod,
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
-            }
-          );
-
-          // Se der certo, salva os dados no estado de tipo de ingresso
-          if (response.status === 200) {
-            setPdvs(response.data);
-            setDataLoaded(true)
-          } else {
-            console.log('Erro na resposta da API (Tipo Ingresso):', response);
-          }
-        } catch (error) {
-          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
-        }
-      };
-
       fetchPdvs();
     }
-  }, [selectedEventCode, dataLoaded]);
+  }, [selectedEventCode, dataLoaded, searchQuery]);
+
+  const handleSearch = (query) => {
+    const searchQuery = query.trim() === '' ? '' : query;
+    setSearchQuery(searchQuery);
+    setPage(0);
+    setDataLoaded(false);
+
+    if (searchQuery === '') {
+      fetchPdvs();
+    }
+  };
 
   // Funções de ordenação
   function descendingComparator(a, b, orderBy) {
@@ -159,12 +177,6 @@ const TablePDV = () => {
     );
   };
 
-  const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('pdv');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const expandirLinha = (pdv) => {
     setLinhaSelecionada(pdv === linhaSelecionada ? -1 : pdv);
   };
@@ -186,6 +198,14 @@ const TablePDV = () => {
 
   return (
     <div>
+      <Grid container sx={{ py: 2 }}>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '5px' }}>
+          <SearchBar label="Buscar PDV" onSearch={(query) => handleSearch(query)} />
+        </Grid>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>
+          <DownloadButton />
+        </Grid>
+      </Grid>
       {dataLoaded ? (
         <div>
           <TableContainer>

@@ -253,13 +253,6 @@ export default function Pdv() {
               </Grid>
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
                 <Grid container spacing={3} sx={{ py: 2 }}>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <SearchBar label="Buscar PDV ou POS" />
-                    
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <DownloadButton />
-                  </Grid>
                   <Grid item xs={12}>
                     <TablePdv />
                   </Grid>
