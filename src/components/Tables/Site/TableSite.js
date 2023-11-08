@@ -58,6 +58,7 @@ export default function TableSite() {
   const [filtroIngresso, setFiltroIngresso] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
   const [statusFilter, setStatusFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
   const [ingressoFilter, setIngressoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonIngresso
+  const [searchQuery, setSearchQuery] = useState(''); // Busca
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -76,7 +77,8 @@ export default function TableSite() {
               filtros: {
                 status: statusFilter,
                 ingresso: ingressoFilter
-              }
+              },
+              busca: searchQuery
             },
             {
               headers: {
@@ -168,6 +170,13 @@ export default function TableSite() {
   //console.log(selectedEventCode.categoria)
   //console.log(filtroIngresso)
 
+  const handleSearch = (query) => {
+    const searchQuery = query.trim() === '' ? '' : query;
+    setSearchQuery(searchQuery);
+    setPage(0);
+    setDataLoaded(false);
+  };
+
   const handleStatusFilterChange = (value) => {
     setStatusFilter(value); // Atualiza o estado statusFilter com a opção selecionada
     setDataLoaded(false);
@@ -211,7 +220,7 @@ export default function TableSite() {
     <Container>
       <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-          <SearchBar label="Buscar cliente" />
+        <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
         </Grid>
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
           <FilterButtonStatus

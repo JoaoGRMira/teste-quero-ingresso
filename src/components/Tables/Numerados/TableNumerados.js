@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './tableNumerados.css';
-import { CircularProgress, TableContainer } from '@mui/material';
+import { CircularProgress, Grid, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
+import SearchBar from '../../Outros/SearchBar';
+import DownloadButton from '../../Buttons/DownloadButton';
 
 // Funções de ordenação
 function descendingComparator(a, b, orderBy) {
@@ -124,6 +126,7 @@ const TableNumerados = () => {
   const [orderBy, setOrderBy] = useState('classe');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState(''); // Busca
 
   // Variáveis para salvar a soma total dos valores
   let estoque = 0;
@@ -141,228 +144,246 @@ const TableNumerados = () => {
     saldo_total += item.saldo;
   });
 
-  React.useEffect(() => {
+  const fetchDados = async () => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
 
-      // Acessa o endpoint de tipo de ingresso
-      const fetchDados = async () => {
-        try {
-          const response = await conn.get(
-            'eventos/numerados?evento=' +
-            selectedEventCode.eve_cod,
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
+      try {
+        const response = await conn.get(
+          `eventos/numerados?evento=${selectedEventCode.eve_cod}&busca=${searchQuery}`,
+          {
+            headers: {
+              'token': localStorage.getItem('token')
             }
-          );
-
-          // Se der certo, salva os dados no estado de tipo de ingresso
-          if (response.status === 200) {
-            setDados(response.data);
-            console.log(response.data)
-            setDataLoaded(true)
-          } else {
-            console.log('Erro na resposta da API (Tipo Ingresso):', response);
           }
-        } catch (error) {
-          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
-        }
-      };
+        );
 
+        if (response.status === 200) {
+          const filteredClasses = response.data.filter((item) => {
+            return item.classe.toLowerCase().includes(searchQuery.toLowerCase());
+          });
+          setDados(filteredClasses);
+          setDataLoaded(true);
+        } else {
+          console.log('Erro na resposta da API (Tipo Ingresso):', response);
+        }
+      } catch (error) {
+        console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchDados();
+  }, [selectedEventCode, dataLoaded, searchQuery]);
+
+  const handleSearch = (query) => {
+    const searchQuery = query.trim() === '' ? '' : query;
+    setSearchQuery(searchQuery);
+    setPage(0);
+    setDataLoaded(false);
+
+    if (searchQuery === '') {
       fetchDados();
     }
-  }, [selectedEventCode, dataLoaded]);
+  };
 
-  console.log(dados)
+    //console.log(dados)
 
-  const expandirLinha = (classe, grupo, numerado) => {
-    setDados((dados) =>
-      dados.map((item) => {
-        if (item.classe === classe) {
-          if (!grupo) {
-            return { ...item, expandir: !item.expandir };
-          }
+    const expandirLinha = (classe, grupo, numerado) => {
+      setDados((dados) =>
+        dados.map((item) => {
+          if (item.classe === classe) {
+            if (!grupo) {
+              return { ...item, expandir: !item.expandir };
+            }
 
-          return {
-            ...item,
-            grupos: item.grupos.map((subItem) => {
-              if (subItem.grupo === grupo) {
-                if (!numerado) {
-                  return { ...subItem, expandir: !subItem.expandir };
+            return {
+              ...item,
+              grupos: item.grupos.map((subItem) => {
+                if (subItem.grupo === grupo) {
+                  if (!numerado) {
+                    return { ...subItem, expandir: !subItem.expandir };
+                  }
+
+                  return {
+                    ...subItem,
+                    numerados: subItem.numerados.map((subSubItem) => {
+                      if (subSubItem.numerado === numerado) {
+                        return { ...subSubItem, expandir: !subSubItem.expandir };
+                      }
+                      return subSubItem;
+                    }),
+                  };
                 }
+                return subItem;
+              }),
+            };
+          }
+          return item;
+        })
+      )
+    };
 
-                return {
-                  ...subItem,
-                  numerados: subItem.numerados.map((subSubItem) => {
-                    if (subSubItem.numerado === numerado) {
-                      return { ...subSubItem, expandir: !subSubItem.expandir };
-                    }
-                    return subSubItem;
-                  }),
-                };
-              }
-              return subItem;
-            }),
-          };
-        }
-        return item;
-      })
-    )
-  };
+    const handleRequestSort = (event, property) => {
+      const isAsc = orderBy === property && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(property);
+    };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  return (
-    <div>
-      {dataLoaded ? (
-        <div>
-          <TableContainer>
-            <table className="numerados-tabela">
-              <EnhancedTableHead
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-              />
-              <tbody>
-                {stableSort(dados, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((item, index) => (
-                    <React.Fragment key={item.classe}>
-                      <tr className={index % 2 === 0 ? 'numerados-linha-branca' : 'numerados-linha-cinza'}>
-                        <td className="numerados-celula">
-                          <button
-                            className="numerados-botao-expandir"
-                            onClick={() => expandirLinha(item.classe)}
-                          >
-                            {item.expandir ? '-' : '+'}
-                          </button>
-                        </td>
-                        <td className="numerados-celula">{item.classe}</td>
-                        <td className={`numerados-celula ${item.disp === 'Disponível' ? 'disponivel-cell' : ''} ${item.disp === 'Parcial' ? 'parcial-cell' : ''} ${item.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
-                          {item.disp}
-                        </td>
-                        <td className="numerados-celula">{item.estq_inicial}</td>
-                        <td className="numerados-celula">{item.vendidos_perc}</td>
-                        <td className="numerados-celula">{item.vendidos}</td>
-                        <td className="numerados-celula">{item.saldo_perc}</td>
-                        <td className="numerados-celula">{item.saldo}</td>
-                      </tr>
-                      {item.expandir && (
-                        <>
-                          <tr>
-                            <td className="numerados-linha-azul"></td>
-                            <td className="numerados-linha-azul">Grupo</td>
-                            <td className="numerados-linha-azul">Disponibilidade</td>
-                            <td className="numerados-linha-azul">Estoque Inicial</td>
-                            <td className="numerados-linha-azul">Vendidos</td>
-                            <td className="numerados-linha-azul">Vendidos (%)</td>
-                            <td className="numerados-linha-azul">Saldo</td>
-                            <td className="numerados-linha-azul">Saldo (%)</td>
-                          </tr>
-                          {item.grupos.map((subItem) => (
-                            <React.Fragment key={subItem.grupo}>
-                              <tr>
-                                <td className="numerados-celula">
-                                  <button
-                                    className="numerados-botao-expandir2"
-                                    onClick={() => expandirLinha(item.classe, subItem.grupo)}
-                                  >
-                                    {subItem.expandir ? '-' : '+'}
-                                  </button>
-                                </td>
-                                <td className="numerados-conteudo-expandido">{subItem.grupo}</td>
-                                <td className={`numerados-conteudo-expandido ${subItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
-                                  {subItem.disp}
-                                </td>
-                                <td className="numerados-conteudo-expandido">{subItem.estq_inicial}</td>
-                                <td className="numerados-conteudo-expandido">{subItem.vendidos}</td>
-                                <td className="numerados-conteudo-expandido">{subItem.vendidos_perc}</td>
-                                <td className="numerados-conteudo-expandido">{subItem.saldo}</td>
-                                <td className="numerados-conteudo-expandido">{subItem.saldo_perc}</td>
-                              </tr>
-                              {subItem.expandir && (
-                                <>
-                                  <tr>
-                                    <td className="numerados-linha-azul">Numeração</td>
-                                    <td className="numerados-linha-azul">Situação</td>
-                                    <td className="numerados-linha-azul">Vendido ?</td>
-                                    <td className="numerados-linha-azul">Cód de Barras</td>
-                                    <td className="numerados-linha-azul">Qtde. Vendidos</td>
-                                    <td className="numerados-linha-azul">Valor de Venda</td>
-                                    <td className="numerados-linha-azul">Tipo de Ingresso</td>
-                                    <td className="numerados-linha-azul">Pdv</td>
-                                  </tr>
-                                  {subItem.numerados.map((subSubItem) => (
-                                    <tr key={subSubItem.numerado}>
-                                      <td className="numerados-conteudo-expandido">{subSubItem.numerado}</td>
-                                      <td className={`numerados-conteudo-expandido ${subSubItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subSubItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subSubItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
-                                        {subSubItem.disp}
-                                      </td>
-                                      <td className="numerados-conteudo-expandido">{subSubItem.vendido ? 'Sim' : 'Não'}</td>
-                                      <td className="numerados-conteudo-expandido">{subSubItem.cod_barras}</td>
-                                      <td className="numerados-conteudo-expandido">{subSubItem.quant_vendido}</td>
-                                      <td className="numerados-conteudo-expandido">{subSubItem.valor_venda}</td>
-                                      <td className="numerados-conteudo-expandido">{subSubItem.tipo}</td>
-                                      <td className="numerados-conteudo-expandido">{subSubItem.pdv}</td>
+    return (
+      <div>
+        {dataLoaded ? (
+          <div>
+            <Grid container sx={{ py: 2 }}>
+              <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '5px' }}>
+                <SearchBar label="Buscar Numerado" onSearch={(query) => handleSearch(query)} />
+              </Grid>
+              <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>
+                <DownloadButton />
+              </Grid>
+            </Grid>
+            <TableContainer>
+              <table className="numerados-tabela">
+                <EnhancedTableHead
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                />
+                <tbody>
+                  {stableSort(dados, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((item, index) => (
+                      <React.Fragment key={item.classe}>
+                        <tr className={index % 2 === 0 ? 'numerados-linha-branca' : 'numerados-linha-cinza'}>
+                          <td className="numerados-celula">
+                            <button
+                              className="numerados-botao-expandir"
+                              onClick={() => expandirLinha(item.classe)}
+                            >
+                              {item.expandir ? '-' : '+'}
+                            </button>
+                          </td>
+                          <td className="numerados-celula">{item.classe}</td>
+                          <td className={`numerados-celula ${item.disp === 'Disponível' ? 'disponivel-cell' : ''} ${item.disp === 'Parcial' ? 'parcial-cell' : ''} ${item.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
+                            {item.disp}
+                          </td>
+                          <td className="numerados-celula">{item.estq_inicial}</td>
+                          <td className="numerados-celula">{item.vendidos_perc}</td>
+                          <td className="numerados-celula">{item.vendidos}</td>
+                          <td className="numerados-celula">{item.saldo_perc}</td>
+                          <td className="numerados-celula">{item.saldo}</td>
+                        </tr>
+                        {item.expandir && (
+                          <>
+                            <tr>
+                              <td className="numerados-linha-azul"></td>
+                              <td className="numerados-linha-azul">Grupo</td>
+                              <td className="numerados-linha-azul">Disponibilidade</td>
+                              <td className="numerados-linha-azul">Estoque Inicial</td>
+                              <td className="numerados-linha-azul">Vendidos</td>
+                              <td className="numerados-linha-azul">Vendidos (%)</td>
+                              <td className="numerados-linha-azul">Saldo</td>
+                              <td className="numerados-linha-azul">Saldo (%)</td>
+                            </tr>
+                            {item.grupos.map((subItem) => (
+                              <React.Fragment key={subItem.grupo}>
+                                <tr>
+                                  <td className="numerados-celula">
+                                    <button
+                                      className="numerados-botao-expandir2"
+                                      onClick={() => expandirLinha(item.classe, subItem.grupo)}
+                                    >
+                                      {subItem.expandir ? '-' : '+'}
+                                    </button>
+                                  </td>
+                                  <td className="numerados-conteudo-expandido">{subItem.grupo}</td>
+                                  <td className={`numerados-conteudo-expandido ${subItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
+                                    {subItem.disp}
+                                  </td>
+                                  <td className="numerados-conteudo-expandido">{subItem.estq_inicial}</td>
+                                  <td className="numerados-conteudo-expandido">{subItem.vendidos}</td>
+                                  <td className="numerados-conteudo-expandido">{subItem.vendidos_perc}</td>
+                                  <td className="numerados-conteudo-expandido">{subItem.saldo}</td>
+                                  <td className="numerados-conteudo-expandido">{subItem.saldo_perc}</td>
+                                </tr>
+                                {subItem.expandir && (
+                                  <>
+                                    <tr>
+                                      <td className="numerados-linha-azul">Numeração</td>
+                                      <td className="numerados-linha-azul">Situação</td>
+                                      <td className="numerados-linha-azul">Vendido ?</td>
+                                      <td className="numerados-linha-azul">Cód de Barras</td>
+                                      <td className="numerados-linha-azul">Qtde. Vendidos</td>
+                                      <td className="numerados-linha-azul">Valor de Venda</td>
+                                      <td className="numerados-linha-azul">Tipo de Ingresso</td>
+                                      <td className="numerados-linha-azul">Pdv</td>
                                     </tr>
-                                  ))}
-                                </>
-                              )}
-                            </React.Fragment>
-                          ))}
-                        </>
-                      )}
-                    </React.Fragment>
-                  ))}
-                <tr>
-                  <td className="numerados-rodape">Total</td>
-                  <td className="numerados-rodape"></td>
-                  <td className="numerados-rodape"></td>
-                  <td className="numerados-rodape">{estoque}</td>
-                  <td className="numerados-rodape">-</td>
-                  <td className="numerados-rodape">{vendidos_total}</td>
-                  <td className="numerados-rodape">-</td>
-                  <td className="numerados-rodape">{saldo_total}</td>
-                </tr>
-              </tbody>
-            </table>
-            <TablePagination
-              labelRowsPerPage="Linhas por página:"
-              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={dados.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
-            />
-          </TableContainer>
-        </div>
-      ) : (
-        // Renderizar um indicador de carregamento enquanto os dados são buscados
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <CircularProgress />
-        </div>
-      )}
-    </div>
-  );
-};
+                                    {subItem.numerados.map((subSubItem) => (
+                                      <tr key={subSubItem.numerado}>
+                                        <td className="numerados-conteudo-expandido">{subSubItem.numerado}</td>
+                                        <td className={`numerados-conteudo-expandido ${subSubItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subSubItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subSubItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
+                                          {subSubItem.disp}
+                                        </td>
+                                        <td className="numerados-conteudo-expandido">{subSubItem.vendido ? 'Sim' : 'Não'}</td>
+                                        <td className="numerados-conteudo-expandido">{subSubItem.cod_barras}</td>
+                                        <td className="numerados-conteudo-expandido">{subSubItem.quant_vendido}</td>
+                                        <td className="numerados-conteudo-expandido">{subSubItem.valor_venda}</td>
+                                        <td className="numerados-conteudo-expandido">{subSubItem.tipo}</td>
+                                        <td className="numerados-conteudo-expandido">{subSubItem.pdv}</td>
+                                      </tr>
+                                    ))}
+                                  </>
+                                )}
+                              </React.Fragment>
+                            ))}
+                          </>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  <tr>
+                    <td className="numerados-rodape">Total</td>
+                    <td className="numerados-rodape"></td>
+                    <td className="numerados-rodape"></td>
+                    <td className="numerados-rodape">{estoque}</td>
+                    <td className="numerados-rodape">-</td>
+                    <td className="numerados-rodape">{vendidos_total}</td>
+                    <td className="numerados-rodape">-</td>
+                    <td className="numerados-rodape">{saldo_total}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <TablePagination
+                labelRowsPerPage="Linhas por página:"
+                labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={dados.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+              />
+            </TableContainer>
+          </div>
+        ) : (
+          // Renderizar um indicador de carregamento enquanto os dados são buscados
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <CircularProgress />
+          </div>
+        )}
+      </div>
+    );
+  };
 
-export default TableNumerados;
+  export default TableNumerados;
