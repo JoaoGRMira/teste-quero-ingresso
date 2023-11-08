@@ -32,6 +32,7 @@ export default function TableDetalhados() {
   const [posFilter, setPosFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonPos
   const [situacaoFilter, setSituacaoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonSituacao
   const [tipoFilter, setTipoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonTipo
+  const [searchQuery, setSearchQuery] = useState(''); // Busca
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -95,6 +96,7 @@ export default function TableDetalhados() {
                 situacao: situacaoFilter,
                 tipo: tipoFilter
               },
+              busca: searchQuery
             },
             {
               headers: {
@@ -149,6 +151,13 @@ export default function TableDetalhados() {
 
   //console.log(filtros)
 
+  const handleSearch = (query) => {
+    const searchQuery = query.trim() === '' ? '' : query;
+    setSearchQuery(searchQuery);
+    setPage(0);
+    setDataLoaded(false);
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -202,7 +211,7 @@ export default function TableDetalhados() {
             <div>
               <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
                 <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <SearchBar label="Informe o nome do PDV, o POS série" />
+                  <SearchBar label="Buscar PDV ou POS" onSearch={handleSearch} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap' }}>
                   <FilterButtonPdv
