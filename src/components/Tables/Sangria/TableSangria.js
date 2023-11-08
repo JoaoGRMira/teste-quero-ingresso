@@ -5,6 +5,9 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import TablePagination from '@mui/material/TablePagination';
+import DownloadButton from '../../Buttons/DownloadButton';
+import SearchBar from '../../Outros/SearchBar';
+import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
 import { format } from 'date-fns';
 
@@ -95,52 +98,60 @@ const SortableTableCell = (props) => {
 const TableSangria = () => {
   const [sangria, setSangria] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
+  const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('pdv');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-  //console.log(selectedEventCode);
-  //console.log(selectedEventCode.eve_cod);
+  const fetchSangria = async () => {
+    const conn = Connection();
+
+    try {
+      const response = await conn.get(
+        `eventos/sangrias?evento=${selectedEventCode.eve_cod}&busca=${searchQuery}`,
+        {
+          headers: {
+            'token': localStorage.getItem('token')
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        const filteredSangria = response.data.filter((item) => {
+          return item.nome.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+        setSangria(filteredSangria);
+        setDataLoaded(true);
+      } else {
+        console.log('Erro na resposta da API (Sangria):', response);
+      }
+    } catch (error) {
+      console.error('Erro na solicitação GET (Sangria):', error);
+    }
+  };
 
   useEffect(() => {
-    if (selectedEventCode && !dataLoaded) {
-      const conn = Connection();
-
-      // Acessa o endpoint de tipo de ingresso
-      const fetchSangria = async () => {
-        try {
-          const response = await conn.get(
-            'eventos/sangrias?evento=' +
-            selectedEventCode.eve_cod,
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
-            }
-          );
-
-          // Se der certo, salva os dados no estado de tipo de ingresso
-          if (response.status === 200) {
-            setSangria(response.data);
-            setDataLoaded(true)
-          } else {
-            console.log('Erro na resposta da API (Tipo Ingresso):', response);
-          }
-        } catch (error) {
-          console.error('Erro na solicitação GET (Tipo Ingresso):', error);
-        }
-      };
-
+    if (!dataLoaded) {
       fetchSangria();
     }
-  }, [selectedEventCode, dataLoaded]);
+  }, [dataLoaded, searchQuery]);
 
-  const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('nome');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const handleSearch = (query) => {
+    const searchQuery = query.trim() === '' ? '' : query;
+    setSearchQuery(searchQuery);
+    setPage(0);
+    setDataLoaded(false);
+
+    if (searchQuery === '') {
+      fetchSangria();
+    }
+  };
 
   const expandirLinha = (nome) => {
     setLinhaSelecionada(nome === linhaSelecionada ? -1 : nome);
@@ -163,6 +174,14 @@ const TableSangria = () => {
 
   return (
     <div>
+      <Grid container sx={{ py: 2 }}>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '5px' }}>
+          <SearchBar label="Buscar PDV" onSearch={(query) => handleSearch(query)} />
+        </Grid>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>
+          <DownloadButton />
+        </Grid>
+      </Grid>
       {dataLoaded ? (
         <div>
           <TableContainer>
