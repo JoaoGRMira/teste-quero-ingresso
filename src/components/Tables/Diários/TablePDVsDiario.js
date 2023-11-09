@@ -203,7 +203,7 @@ const TablePDVsDiario = () => {
                         <td className="diario-celula">{item.prazo}</td>
                         <td className="diario-celula">{item.vendidos}</td>
                         <td className="diario-celula">{item.cortesias}</td>
-                        <td className="diario-celula">{item.valor}</td>
+                        <td className="diario-celula">{parseFloat(item.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                       </tr>
                       {item.data === linhaSelecionada && (
                         <>
@@ -221,7 +221,7 @@ const TablePDVsDiario = () => {
                               <td className="diario-conteudo-expandido">{row.nome}</td>
                               <td className="diario-conteudo-expandido">{row.vendidos}</td>
                               <td className="diario-conteudo-expandido">{row.cortesias}</td>
-                              <td className="diario-conteudo-expandido">{row.valor}</td>
+                              <td className="diario-conteudo-expandido">{parseFloat(row.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                               <td className="diario-conteudo-expandido"></td>
                             </tr>
                           ))}

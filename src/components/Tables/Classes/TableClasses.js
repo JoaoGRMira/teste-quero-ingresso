@@ -239,7 +239,7 @@ const TableClasses = () => {
                         <td className="classes-celula">{item.vendas_quant}</td>
                         <td className="classes-celula">{item.cortesias_quant}</td>
                         <td className="classes-celula">{item.total_quant}</td>
-                        <td className="classes-celula">{item.valor_total}</td>
+                        <td className="classes-celula">{parseFloat(item.valor_total).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                       </tr>
                       {item.categoria === linhaSelecionada && (
                         <>
@@ -254,11 +254,11 @@ const TableClasses = () => {
                           {item.classes.map((row) => (
                             <tr key={row.classe}>
                               <td className="classes-conteudo-expandido">{row.classe}</td>
-                              <td className="classes-conteudo-expandido">{row.valor_ing}</td>
+                              <td className="classes-conteudo-expandido">{parseFloat(row.valor_ing).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                               <td className="classes-conteudo-expandido">{row.vendas_quant}</td>
                               <td className="classes-conteudo-expandido">{row.cortesias_quant}</td>
                               <td className="classes-conteudo-expandido">{row.total_quant}</td>
-                              <td className="classes-conteudo-expandido">{row.valor_total}</td>
+                              <td className="classes-conteudo-expandido">{parseFloat(row.valor_total).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                             </tr>
                           ))}
                         </>
@@ -271,7 +271,7 @@ const TableClasses = () => {
                   <td className="classes-rodape">{totalVendasQuant}</td>
                   <td className="classes-rodape">{totalCortesiasQuant}</td>
                   <td className="classes-rodape">{totalTotalQuant}</td>
-                  <td className="classes-rodape">R$ {totalValorTotal.toFixed(2)}</td>
+                  <td className="classes-rodape">{parseFloat(totalValorTotal).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                 </tr>
               </tbody>
             </table>

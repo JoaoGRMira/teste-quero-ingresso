@@ -172,6 +172,8 @@ const TableSangria = () => {
     setPage(0);
   };
 
+  console.log(sangria)
+
   return (
     <div>
       <Grid container sx={{ py: 2 }}>

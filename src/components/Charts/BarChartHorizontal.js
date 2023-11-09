@@ -4,8 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import Connection from '../../model';
 
 const BarChartHorizontal = () => {
-    const [classes, setClasses] = React.useState([]); // Estado para armazenar dados da rota
-    const [dataLoaded, setDataLoaded] = React.useState(false); // Estado para controlar se os dados foram carregados
+    const [classes, setClasses] = React.useState([]); //estado para armazenar dados da rota
+    const [dataLoaded, setDataLoaded] = React.useState(false); //estado para controlar se os dados foram carregados
 
     // Recupera o objeto do evento selecionado do localStorage
     const selectedEventCodeJSON = localStorage.getItem("selectedEvent");

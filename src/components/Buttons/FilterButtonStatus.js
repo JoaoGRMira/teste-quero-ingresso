@@ -6,10 +6,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function FilterButtonStatus({ statusOptions, selectedStatus, onStatusFilterChange }) {
-  const handleChange = (event) => {
-    const selectedValue = event.target.value;
-    onStatusFilterChange(selectedValue);
+
+  const handleChange = (event) => { //função de selecionar filtro
+    const selectedValue = event.target.value; //define o valor da variável como a opção atual
+    onStatusFilterChange(selectedValue); //passa variável como parâmetro da função
   };
+
   return (
     <Box sx={{ minWidth: 120, maxWidth: 120, marginRight: '7px' }}>
       <FormControl fullWidth size="small">
@@ -17,15 +19,15 @@ export default function FilterButtonStatus({ statusOptions, selectedStatus, onSt
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={selectedStatus}
+          value={selectedStatus} //define o valor como o filtro selecionado
           label="Status"
-          onChange={handleChange}
+          onChange={handleChange} //função de seleção
           sx={{ height: '39px' }}
         >
           <MenuItem>Selecione...</MenuItem>
-          {statusOptions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {statusOptions.map((option) => ( //mapeamento das opções
+            <MenuItem key={option.value} value={option.value}> {/* define os valores das opções */}
+              {option.label} {/* define o texto da opção */}
             </MenuItem>
           ))}
         </Select>
