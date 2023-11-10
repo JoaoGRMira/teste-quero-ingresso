@@ -38,11 +38,18 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     '&:nth-of-type(5)': {
       minWidth: '200px',
     },
+    '&:nth-of-type(9)': {
+      minWidth: '200px',
+    },
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     textAlign: 'center',
   },
+}));
+
+const StyledTableBodyRow = styled(TableRow)(({ theme, index }) => ({
+  backgroundColor: theme.palette.mode === 'light' ? (index % 2 === 0 ? 'white' : '#f5f5f5') : '',
 }));
 
 export default function TableSite() {
@@ -349,8 +356,8 @@ export default function TableSite() {
                   return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
                 }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : site
-              ).map((row) => (
-                <TableRow key={row.pedido}>
+              ).map((row, index) => (
+                <StyledTableBodyRow key={row.tipo} index={index}>
                   <StyledTableCell component="th" scope="row">
                     {row.pedido}
                   </StyledTableCell>
@@ -381,7 +388,7 @@ export default function TableSite() {
                   <StyledTableCell component="th" scope="row">
                     {row.valor}
                   </StyledTableCell>
-                </TableRow>
+                </StyledTableBodyRow>
               ))}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>

@@ -73,6 +73,10 @@ export default function TableDetalhados() {
     },
   }));
 
+  const StyledTableBodyRow = styled(TableRow)(({ theme, index }) => ({
+    backgroundColor: theme.palette.mode === 'light' ? (index % 2 === 0 ? 'white' : '#f5f5f5') : '',
+  }));
+
   const handleRequestSort = (property) => () => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -365,8 +369,8 @@ export default function TableDetalhados() {
                             return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
                           }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                           : detalhes
-                        ).map((row) => (
-                          <TableRow key={row.tipo}>
+                        ).map((row, index) => (
+                          <StyledTableBodyRow key={row.tipo} index={index}>
                             <TableCell component="th" scope="row" align='center'></TableCell>
                             <TableCell component="th" scope="row" align='center'>
                               {format(new Date(row.data_compra), 'dd/MM/yyyy HH:mm')}
@@ -381,7 +385,7 @@ export default function TableDetalhados() {
                             <TableCell align='center'>{row.valor}</TableCell>
                             <TableCell align='center'>{row.pagamento}</TableCell>
                             <TableCell align='center'>{row.cod_pagseguro}</TableCell>
-                          </TableRow>
+                          </StyledTableBodyRow>
                         ))}
                         {emptyRows > 0 && (
                           <TableRow style={{ height: 53 * emptyRows }}>
