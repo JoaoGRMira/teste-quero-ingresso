@@ -54,7 +54,7 @@ const StyledTableBodyRow = styled(TableRow)(({ theme, index }) => ({
 
 export default function TableSite() {
   const [orderBy, setOrderBy] = useState('data'); // Defina a coluna padrão para ordenar
-  const [order, setOrder] = useState('asc'); // Defina a ordem padrão para ordenar
+  const [order, setOrder] = useState('desc'); // Defina a ordem padrão para ordenar
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não

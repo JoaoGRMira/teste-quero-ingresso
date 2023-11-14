@@ -21,7 +21,7 @@ import { format } from 'date-fns';
 
 export default function TableDetalhados() {
   const [orderBy, setOrderBy] = useState('data_compra');
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
