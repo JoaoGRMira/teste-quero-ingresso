@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, InputAdornment, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import Box from '@mui/material/Box';
 
 function SearchBar(props) {
   const [searchText, setSearchText] = useState('');
@@ -13,21 +14,34 @@ function SearchBar(props) {
     props.onSearch(searchText);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
-    <div>
+    <Box sx={{ width: '250px', marginRight: '7px' }}>
       <TextField
         label={props.label}
         variant="outlined"
         value={searchText}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         size='small'
         placeholder="Buscar…"
-        sx={{ width: '24ch' }}
+        
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleSearch} size="large">
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
-      <Button variant="contained" onClick={handleSearch} sx={{ width: '2ch', height: '39px', borderRadius: 0 }}>
-        <SearchIcon />
-      </Button>
-    </div>
+    </Box>
   );
 }
 

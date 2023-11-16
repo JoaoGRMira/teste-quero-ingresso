@@ -1,5 +1,5 @@
 .pagination-container {
-  text-align: center;
+  text-align: right;
 }
 
 .pagination-button {
@@ -7,7 +7,7 @@
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 7px 17px;
+  padding: 7px 15px;
   margin: 4px;
   cursor: pointer;
 }

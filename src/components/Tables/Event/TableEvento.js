@@ -6,6 +6,7 @@ import SearchBar from '../../Outros/SearchBar';
 import FilterEventos from '../../Buttons/FilterEventos';
 import Grid from '@mui/material/Grid';
 import { CircularProgress } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 const Table = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Table = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [eventFilter, setEventFilter] = useState('1');
+  const [totalPages, setTotalPages] = useState(0);
 
   const conn = Connection();
   const fetchEventos = async (page) => {
@@ -28,7 +30,8 @@ const Table = () => {
 
       if (response.status === 200) {
         setData(response.data);
-        setEventos(response.data.eventos)
+        setEventos(response.data.eventos);
+        setTotalPages(response.data.total);
         setDataLoaded(true);
       } else {
         console.log('Erro na resposta da API:', response);
@@ -84,11 +87,11 @@ const Table = () => {
 
   return (
     <div>
-      <Grid container spacing={3} sx={{marginBottom: '20px'}}>
+      <Grid container spacing={4} sx={{marginBottom: '20px'}}>
         <Grid item xs={12} md={9} lg={9} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <FilterEventos eventFilter={eventFilter} onEventFilterChange={handleEventFilterChange} />
         </Grid>
-        <Grid item xs={12} md={3} lg={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <Grid item xs={12} md={4} lg={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <SearchBar label="Buscar Eventos" onSearch={handleSearch} />
         </Grid>
       </Grid>
@@ -272,11 +275,12 @@ const Table = () => {
             {data && data.total && (
               <div className="pagination-container">
                 <button onClick={handleDecrement} className="pagination-button" disabled={page === 1}>
-                  -
+                  {"<"}
                 </button>
                 <span>{page}</span>
+                <span> de {data.total}</span>
                 <button onClick={handleIncrement} className="pagination-button" disabled={page === data.total}>
-                  +
+                  {">"}
                 </button>
               </div>
             )}
