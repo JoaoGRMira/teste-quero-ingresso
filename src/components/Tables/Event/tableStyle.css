@@ -12,6 +12,22 @@
   cursor: pointer;
 }
 
+.pagination-numbers button {
+  background-color: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 15px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.pagination-numbers button.active {
+  background-color: var(--light-blue);
+  color: var(--blue);
+  font-weight: bold;
+}
+
 .pagination-button:hover {
   background-color: #024893;
 }

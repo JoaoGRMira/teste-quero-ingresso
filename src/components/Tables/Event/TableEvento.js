@@ -72,6 +72,41 @@ const Table = () => {
     }
   }
 
+  const handleGoToPage = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setPage(pageNumber);
+      fetchEventos(pageNumber);
+    }
+  };
+
+  const renderPageNumbers = () => {
+    const currentPage = page;
+    let startPage = 1;
+    const maxPages = Math.min(currentPage + 2, totalPages);
+  
+    if (currentPage > totalPages - 2) {
+      startPage = totalPages - 2;
+    } else {
+      startPage = currentPage;
+    }
+  
+    const pageNumbers = [];
+    for (let i = startPage; i <= maxPages; i++) {
+      if (i >= 1) {
+        pageNumbers.push(
+          <button
+            key={i}
+            onClick={() => handleGoToPage(i)}
+            className={`pagination-number ${page === i ? 'active' : ''}`}
+          >
+            {i}
+          </button>
+        );
+      }
+    }
+    return pageNumbers;
+  };  
+
   const handleSearch = (query) => {
     const searchQuery = query.trim() === '' ? '' : query;
     setSearchQuery(searchQuery);
@@ -277,8 +312,25 @@ const Table = () => {
                 <button onClick={handleDecrement} className="pagination-button" disabled={page === 1}>
                   {"<"}
                 </button>
-                <span>{page}</span>
-                <span> de {data.total}</span>
+                <button
+                  onClick={() => handleGoToPage(1)}
+                  className="pagination-button"
+                  style={{ display: page === 1 ? 'none' : 'inline-block' }}
+                >
+                  {"1"}
+                </button>
+                <span style={{ display: (page === 1 || page === 2) ? 'none' : 'inline-block', marginLeft: '5px' }}>
+                  ...
+                </span>
+                <span className="pagination-numbers">
+                  {renderPageNumbers()}
+                </span>
+                <span style={{ display: (page === totalPages) ? 'none' : 'inline-block', marginRight: '5px', marginLeft: '5px' }}>
+                  ...
+                </span>
+                <button onClick={() => handleGoToPage(totalPages)} className="pagination-button" style={{ display: (page === totalPages) ? 'none' : 'inline-block' }}>
+                  {totalPages}
+                </button>
                 <button onClick={handleIncrement} className="pagination-button" disabled={page === data.total}>
                   {">"}
                 </button>
