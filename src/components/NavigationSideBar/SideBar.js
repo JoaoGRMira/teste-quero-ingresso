@@ -11,11 +11,11 @@ import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import NumbersIcon from '@mui/icons-material/Numbers';
 import NotInterestedIcon from '@mui/icons-material/NotInterested';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
+//import ReceiptIcon from '@mui/icons-material/Receipt';
+//import AnalyticsIcon from '@mui/icons-material/Analytics';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import SellIcon from '@mui/icons-material/Sell';
-import InventoryIcon from '@mui/icons-material/Inventory';
+//import SellIcon from '@mui/icons-material/Sell';
+//import InventoryIcon from '@mui/icons-material/Inventory';
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
@@ -80,14 +80,14 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/Cancelados" sx={{ color: 'white' }}>
       <ListItemIcon>
         <NotInterestedIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '0.9rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Cancelados#
+            Cancelados
           </Typography>
         }
       />
@@ -97,6 +97,7 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <React.Fragment>
+    {/* 
     <ListItemButton sx={{ color: 'white' }}>
       <ListItemIcon>
         <SellIcon sx={{ color: 'white' }} />
@@ -109,6 +110,7 @@ export const secondaryListItems = (
         }
       />
     </ListItemButton>
+    */}
     <ListItemButton component={Link} to="/site" sx={{ color: 'white' }}>
       <ListItemIcon>
         <BarChartIcon sx={{ color: 'white' }} />
@@ -136,6 +138,7 @@ export const secondaryListItems = (
   </React.Fragment>
 );
 
+/*
 export const tertiaryListItems = (
   <React.Fragment>
     <ListItemButton sx={{ color: 'white' }}>
@@ -152,6 +155,7 @@ export const tertiaryListItems = (
     </ListItemButton>
   </React.Fragment>
 );
+*/
 
 export const quaternaryListItems = (
   <React.Fragment>
@@ -167,6 +171,7 @@ export const quaternaryListItems = (
         }
       />
     </ListItemButton>
+    {/* 
     <ListItemButton sx={{ color: 'white' }}>
       <ListItemIcon>
         <ReceiptIcon sx={{ color: 'white' }} />
@@ -179,9 +184,11 @@ export const quaternaryListItems = (
         }
       />
     </ListItemButton>
+    */}
   </React.Fragment>
 );
 
+/*
 export const quinaryListItems = (
   <React.Fragment>
     <ListItemButton sx={{ color: 'white' }}>
@@ -198,3 +205,4 @@ export const quinaryListItems = (
     </ListItemButton>
   </React.Fragment>
 );
+*/

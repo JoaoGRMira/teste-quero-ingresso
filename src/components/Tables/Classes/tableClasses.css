@@ -10,6 +10,14 @@
   text-align: center;
 }
 
+.classes-cabecalho-botao {
+  border-bottom: 1px solid var(--grey-shadow);
+  border-top: 1px solid var(--grey-shadow);
+  padding: 10px;
+  text-align: left;
+  width: 200px;
+}
+
 .classes-rodape {
   border-bottom: 1px solid var(--grey-shadow);
   border-top: 1px solid var(--grey-shadow);
@@ -18,9 +26,24 @@
   font-weight: bold;
 }
 
+.classes-rodape-left {
+  border-bottom: 1px solid var(--grey-shadow);
+  border-top: 1px solid var(--grey-shadow);
+  padding: 10px;
+  padding-left: 15px;
+  text-align: left;
+  font-weight: bold;
+}
+
 .classes-celula {
   border-bottom: 1px solid var(--grey-shadow);
   text-align: center;
+}
+
+.classes-celula-left {
+  border-bottom: 1px solid var(--grey-shadow);
+  text-align: left;
+  padding-left: 15px;
 }
 
 .classes-botao-expandir {
@@ -40,6 +63,18 @@
   text-align: center;
 }
 
+.classes-conteudo-expandido-left {
+  border-bottom: 1px solid var(--grey-shadow);
+  text-align: left;
+  padding-left: 15px;
+}
+
+.classes-conteudo-expandido-left-botao {
+  border-bottom: 1px solid var(--grey-shadow);
+  text-align: left;
+  padding-left: 80px;
+}
+
 .classes-linha-branca {
   background-color: #ffffff;
 }
@@ -53,5 +88,21 @@
   font-weight: bold;
   border-bottom: 1px solid var(--grey-shadow);
   text-align: center;
+}
+
+.classes-linha-azul-left {
+  background-color: lightblue;
+  font-weight: bold;
+  border-bottom: 1px solid var(--grey-shadow);
+  text-align: left;
+  padding-left: 15px;
+}
+
+.classes-linha-azul-left-botao {
+  background-color: lightblue;
+  font-weight: bold;
+  border-bottom: 1px solid var(--grey-shadow);
+  text-align: left;
+  padding-left: 80px;
 }
   

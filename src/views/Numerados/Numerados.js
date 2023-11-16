@@ -122,16 +122,19 @@ export default function Numerados() {
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
               >
                 <Link href='/eventos' sx={{
-                textDecoration: 'none',
-                '&:visited': {
-                  color: 'inherit',
-                },
-              }}>
-                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                  textDecoration: 'none',
+                  '&:visited': {
+                    color: 'inherit',
+                  },
+                }}>
+                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                     Home
-                    </Typography>
+                  </Typography>
                 </Link>
               </IconButton>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+              <Title>Relatório Numerados</Title>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
@@ -183,16 +186,16 @@ export default function Numerados() {
               display: open ? 'block' : 'none',
             }}
           >
-            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> {}
+            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> { }
               {mainListItems}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {secondaryListItems}
-              <Divider sx={{ my: 1, backgroundColor: 'white' }} />
-              {tertiaryListItems}
+              {/*<Divider sx={{ my: 1, backgroundColor: 'white' }} />
+              {tertiaryListItems}*/}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {quaternaryListItems}
-              <Divider sx={{ my: 1, backgroundColor: 'white' }} />
-              {quinaryListItems}
+              {/*<Divider sx={{ my: 1, backgroundColor: 'white' }} />
+              {quinaryListItems}*/}
             </List>
           </Box>
         </Drawer>
@@ -212,22 +215,22 @@ export default function Numerados() {
               <Grid item xs={12} md={5} lg={5}>
                 <Title>Relatório Numerados</Title>
                 <EventoAtual nomeEvento={selectedEventCode.eve_nome}
-                        dataEvento={selectedEventCode.eve_data}
-                        localEvento={selectedEventCode.local}
-                        cidadeEvento={selectedEventCode.cidade} />
+                  dataEvento={selectedEventCode.eve_data}
+                  localEvento={selectedEventCode.local}
+                  cidadeEvento={selectedEventCode.cidade} />
               </Grid>
               {/* Infos */}
               <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize='14px'>
                     Total: {selectedEventCode.cortesias_pdv_total + selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Vendas: {selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Cortesia: {selectedEventCode.cortesias_pdv_total}
                   </Typography>
                 </div>
@@ -235,7 +238,7 @@ export default function Numerados() {
               <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
-                  {selectedEventCode.receitas_total}
+                    {selectedEventCode.receitas_total}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">
@@ -248,7 +251,7 @@ export default function Numerados() {
                 <Divider sx={{ my: 1, backgroundColor: 'var(--grey-shadow)' }} />
               </Grid>
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
-                <Grid container spacing={3} sx={{ py: 2 }}> 
+                <Grid container spacing={3} sx={{ py: 2 }}>
                   <Grid item xs={12}>
                     <TableNumerados />
                   </Grid>
