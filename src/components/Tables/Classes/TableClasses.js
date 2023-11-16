@@ -50,7 +50,7 @@ const EnhancedTableHead = (props) => {
   return (
     <thead>
       <tr>
-        <th className="classes-cabecalho"></th>
+        <th className="classes-cabecalho-botao"></th>
         <SortableTableCell
           label={<b>Categoria</b>}
           numeric={false}
@@ -91,7 +91,7 @@ const SortableTableCell = (props) => {
   const { label, numeric, order, onRequestSort } = props;
 
   return (
-    <TableCell className="classes-cabecalho" align={numeric ? 'center' : 'center'}>
+    <TableCell className="classes-cabecalho" align={numeric ? 'center' : 'left'}>
       <TableSortLabel
         active={order !== false}
         direction={order === 'asc' ? 'asc' : 'desc'}
@@ -115,26 +115,28 @@ const TableClasses = () => {
   const [page, setPage] = useState(0); // Paginação
   const [rowsPerPage, setRowsPerPage] = useState(5); // Número de linhas por página
   const [searchQuery, setSearchQuery] = useState(''); // Busca
+  const [totalVendasQuant, setTotalVendasQuant] = useState(0);
+  const [totalCortesiasQuant, setTotalCortesiasQuant] = useState(0);
+  const [totalTotalQuant, setTotalTotalQuant] = useState(0);
+  const [totalValorTotal, setTotalValorTotal] = useState(0);
 
-  // Variáveis para salvar a soma total dos valores
-  let totalVendasQuant = 0;
-  let totalCortesiasQuant = 0;
-  let totalTotalQuant = 0;
-  let totalValorTotal = 0;
-
-  // Função para realizar a soma dos valores
   const calculateTotalValues = () => {
-    totalVendasQuant = 0;
-    totalCortesiasQuant = 0;
-    totalTotalQuant = 0;
-    totalValorTotal = 0;
+    let vendasQuant = 0;
+    let cortesiasQuant = 0;
+    let totalQuant = 0;
+    let valorTotal = 0;
 
     classes.forEach((item) => {
-      totalVendasQuant += item.vendas_quant;
-      totalCortesiasQuant += item.cortesias_quant;
-      totalTotalQuant += item.total_quant;
-      totalValorTotal += item.valor_total;
+      vendasQuant += item.vendas_quant;
+      cortesiasQuant += item.cortesias_quant;
+      totalQuant += item.total_quant;
+      valorTotal += item.valor_total;
     });
+
+    setTotalVendasQuant(vendasQuant);
+    setTotalCortesiasQuant(cortesiasQuant);
+    setTotalTotalQuant(totalQuant);
+    setTotalValorTotal(valorTotal);
   };
 
   // Recupera o objeto do evento selecionado do localStorage
@@ -174,6 +176,10 @@ const TableClasses = () => {
   useEffect(() => {
     fetchClasses();
   }, [selectedEventCode, dataLoaded, searchQuery]);
+
+  useEffect(() => {
+    calculateTotalValues();
+  }, [classes]);
 
   const handleSearch = (query) => {
     const searchQuery = query.trim() === '' ? '' : query;
@@ -235,30 +241,30 @@ const TableClasses = () => {
                             {item.categoria === linhaSelecionada ? '-' : '+'}
                           </button>
                         </td>
-                        <td className="classes-celula">{item.categoria}</td>
+                        <td className="classes-celula-left">{item.categoria}</td>
                         <td className="classes-celula">{item.vendas_quant}</td>
                         <td className="classes-celula">{item.cortesias_quant}</td>
                         <td className="classes-celula">{item.total_quant}</td>
-                        <td className="classes-celula">{item.valor_total}</td>
+                        <td className="classes-celula-left">{parseFloat(item.valor_total).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                       </tr>
                       {item.categoria === linhaSelecionada && (
                         <>
                           <tr>
-                            <td className="classes-linha-azul">Classe</td>
-                            <td className="classes-linha-azul">Valor</td>
+                            <td className="classes-linha-azul-left-botao">Classe</td>
+                            <td className="classes-linha-azul-left">Valor</td>
                             <td className="classes-linha-azul">Vendido</td>
                             <td className="classes-linha-azul">Cortesia</td>
                             <td className="classes-linha-azul">Total</td>
-                            <td className="classes-linha-azul">Valor Total</td>
+                            <td className="classes-linha-azul-left">Valor Total</td>
                           </tr>
                           {item.classes.map((row) => (
                             <tr key={row.classe}>
-                              <td className="classes-conteudo-expandido">{row.classe}</td>
-                              <td className="classes-conteudo-expandido">{row.valor_ing}</td>
+                              <td className="classes-conteudo-expandido-left-botao">{row.classe}</td>
+                              <td className="classes-conteudo-expandido-left">{parseFloat(row.valor_ing).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                               <td className="classes-conteudo-expandido">{row.vendas_quant}</td>
                               <td className="classes-conteudo-expandido">{row.cortesias_quant}</td>
                               <td className="classes-conteudo-expandido">{row.total_quant}</td>
-                              <td className="classes-conteudo-expandido">{row.valor_total}</td>
+                              <td className="classes-conteudo-expandido-left">{parseFloat(row.valor_total).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                             </tr>
                           ))}
                         </>
@@ -267,11 +273,11 @@ const TableClasses = () => {
                   ))}
                 <tr>
                   <td className="classes-rodape"></td>
-                  <td className="classes-rodape">Total (Vendas + Cortesia)</td>
+                  <td className="classes-rodape-left">Total (Vendas + Cortesia)</td>
                   <td className="classes-rodape">{totalVendasQuant}</td>
                   <td className="classes-rodape">{totalCortesiasQuant}</td>
                   <td className="classes-rodape">{totalTotalQuant}</td>
-                  <td className="classes-rodape">R$ {totalValorTotal.toFixed(2)}</td>
+                  <td className="classes-rodape-left">{parseFloat(totalValorTotal).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                 </tr>
               </tbody>
             </table>

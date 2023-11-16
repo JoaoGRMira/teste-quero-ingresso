@@ -13,6 +13,7 @@ import Link from '@mui/material/Link';
 import FilterEventos from '../../components/Buttons/FilterEventos';
 import SearchBar from '../../components/Outros/SearchBar';
 import TableEvento from "../../components/Tables/Event/TableEvento";
+import Title from '../../components/Outros/Title';
 //import { useLogin } from '../../model/loginContext';
 
 const defaultTheme = createTheme();
@@ -44,22 +45,10 @@ export default function Eventos() {
           <Toolbar>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <img src={logo} alt="Logo" style={{ height: '71px' }} />
-              <IconButton
-                color="inherit"
-                sx={{ marginLeft: '20px', borderRadius: '0' }}              >
-                <Link href='/eventos'
-                  sx={{
-                    textDecoration: 'none',
-                    '&:visited': {
-                      color: 'inherit',
-                    },
-                  }}>
-                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
-                    Home
-                  </Typography>
-                </Link>
-              </IconButton>
             </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+                    <Title>Home</Title>
+                  </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link
                 href="#"

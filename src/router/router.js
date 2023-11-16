@@ -11,6 +11,7 @@ import Detalhados from '../views/Detalhados/Detalhados';
 import Numerados from '../views/Numerados/Numerados';
 import { TokenProvider } from '../model/tokenContext';
 import { LoginProvider } from '../model/loginContext';
+import Cancelados from '../views/Cancelados/Cancelados';
 
 function Router() {
     return (
@@ -28,6 +29,7 @@ function Router() {
                 <Route path='/sangria' element={<Sangria />}/>
                 <Route path='/detalhados' element={<Detalhados />}/>
                 <Route path='/numerados' element={<Numerados />}/>
+                <Route path='/cancelados' element={<Cancelados />}/>
             </Routes>
         </BrowserRouter>
         </TokenProvider>

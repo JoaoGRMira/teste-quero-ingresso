@@ -13,12 +13,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
 import Title from '../../components/Outros/Title';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import TableSite from '../../components/Tables/Site/TableSite';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import TableCancelados from '../../components/Tables/Cancelados/Cancelados';
 
 function Copyright(props) {
   return (
@@ -81,7 +81,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Site() {
+export default function Cancelados() {
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
   const toggleDrawer = () => {
@@ -136,7 +136,7 @@ export default function Site() {
               </IconButton>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-              <Title>Relatório Site Detalhado</Title>
+              <Title>Relatório Cancelados</Title>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
@@ -215,7 +215,7 @@ export default function Site() {
             <Grid container spacing={3}>
               {/* Evento Atual */}
               <Grid item xs={12} md={5} lg={5}>
-                <Title>Relatório Site Detalhado</Title>
+                <Title>Relatório Cancelados</Title>
                 <EventoAtual nomeEvento={selectedEventCode.eve_nome}
                   dataEvento={selectedEventCode.eve_data}
                   localEvento={selectedEventCode.local}
@@ -255,7 +255,7 @@ export default function Site() {
               <Container maxWidth="lg" sx={{ m: 2, backgroundColor: 'white', borderRadius: 1, boxShadow: 2 }}>
                 <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
                   <Grid item xs={12}>
-                    <TableSite />
+                    <TableCancelados />
                   </Grid>
                 </Grid>
               </Container>

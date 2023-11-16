@@ -90,12 +90,12 @@ export default function Classes() {
     setOpen(!open);
   };
 
-   // Recupera o objeto do evento selecionado do localStorage
-   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
-   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
- 
-   //console.log(selectedEventCode);
-   //console.log(selectedEventCode.eve_cod);
+  // Recupera o objeto do evento selecionado do localStorage
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+
+  //console.log(selectedEventCode);
+  //console.log(selectedEventCode.eve_cod);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -126,16 +126,19 @@ export default function Classes() {
                 sx={{ marginLeft: '20px', borderRadius: '0' }}
               >
                 <Link href='/eventos' sx={{
-                textDecoration: 'none',
-                '&:visited': {
-                  color: 'inherit',
-                },
-              }}>
-                    <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
+                  textDecoration: 'none',
+                  '&:visited': {
+                    color: 'inherit',
+                  },
+                }}>
+                  <Typography variant="body2" color="black" fontFamily="'Century Gothic', Futura, sans-serif">
                     Home
-                    </Typography>
+                  </Typography>
                 </Link>
               </IconButton>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+              <Title>Relatório Classes</Title>
             </Box>
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
@@ -187,16 +190,16 @@ export default function Classes() {
               display: open ? 'block' : 'none',
             }}
           >
-            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> {}
+            <List component="nav" sx={{ display: open ? 'block' : 'none' }}> { }
               {mainListItems}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {secondaryListItems}
-              <Divider sx={{ my: 1, backgroundColor: 'white' }} />
-              {tertiaryListItems}
+              {/*<Divider sx={{ my: 1, backgroundColor: 'white' }} />
+              {tertiaryListItems}*/}
               <Divider sx={{ my: 1, backgroundColor: 'white' }} />
               {quaternaryListItems}
-              <Divider sx={{ my: 1, backgroundColor: 'white' }} />
-              {quinaryListItems}
+              {/*<Divider sx={{ my: 1, backgroundColor: 'white' }} />
+              {quinaryListItems}*/}
             </List>
           </Box>
         </Drawer>
@@ -223,15 +226,15 @@ export default function Classes() {
               {/* Infos */}
               <Grid item xs={12} md={5} lg={5} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold" fontSize='14px'>
                     Total: {selectedEventCode.cortesias_pdv_total + selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Vendas: {selectedEventCode.vendido_total}
                   </Typography>
                   <br />
-                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize= '14px'>
+                  <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif" fontSize='14px'>
                     Cortesia: {selectedEventCode.cortesias_pdv_total}
                   </Typography>
                 </div>
