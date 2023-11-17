@@ -37,12 +37,25 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       minWidth: '200px',
     },
     '&:nth-of-type(9)': {
-      minWidth: '200px',
+      minWidth: '150px',
+      textAlign: 'left'
+    },
+    '&:nth-of-type(10)': {
+      minWidth: '100px',
+      textAlign: 'left'
     },
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     textAlign: 'center',
+    '&:nth-of-type(9)': {
+      minWidth: '200px',
+      textAlign: 'left'
+    },
+    '&:nth-of-type(10)': {
+      minWidth: '100px',
+      textAlign: 'left'
+    },
   },
 }));
 

@@ -71,6 +71,18 @@ export default function TableDetalhados() {
         minWidth: '200px',
       },
     },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+      textAlign: 'center',
+      '&:nth-of-type(7)': {
+        minWidth: '100px',
+        textAlign: 'left'
+      },
+      '&:nth-of-type(9)': {
+        minWidth: '100px',
+        textAlign: 'left'
+      },
+    },
   }));
 
   const StyledTableBodyRow = styled(TableRow)(({ theme, index }) => ({
@@ -315,7 +327,7 @@ export default function TableDetalhados() {
                               <strong>Situação</strong>
                             </TableSortLabel>
                           </StyledTableHeaderCell>
-                          <StyledTableHeaderCell align='center'>
+                          <StyledTableHeaderCell align='left'>
                             <TableSortLabel
                               active={orderBy === 'ingresso'}
                               direction={orderBy === 'ingresso' ? order : 'asc'}
@@ -333,7 +345,7 @@ export default function TableDetalhados() {
                               <strong>Ingresso Numerado</strong>
                             </TableSortLabel>
                           </StyledTableHeaderCell>
-                          <StyledTableHeaderCell align='center'>
+                          <StyledTableHeaderCell align='left'>
                             <TableSortLabel
                               active={orderBy === 'valor'}
                               direction={orderBy === 'valor' ? order : 'asc'}
@@ -380,9 +392,9 @@ export default function TableDetalhados() {
                             <TableCell align='center'>{row.pedido}</TableCell>
                             <TableCell align='center'>{row.cod_barras}</TableCell>
                             <TableCell align='center'>{row.situacao}</TableCell>
-                            <TableCell align='center'>{row.ing}</TableCell>
+                            <TableCell align='left'>{row.ing}</TableCell>
                             <TableCell align='center'>{row.ing_num}</TableCell>
-                            <TableCell align='center'>{row.valor}</TableCell>
+                            <TableCell align='left'>{row.valor}</TableCell>
                             <TableCell align='center'>{row.pagamento}</TableCell>
                             <TableCell align='center'>{row.cod_pagseguro}</TableCell>
                           </StyledTableBodyRow>

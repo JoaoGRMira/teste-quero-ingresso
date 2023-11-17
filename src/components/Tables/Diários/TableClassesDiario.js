@@ -117,7 +117,7 @@ const TableClassesDiario = () => {
           />
           <SortableTableCell
             label={<b>Valor</b>}
-            numeric={true}
+            numeric={false}
             order={orderBy === 'valor' ? order : false}
             onRequestSort={createSortHandler('valor')}
           />
@@ -130,7 +130,7 @@ const TableClassesDiario = () => {
     const { label, numeric, order, onRequestSort } = props;
 
     return (
-      <TableCell className="diario-cabecalho" align={numeric ? 'center' : 'center'}>
+      <TableCell className="diario-cabecalho" align={numeric ? 'center' : 'left'}>
         <TableSortLabel
           active={order !== false}
           direction={order === 'asc' ? 'asc' : 'desc'}
@@ -197,30 +197,30 @@ const TableClassesDiario = () => {
                             {item.data === linhaSelecionada ? '-' : '+'}
                           </button>
                         </td>
-                        <td className="diario-celula">{item.data}</td>
+                        <td className="diario-celula-left">{item.data}</td>
                         <td className="diario-celula">{item.prazo}</td>
                         <td className="diario-celula">{item.vendidos}</td>
                         <td className="diario-celula">{item.cortesias}</td>
-                        <td className="diario-celula">{parseFloat(item.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                        <td className="diario-celula-left">{parseFloat(item.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                       </tr>
                       {item.data === linhaSelecionada && (
                         <>
                           <tr>
                             <td className="diario-linha-azul"></td>
-                            <td className="diario-linha-azul">Nome</td>
+                            <td className="diario-linha-azul-left">Nome</td>
+                            <td className="diario-linha-azul"></td>
                             <td className="diario-linha-azul">Ingressos Vendidos</td>
                             <td className="diario-linha-azul">Cortesias Emitidas</td>
-                            <td className="diario-linha-azul">Total Vendidos</td>
-                            <td className="diario-linha-azul"></td>
+                            <td className="diario-linha-azul-left">Total Vendidos</td>
                           </tr>
                           {item.vendas.map((row) => (
                             <tr>
                               <td className="diario-conteudo-expandido"></td>
-                              <td className="diario-conteudo-expandido">{row.nome}</td>
+                              <td className="diario-conteudo-expandido-left">{row.nome}</td>
+                              <td className="diario-conteudo-expandido"></td>
                               <td className="diario-conteudo-expandido">{row.vendidos}</td>
                               <td className="diario-conteudo-expandido">{row.cortesias}</td>
-                              <td className="diario-conteudo-expandido">{parseFloat(row.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
-                              <td className="diario-conteudo-expandido"></td>
+                              <td className="diario-conteudo-expandido-left">{parseFloat(row.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                             </tr>
                           ))}
                         </>

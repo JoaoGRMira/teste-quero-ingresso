@@ -49,10 +49,10 @@ const EnhancedTableHead = (props) => {
   return (
     <thead>
       <tr>
-        <th className="pdv-cabecalho"></th>
+        <th className="numerados-cabecalho"></th>
         <SortableTableCell
           label={<b>Classe</b>}
-          numeric={false}
+          numeric={true}
           order={orderBy === 'classe' ? order : false}
           onRequestSort={createSortHandler('classe')}
         />
@@ -64,7 +64,7 @@ const EnhancedTableHead = (props) => {
         />
         <SortableTableCell
           label={<b>Estoque inicial</b>}
-          numeric={true}
+          numeric={false}
           order={orderBy === 'estq_inicial' ? order : false}
           onRequestSort={createSortHandler('estq_inicial')}
         />
@@ -76,7 +76,7 @@ const EnhancedTableHead = (props) => {
         />
         <SortableTableCell
           label={<b>Qtde (Total)</b>}
-          numeric={true}
+          numeric={false}
           order={orderBy === 'vendidos_perc' ? order : false}
           onRequestSort={createSortHandler('vendidos_perc')}
         />
@@ -102,7 +102,7 @@ const SortableTableCell = (props) => {
   const { label, numeric, order, onRequestSort } = props;
 
   return (
-    <TableCell className="pdv-cabecalho" align={numeric ? 'center' : 'center'}>
+    <TableCell className="numerados-cabecalho" align={numeric ? 'left' : 'center'}>
       <TableSortLabel
         active={order !== false}
         direction={order === 'asc' ? 'asc' : 'desc'}
@@ -273,7 +273,7 @@ const TableNumerados = () => {
                               {item.expandir ? '-' : '+'}
                             </button>
                           </td>
-                          <td className="numerados-celula">{item.classe}</td>
+                          <td className="numerados-celula-left">{item.classe}</td>
                           <td className={`numerados-celula ${item.disp === 'Disponível' ? 'disponivel-cell' : ''} ${item.disp === 'Parcial' ? 'parcial-cell' : ''} ${item.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
                             {item.disp}
                           </td>
@@ -287,7 +287,7 @@ const TableNumerados = () => {
                           <>
                             <tr>
                               <td className="numerados-linha-azul"></td>
-                              <td className="numerados-linha-azul">Grupo</td>
+                              <td className="numerados-linha-azul-left">Grupo</td>
                               <td className="numerados-linha-azul">Disponibilidade</td>
                               <td className="numerados-linha-azul">Estoque Inicial</td>
                               <td className="numerados-linha-azul">Vendidos</td>
@@ -306,7 +306,7 @@ const TableNumerados = () => {
                                       {subItem.expandir ? '-' : '+'}
                                     </button>
                                   </td>
-                                  <td className="numerados-conteudo-expandido">{subItem.grupo}</td>
+                                  <td className="numerados-conteudo-expandido-left">{subItem.grupo}</td>
                                   <td className={`numerados-conteudo-expandido ${subItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
                                     {subItem.disp}
                                   </td>
@@ -319,25 +319,25 @@ const TableNumerados = () => {
                                 {subItem.expandir && (
                                   <>
                                     <tr>
-                                      <td className="numerados-linha-azul">Numeração</td>
+                                      <td className="numerados-linha-azul-left">Numeração</td>
                                       <td className="numerados-linha-azul">Situação</td>
                                       <td className="numerados-linha-azul">Vendido ?</td>
                                       <td className="numerados-linha-azul">Cód de Barras</td>
                                       <td className="numerados-linha-azul">Qtde. Vendidos</td>
-                                      <td className="numerados-linha-azul">Valor de Venda</td>
+                                      <td className="numerados-linha-azul-left">Valor de Venda</td>
                                       <td className="numerados-linha-azul">Tipo de Ingresso</td>
                                       <td className="numerados-linha-azul">Pdv</td>
                                     </tr>
                                     {subItem.numerados.map((subSubItem) => (
                                       <tr key={subSubItem.numerado}>
-                                        <td className="numerados-conteudo-expandido">{subSubItem.numerado}</td>
+                                        <td className="numerados-conteudo-expandido-left">{subSubItem.numerado}</td>
                                         <td className={`numerados-conteudo-expandido ${subSubItem.disp === 'Disponível' ? 'disponivel-cell' : ''} ${subSubItem.disp === 'Parcial' ? 'parcial-cell' : ''} ${subSubItem.disp === 'Vendido' ? 'vendido-cell' : ''}`}>
                                           {subSubItem.disp}
                                         </td>
                                         <td className="numerados-conteudo-expandido">{subSubItem.vendido ? 'Sim' : 'Não'}</td>
                                         <td className="numerados-conteudo-expandido">{subSubItem.cod_barras}</td>
                                         <td className="numerados-conteudo-expandido">{subSubItem.quant_vendido}</td>
-                                        <td className="numerados-conteudo-expandido">{subSubItem.valor_venda}</td>
+                                        <td className="numerados-conteudo-expandido-left">{subSubItem.valor_venda}</td>
                                         <td className="numerados-conteudo-expandido">{subSubItem.tipo}</td>
                                         <td className="numerados-conteudo-expandido">{subSubItem.pdv}</td>
                                       </tr>

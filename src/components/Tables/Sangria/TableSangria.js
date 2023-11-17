@@ -49,9 +49,9 @@ const EnhancedTableHead = (props) => {
   };
 
   const headers = [
-    { label: 'PDV', id: 'pdv', numeric: false },
+    { label: 'PDV', id: 'pdv', numeric: true },
     { label: 'Vendas', id: 'vendas', numeric: true },
-    { label: 'Sangrias', id: 'sangrias', numeric: false },
+    { label: 'Sangrias', id: 'sangrias', numeric: true },
     { label: 'Saldo', id: 'saldo', numeric: true },
   ];
 
@@ -78,7 +78,7 @@ const SortableTableCell = (props) => {
   const { label, numeric, order, onRequestSort } = props;
 
   return (
-    <TableCell className="pdv-cabecalho" align={numeric ? 'center' : 'center'}>
+    <TableCell className="pdv-cabecalho" align={numeric ? 'left' : 'center'}>
       <TableSortLabel
         active={order !== false}
         direction={order === 'asc' ? 'asc' : 'desc'}
@@ -199,7 +199,7 @@ const TableSangria = () => {
                   .map((item, index) => (
                     <React.Fragment key={item.nome}>
                       <tr className={index % 2 === 0 ? 'sangria-linha-branca' : 'sangria-linha-cinza'}>
-                        <td className="sangria-celula">
+                        <td className="sangria-celula-botao">
                           <button
                             className="sangria-botao-expandir"
                             onClick={() => expandirLinha(item.nome)}

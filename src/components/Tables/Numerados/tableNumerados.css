@@ -22,6 +22,12 @@
     border-bottom: 1px solid var(--grey-shadow);
     text-align: center;
   }
+
+  .numerados-celula-left {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding-left: 15px;
+  }
   
   .numerados-botao-expandir {
     width: 30px;
@@ -38,6 +44,12 @@
   .numerados-conteudo-expandido {
     border-bottom: 1px solid var(--grey-shadow);
     text-align: center;
+  }
+
+  .numerados-conteudo-expandido-left {
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding-left: 15px;
   }
 
   .numerados-botao-expandir2 {
@@ -69,6 +81,14 @@
     font-weight: bold;
     border-bottom: 1px solid var(--grey-shadow);
     text-align: center;
+  }
+
+  .numerados-linha-azul-left {
+    background-color: lightblue;
+    font-weight: bold;
+    border-bottom: 1px solid var(--grey-shadow);
+    text-align: left;
+    padding-left: 15px;
   }
   
 

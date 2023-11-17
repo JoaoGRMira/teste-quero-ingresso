@@ -162,7 +162,7 @@ const TablePDV = () => {
     const { label, numeric, order, onRequestSort } = props;
 
     return (
-      <TableCell className="pdv-cabecalho" align={numeric ? 'center' : 'center'}>
+      <TableCell className="pdv-cabecalho" align={numeric ? 'center' : 'left'}>
         <TableSortLabel
           active={order !== false}
           direction={order === 'asc' ? 'asc' : 'desc'}
@@ -231,16 +231,16 @@ const TablePDV = () => {
                             {item.pdv === linhaSelecionada ? '-' : '+'}
                           </button>
                         </td>
-                        <td className="pdv-celula">{item.pdv}</td>
+                        <td className="pdv-celula-left">{item.pdv}</td>
                         <td className="pdv-celula">{item.quant_hoje}</td>
-                        <td className="pdv-celula">
+                        <td className="pdv-celula-left">
                           {parseFloat(item.valor_hoje).toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
                           })}
                         </td>
                         <td className="pdv-celula">{item.quant_total}</td>
-                        <td className="pdv-celula">
+                        <td className="pdv-celula-left">
                           {parseFloat(item.valor_total).toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
@@ -274,27 +274,27 @@ const TablePDV = () => {
                         <>
                           <tr>
                             <td className="pdv-linha-azul"></td>
-                            <td className="pdv-linha-azul">Classe</td>
+                            <td className="pdv-linha-azul-left">Classe</td>
                             <td className="pdv-linha-azul">Qtde (Hoje)</td>
-                            <td className="pdv-linha-azul">Valor (Hoje)</td>
+                            <td className="pdv-linha-azul-left">Valor (Hoje)</td>
                             <td className="pdv-linha-azul">Qtde (Total)</td>
-                            <td className="pdv-linha-azul">Valor (Total)</td>
+                            <td className="pdv-linha-azul-left">Valor (Total)</td>
                             <td className="pdv-linha-azul">Cortesias</td>
                             <td className="pdv-linha-azul"></td>
                           </tr>
                           {item.classes.map((row) => (
                             <tr key={row.classe}>
                               <td className="pdv-conteudo-expandido"></td>
-                              <td className="pdv-conteudo-expandido">{row.classe}</td>
+                              <td className="pdv-conteudo-expandido-left">{row.classe}</td>
                               <td className="pdv-conteudo-expandido">{row.quant_hoje}</td>
-                              <td className="pdv-celula">
+                              <td className="pdv-celula-left">
                                 {parseFloat(row.valor_hoje).toLocaleString('pt-BR', {
                                   style: 'currency',
                                   currency: 'BRL',
                                 })}
                               </td>
                               <td className="pdv-conteudo-expandido">{row.quant_total}</td>
-                              <td className="pdv-celula">
+                              <td className="pdv-celula-left">
                                 {parseFloat(row.valor_total).toLocaleString('pt-BR', {
                                   style: 'currency',
                                   currency: 'BRL',
