@@ -137,9 +137,9 @@ export default function Pdv() {
                 </Link>
               </IconButton>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+            {/*<Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
               <Title>Relatório Pdv</Title>
-            </Box>
+            </Box>*/}
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
                 textDecoration: 'none',

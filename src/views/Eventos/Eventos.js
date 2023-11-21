@@ -46,9 +46,9 @@ export default function Eventos() {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <img src={logo} alt="Logo" style={{ height: '71px' }} />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-                    <Title>Home</Title>
-                  </Box>
+            {/*<Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+              <Title>Home</Title>
+            </Box>*/}
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link
                 href="#"
@@ -91,7 +91,7 @@ export default function Eventos() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)', marginBottom:"20px" }}>
+          <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)', marginBottom: "20px" }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <StyledContainer sx={{ boxShadow: 2 }}>

@@ -137,9 +137,9 @@ export default function Sangria() {
                 </Link>
               </IconButton>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+            {/*<Box sx={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
               <Title>Relatório Sangria</Title>
-            </Box>
+            </Box>*/}
             <IconButton color="black" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
                 textDecoration: 'none',
