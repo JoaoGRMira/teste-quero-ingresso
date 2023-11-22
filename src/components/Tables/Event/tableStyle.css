@@ -57,70 +57,76 @@
 
 .table-responsive {
   overflow-x: auto;
+  border: 1px solid #ddd;
 }
 
-.table .title {
+
+.table-responsive .title {
+  font-weight: bold;
   text-align: center;
   vertical-align: middle;
   color: var(--blue);
+  padding: 5px;
 }
 
-.table thead .sub-title {
+.table-responsive .sub-title {
+  font-weight: bold;
   text-align: center;
   vertical-align: middle;
+  padding: 5px;
 }
 
-.table tbody td {
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.table tbody .nome {
+.table-responsive .nome {
   color: var(--blue);
   font-weight: bold;
   vertical-align: middle;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
-.table tbody .local {
+.table-responsive .local {
   color: gray;
   vertical-align: middle;
   text-transform: capitalize;
+  cursor: pointer;
 }
 
-.table tbody .data {
+.table-responsive .data {
   color: gray;
-  font-weight: bold;
-  text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 
-.table tbody .dias {
+.table-responsive .dias {
   color: var(--blue);
   vertical-align: middle;
+  cursor: pointer;
 }
 
-.table tbody .vendidos {
+.table-responsive .vendidos {
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 
-.table tbody .receita {
+.table-responsive .receita {
   color: rgb(2, 161, 2);
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 
-.table tbody .cortesias {
+.table-responsive .cortesias {
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 
-.table tbody .taxa {
+.table-responsive .taxa {
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .mobile-table {
@@ -128,7 +134,7 @@
 }
 
 @media all and (max-width: 600px) {
-  .table {
+  .table-responsive {
     display: none;
   }
 

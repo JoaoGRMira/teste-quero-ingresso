@@ -7,8 +7,15 @@ import FilterEventos from '../../Buttons/FilterEventos';
 import Grid from '@mui/material/Grid';
 import { CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import Table from '@mui/material/Table';
 
-const Table = () => {
+const EventTable = () => {
   const navigate = useNavigate();
   const [eventos, setEventos] = useState([]);
   const [data, setData] = useState();
@@ -120,6 +127,17 @@ const Table = () => {
     setDataLoaded(false);
   };
 
+  const theme = useTheme();
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
+
   return (
     <div>
       <Grid container spacing={4} sx={{marginBottom: '20px'}}>
@@ -134,79 +152,82 @@ const Table = () => {
         <div>
           <div className="table-responsive">
             {/* Desktop */}
-            <table className="table table-bordered table-hover">
-              <thead role="rowgroup">
-                <tr role="row">
-                  <th scope="col" className="title" rowSpan="2">
-                    Nome
-                  </th>
-                  <th scope="col" className="title" rowSpan="2">
-                    Data do Evento
-                  </th>
-                  <th scope="col" colSpan="2" className="title">
-                    Hoje
-                  </th>
-                  <th scope="col" colSpan="4" className="title">
-                    Total
-                  </th>
-                </tr>
-                <tr role="row">
-                  <th scope="col" className="sub-title">
-                    Vendidos
-                  </th>
-                  <th scope="col" className="sub-title">
-                    Receita
-                  </th>
-                  <th scope="col" className="sub-title">
-                    Cortesias
-                  </th>
-                  <th scope="col" className="sub-title">
-                    Vendidos
-                  </th>
-                  <th scope="col" className="sub-title">
-                    Receita
-                  </th>
-                  <th scope="col" className="sub-title">
-                    Taxa
-                  </th>
-                </tr>
-              </thead>
-              <tbody role="rowgroup">
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className="title" rowSpan="2">
+                      Nome
+                    </TableCell>
+                    <TableCell className="title" rowSpan="2">
+                      Data do Evento
+                    </TableCell>
+                    <TableCell colSpan="2" className="title">
+                      Hoje
+                    </TableCell>
+                    <TableCell colSpan="4" className="title">
+                      Total
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="sub-title">
+                      Vendidos
+                    </TableCell>
+                    <TableCell className="sub-title">
+                      Receita
+                    </TableCell>
+                    <TableCell className="sub-title">
+                      Cortesias
+                    </TableCell>
+                    <TableCell className="sub-title">
+                      Vendidos
+                    </TableCell>
+                    <TableCell className="sub-title">
+                      Receita
+                    </TableCell>
+                    <TableCell className="sub-title">
+                      Taxa
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
                 {eventos.map((evento, index) => (
-                  <tr key={index} role="row" onClick={() => handleEventClick(evento.eve_cod)}>
-                    <td data-title="Nome">
-                      <span className="nome">{evento.eve_nome}</span> <br />
-                      <span className="local">{evento.local}</span>
-                    </td>
-                    <td data-title="Data">
-                      {evento.eve_data} <br />
-                      <span className="dias">{evento.inicio_evento}</span>
-                    </td>
-                    <td data-title="Vendidos Hoje" className="vendidos">
-                      {evento.vendido_hoje}
-                    </td>
-                    <td data-title="Receita Hoje" className="receita">
-                      {evento.receitas_hoje}
-                    </td>
-                    <td data-title="Cortesias Total" className="cortesias">
-                      {evento.cortesias_pdv_total}
-                    </td>
-                    <td data-title="Vendidos Total" className="vendidos">
-                      {evento.vendido_total}
-                    </td>
-                    <td data-title="Receita Total" className="receita">
-                      {evento.receitas_total}
-                    </td>
-                    <td data-title="Taxa Total" className="taxa">
-                      {evento.taxas_total}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  <StyledTableRow key={index} onClick={() => handleEventClick(evento.eve_cod)}>
+                    <TableCell className="nome">
+                        <span className="nome">{evento.eve_nome}</span> <br />
+                        <span className="local">{evento.local}</span>
+                    </TableCell>
+                    <TableCell className="data">
+                        {evento.eve_data} <br />
+                        <span className="dias">{evento.inicio_evento}</span>
+                      </TableCell>
+                      <TableCell className="vendidos">
+                        {evento.vendido_hoje}
+                      </TableCell>
+                      <TableCell className="receita">
+                        {evento.receitas_hoje}
+                      </TableCell>
+                      <TableCell className="cortesias">
+                        {evento.cortesias_pdv_total}
+                      </TableCell>
+                      <TableCell className="vendidos">
+                        {evento.vendido_total}
+                      </TableCell>
+                      <TableCell className="receita">
+                        {evento.receitas_total}
+                      </TableCell>
+                      <TableCell className="taxa">
+                        {evento.taxas_total}
+                      </TableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
 
-            {/* Mobile */}
-            <div className="table-container">
+          {/* Mobile */}
+          <div className="table-container">
               <table className="mobile-table">
                 <tbody>
                   {eventos.map((evento, index) => (
@@ -337,7 +358,6 @@ const Table = () => {
               </div>
             )}
           </div>
-        </div>
       ) : (
         // Renderizar um indicador de carregamento enquanto os dados são buscados
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -348,4 +368,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default EventTable;
