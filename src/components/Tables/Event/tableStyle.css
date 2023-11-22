@@ -55,6 +55,39 @@
   width: 100%;
 }
 
+.table-responsive .title,
+.table-responsive .sub-title {
+  padding: 5px;
+  border-right: 1px solid #ddd;
+}
+
+.table-responsive .nome,
+.table-responsive .local,
+.table-responsive .data,
+.table-responsive .dias,
+.table-responsive .vendidos,
+.table-responsive .receita,
+.table-responsive .cortesias,
+.table-responsive .taxa {
+  padding: 5px;
+}
+
+.table-responsive .data,
+.table-responsive .vendidos,
+.table-responsive .receita,
+.table-responsive .cortesias,
+.table-responsive .taxa {
+  border-right: 1px solid #ddd
+}
+
+.table-responsive .data{
+  border-left: 1px solid #ddd
+}
+
+.table-responsive .taxa {
+  border-right: none;
+}
+
 .table-responsive {
   overflow-x: auto;
   border: 1px solid #ddd;
