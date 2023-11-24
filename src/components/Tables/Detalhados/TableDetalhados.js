@@ -47,7 +47,7 @@ export default function TableDetalhados() {
         minWidth: '200px',
       },
       '&:nth-of-type(4)': {
-        minWidth: '100px',
+        minWidth: '150px',
       },
       '&:nth-of-type(5)': {
         minWidth: '150px',
@@ -231,34 +231,34 @@ export default function TableDetalhados() {
                 </Grid>
                 <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap' }}>
                   <FilterButtonPdv
-                      pdvOptions={filtros.pdv.map((filtro) => ({
+                    pdvOptions={filtros.pdv.map((filtro) => ({
                       value: filtro,
                       label: filtro,
                     }))}
                     selectedPdv={pdvFilter}
                     onPdvFilterChange={handlePdvFilterChange}
                   />
-                  <FilterButtonPos 
+                  <FilterButtonPos
                     posOptions={filtros.pos.map((filtro) => ({
-                    value: filtro,
-                    label: filtro,
-                  }))}
+                      value: filtro,
+                      label: filtro,
+                    }))}
                     selectedPos={posFilter}
                     onPosFilterChange={handlePosFilterChange}
                   />
-                  <FilterButtonSituacao 
+                  <FilterButtonSituacao
                     situacaoOptions={filtros.situacao.map((filtro) => ({
-                    value: filtro,
-                    label: filtro,
-                  }))}
+                      value: filtro,
+                      label: filtro,
+                    }))}
                     selectedSituacao={situacaoFilter}
                     onSituacaoFilterChange={handleSituacaoFilterChange}
                   />
-                  <FilterButtonTipo 
+                  <FilterButtonTipo
                     tipoOptions={filtros.tipo.map((filtro) => ({
-                    value: filtro,
-                    label: filtro,
-                  }))}
+                      value: filtro,
+                      label: filtro,
+                    }))}
                     selectedTipo={tipoFilter}
                     onTipoFilterChange={handleTipoFilterChange}
                   />
@@ -417,7 +417,9 @@ export default function TableDetalhados() {
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
+                    showFirstButton
+                    showLastButton
+                    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
                   />
                 </Grid>
               </Grid>

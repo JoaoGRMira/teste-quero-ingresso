@@ -194,7 +194,9 @@ export default function Ranking() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
+          showFirstButton
+          showLastButton
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
         />
       </Paper>
     </Box>

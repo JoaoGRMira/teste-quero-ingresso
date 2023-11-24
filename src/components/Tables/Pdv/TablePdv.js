@@ -106,6 +106,8 @@ const TablePDV = () => {
       onRequestSort(event, property);
     };
 
+    //console.log(pdvs)
+
     return (
       <thead>
         <tr>
@@ -313,14 +315,16 @@ const TablePDV = () => {
             <TablePagination
               labelRowsPerPage="Linhas por página:"
               labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 20]}
               component="div"
               count={pdvs.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+              showFirstButton
+              showLastButton
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
             />
           </TableContainer>
         </div>

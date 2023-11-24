@@ -87,6 +87,8 @@ const TablePDVsDiario = () => {
       onRequestSort(event, property);
     };
 
+    //console.log(diarios)
+
     return (
       <thead>
         <tr>
@@ -203,7 +205,7 @@ const TablePDVsDiario = () => {
                         <td className="diario-celula">{item.prazo}</td>
                         <td className="diario-celula">{item.vendidos}</td>
                         <td className="diario-celula">{item.cortesias}</td>
-                        <td className="diario-celula-left">{parseFloat(item.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                        <td className="diario-celula-left">{parseFloat(item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                       </tr>
                       {item.data === linhaSelecionada && (
                         <>
@@ -222,7 +224,7 @@ const TablePDVsDiario = () => {
                               <td className="diario-conteudo-expandido"></td>
                               <td className="diario-conteudo-expandido">{row.vendidos}</td>
                               <td className="diario-conteudo-expandido">{row.cortesias}</td>
-                              <td className="diario-conteudo-expandido-left">{parseFloat(row.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                              <td className="diario-conteudo-expandido-left">{parseFloat(row.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                             </tr>
                           ))}
                         </>
@@ -234,14 +236,16 @@ const TablePDVsDiario = () => {
             <TablePagination
               labelRowsPerPage="Linhas por página:"
               labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 20]}
               component="div"
               count={diarios.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+              showFirstButton
+              showLastButton
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
             />
           </TableContainer>
         </div>

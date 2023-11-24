@@ -172,7 +172,7 @@ const TableSangria = () => {
     setPage(0);
   };
 
-  console.log(sangria)
+  //console.log(sangria)
 
   return (
     <div>
@@ -239,14 +239,16 @@ const TableSangria = () => {
             <TablePagination
               labelRowsPerPage="Linhas por página:"
               labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 20]}
               component="div"
               count={sangria.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+              showFirstButton
+              showLastButton
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
             />
           </TableContainer>
         </div>

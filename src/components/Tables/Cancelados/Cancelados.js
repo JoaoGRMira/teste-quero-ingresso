@@ -114,7 +114,7 @@ export default function TableCancelados() {
   }, [selectedEventCode, dataLoaded, searchQuery]);
 
   //console.log(selectedEventCode.categoria)
-  console.log(site)
+  //console.log(site)
 
   const handleSearch = (query) => {
     const searchQuery = query.trim() === '' ? '' : query;
@@ -156,7 +156,7 @@ export default function TableCancelados() {
     <Container>
       <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-        <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
+          <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
         </Grid>
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
           <DownloadButton />
@@ -321,7 +321,9 @@ export default function TableCancelados() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          style={{ display: 'flex', justifyContent: 'center', padding: '16px' }}
+          showFirstButton
+          showLastButton
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
         />
       </Grid>
     </Container>

@@ -211,13 +211,15 @@ const TableClasses = () => {
     setPage(0);
   };
 
+  //console.log(classes)
+
   return (
     <div>
       <Grid container sx={{ py: 2 }}>
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '5px' }}>
           <SearchBar label="Buscar Classe" onSearch={(query) => handleSearch(query)} />
         </Grid>
-        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>                  
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '5px' }}>
           <DownloadButton />
         </Grid>
       </Grid>
@@ -245,7 +247,7 @@ const TableClasses = () => {
                         <td className="classes-celula">{item.vendas_quant}</td>
                         <td className="classes-celula">{item.cortesias_quant}</td>
                         <td className="classes-celula">{item.total_quant}</td>
-                        <td className="classes-celula-left">{parseFloat(item.valor_total).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                        <td className="classes-celula-left">{parseFloat(item.valor_total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                       </tr>
                       {item.categoria === linhaSelecionada && (
                         <>
@@ -260,11 +262,11 @@ const TableClasses = () => {
                           {item.classes.map((row) => (
                             <tr key={row.classe}>
                               <td className="classes-conteudo-expandido-left-botao">{row.classe}</td>
-                              <td className="classes-conteudo-expandido-left">{parseFloat(row.valor_ing).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                              <td className="classes-conteudo-expandido-left">{parseFloat(row.valor_ing).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                               <td className="classes-conteudo-expandido">{row.vendas_quant}</td>
                               <td className="classes-conteudo-expandido">{row.cortesias_quant}</td>
                               <td className="classes-conteudo-expandido">{row.total_quant}</td>
-                              <td className="classes-conteudo-expandido-left">{parseFloat(row.valor_total).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                              <td className="classes-conteudo-expandido-left">{parseFloat(row.valor_total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                             </tr>
                           ))}
                         </>
@@ -277,21 +279,23 @@ const TableClasses = () => {
                   <td className="classes-rodape">{totalVendasQuant}</td>
                   <td className="classes-rodape">{totalCortesiasQuant}</td>
                   <td className="classes-rodape">{totalTotalQuant}</td>
-                  <td className="classes-rodape-left">{parseFloat(totalValorTotal).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
+                  <td className="classes-rodape-left">{parseFloat(totalValorTotal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                 </tr>
               </tbody>
             </table>
             <TablePagination
               labelRowsPerPage="Linhas por página:"
               labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 20]}
               component="div"
               count={classes.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
+              showFirstButton
+              showLastButton
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
             />
           </TableContainer>
         </div>
