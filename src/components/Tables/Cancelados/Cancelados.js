@@ -14,6 +14,7 @@ import Connection from '../../../model';
 import { format } from 'date-fns';
 import SearchBar from '../../Outros/SearchBar';
 import DownloadButton from '../../Buttons/DownloadButton';
+import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -71,6 +72,12 @@ export default function TableCancelados() {
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint
   const [searchQuery, setSearchQuery] = useState(''); // Busca
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -129,14 +136,14 @@ export default function TableCancelados() {
     setOrderBy(property);
   };
 
-  const handleChangePage = (event, newPage) => {
+  /*const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
+  };*/
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, site.length - page * rowsPerPage);
 
@@ -311,16 +318,10 @@ export default function TableCancelados() {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          labelRowsPerPage="Linhas por página:"
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={site.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+        <Pagination
+          count={Math.ceil(site.length / rowsPerPage)} // Calcula o número total de páginas
+          page={currentPage}
+          onChange={handleChangePagination}
           showFirstButton
           showLastButton
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}

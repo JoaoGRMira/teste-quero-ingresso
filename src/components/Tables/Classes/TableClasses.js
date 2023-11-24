@@ -9,6 +9,7 @@ import DownloadButton from '../../Buttons/DownloadButton';
 import SearchBar from '../../Outros/SearchBar';
 import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
+import Pagination from '@mui/material/Pagination';
 
 // Funções de ordenação
 function descendingComparator(a, b, orderBy) {
@@ -119,6 +120,12 @@ const TableClasses = () => {
   const [totalCortesiasQuant, setTotalCortesiasQuant] = useState(0);
   const [totalTotalQuant, setTotalTotalQuant] = useState(0);
   const [totalValorTotal, setTotalValorTotal] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   const calculateTotalValues = () => {
     let vendasQuant = 0;
@@ -283,16 +290,10 @@ const TableClasses = () => {
                 </tr>
               </tbody>
             </table>
-            <TablePagination
-              labelRowsPerPage="Linhas por página:"
-              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 20]}
-              component="div"
-              count={classes.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+            <Pagination
+              count={Math.ceil(classes.length / rowsPerPage)} // Calcula o número total de páginas
+              page={currentPage}
+              onChange={handleChangePagination}
               showFirstButton
               showLastButton
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}

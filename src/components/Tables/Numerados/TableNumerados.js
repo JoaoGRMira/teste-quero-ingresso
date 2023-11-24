@@ -8,6 +8,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import SearchBar from '../../Outros/SearchBar';
 import DownloadButton from '../../Buttons/DownloadButton';
+import Pagination from '@mui/material/Pagination';
 
 // Funções de ordenação
 function descendingComparator(a, b, orderBy) {
@@ -127,6 +128,12 @@ const TableNumerados = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState(''); // Busca
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   // Variáveis para salvar a soma total dos valores
   let estoque = 0;
@@ -362,16 +369,10 @@ const TableNumerados = () => {
                 </tr>
               </tbody>
             </table>
-            <TablePagination
-              labelRowsPerPage="Linhas por página:"
-              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 20]}
-              component="div"
-              count={dados.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+            <Pagination
+              count={Math.ceil(dados.length / rowsPerPage)} // Calcula o número total de páginas
+              page={currentPage}
+              onChange={handleChangePagination}
               showFirstButton
               showLastButton
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}

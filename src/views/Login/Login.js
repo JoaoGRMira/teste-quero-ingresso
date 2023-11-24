@@ -5,6 +5,8 @@ import Connection from '../../model/index';
 import { useToken } from '../../model/tokenContext';
 import "./login.css";
 import { useLogin } from '../../model/loginContext';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -109,7 +111,7 @@ export default function Login() {
 
             {error && <p className="error-message">{error}</p>}
 
-            <div className="mb-3">
+            {/*<div className="mb-3">
               <div className="custom-control custom-checkbox d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -120,7 +122,7 @@ export default function Login() {
                   Lembrar-me
                 </label>
               </div>
-            </div>
+            </div>*/}
 
             <div className="d-grid">
               <button type="submit" className="btn btn-primary">

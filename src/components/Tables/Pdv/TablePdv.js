@@ -9,6 +9,7 @@ import DownloadButton from '../../Buttons/DownloadButton';
 import SearchBar from '../../Outros/SearchBar';
 import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
+import Pagination from '@mui/material/Pagination';
 
 const TablePDV = () => {
   const [pdvs, setPdvs] = useState([]); // Estado para armazenar dados da rota
@@ -19,6 +20,12 @@ const TablePDV = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -312,16 +319,10 @@ const TablePDV = () => {
                   ))}
               </tbody>
             </table>
-            <TablePagination
-              labelRowsPerPage="Linhas por página:"
-              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 20]}
-              component="div"
-              count={pdvs.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+            <Pagination
+              count={Math.ceil(pdvs.length / rowsPerPage)} // Calcula o número total de páginas
+              page={currentPage}
+              onChange={handleChangePagination}
               showFirstButton
               showLastButton
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}

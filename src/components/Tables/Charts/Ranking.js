@@ -10,6 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import { Box, Typography } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import Pagination from '@mui/material/Pagination';
 
 export default function Ranking() {
   const [orderBy, setOrderBy] = useState('nome');
@@ -18,6 +19,12 @@ export default function Ranking() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [rankingMetrics, setRanking] = useState([]); //estado para salvar os dados retornados pelo endpoint 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -184,16 +191,10 @@ export default function Ranking() {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          labelRowsPerPage="Linhas por página:"
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={ranking.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+        <Pagination
+          count={Math.ceil(ranking.length / rowsPerPage)} // Calcula o número total de páginas
+          page={currentPage}
+          onChange={handleChangePagination}
           showFirstButton
           showLastButton
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}

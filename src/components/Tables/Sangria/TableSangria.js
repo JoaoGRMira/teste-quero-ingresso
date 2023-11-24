@@ -10,6 +10,7 @@ import SearchBar from '../../Outros/SearchBar';
 import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
 import { format } from 'date-fns';
+import Pagination from '@mui/material/Pagination';
 
 // Funções de ordenação
 function descendingComparator(a, b, orderBy) {
@@ -104,6 +105,12 @@ const TableSangria = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -236,16 +243,10 @@ const TableSangria = () => {
                   ))}
               </tbody>
             </table>
-            <TablePagination
-              labelRowsPerPage="Linhas por página:"
-              labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-              rowsPerPageOptions={[5, 10, 20]}
-              component="div"
-              count={sangria.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+            <Pagination
+              count={Math.ceil(sangria.length / rowsPerPage)} // Calcula o número total de páginas
+              page={currentPage}
+              onChange={handleChangePagination}
               showFirstButton
               showLastButton
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}

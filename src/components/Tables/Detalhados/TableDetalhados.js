@@ -18,6 +18,7 @@ import FilterButtonPdv from '../../Buttons/FilterButtonPdv';
 import SearchBar from '../../Outros/SearchBar';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { format } from 'date-fns';
+import Pagination from '@mui/material/Pagination';
 
 export default function TableDetalhados() {
   const [orderBy, setOrderBy] = useState('data_compra');
@@ -33,6 +34,12 @@ export default function TableDetalhados() {
   const [situacaoFilter, setSituacaoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonSituacao
   const [tipoFilter, setTipoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonTipo
   const [searchQuery, setSearchQuery] = useState(''); // Busca
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -407,16 +414,10 @@ export default function TableDetalhados() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <TablePagination
-                    labelRowsPerPage="Linhas por página:"
-                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-                    rowsPerPageOptions={[5, 10, 20]}
-                    component="div"
-                    count={detalhes.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  <Pagination
+                    count={Math.ceil(detalhes.length / rowsPerPage)} // Calcula o número total de páginas
+                    page={currentPage}
+                    onChange={handleChangePagination}
                     showFirstButton
                     showLastButton
                     style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}

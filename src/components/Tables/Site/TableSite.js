@@ -16,6 +16,7 @@ import SearchBar from '../../Outros/SearchBar';
 import FilterButtonStatus from '../../Buttons/FilterButtonStatus';
 import FilterButtonIngresso from '../../Buttons/FilterButtonIngresso';
 import DownloadButton from '../../Buttons/DownloadButton';
+import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -79,6 +80,12 @@ export default function TableSite() {
   const [statusFilter, setStatusFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonStatus
   const [ingressoFilter, setIngressoFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonIngresso
   const [searchQuery, setSearchQuery] = useState(''); // Busca
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleChangePagination = (event, value) => {
+    setCurrentPage(value);
+    setPage(value - 1);
+  };
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
@@ -411,20 +418,14 @@ export default function TableSite() {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          labelRowsPerPage="Linhas por página:"
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={site.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          showFirstButton
-          showLastButton
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
-        />
+        <Pagination
+              count={Math.ceil(site.length / rowsPerPage)} // Calcula o número total de páginas
+              page={currentPage}
+              onChange={handleChangePagination}
+              showFirstButton
+              showLastButton
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
+            />
       </Grid>
     </Container>
   );
