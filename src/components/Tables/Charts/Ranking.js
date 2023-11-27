@@ -16,7 +16,7 @@ export default function Ranking() {
   const [orderBy, setOrderBy] = useState('nome');
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [rankingMetrics, setRanking] = useState([]); //estado para salvar os dados retornados pelo endpoint 
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,15 +77,6 @@ export default function Ranking() {
   }))
 
   //console.log('ranking:' + ranking.nome)
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, ranking.length - page * rowsPerPage);
 

@@ -114,7 +114,7 @@ const TableClasses = () => {
   const [order, setOrder] = useState('asc'); // Ordenação da tabela (crescente ou decrescente)
   const [orderBy, setOrderBy] = useState('categoria'); // Tipo de ordenação
   const [page, setPage] = useState(0); // Paginação
-  const [rowsPerPage, setRowsPerPage] = useState(5); // Número de linhas por página
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Número de linhas por página
   const [searchQuery, setSearchQuery] = useState(''); // Busca
   const [totalVendasQuant, setTotalVendasQuant] = useState(0);
   const [totalCortesiasQuant, setTotalCortesiasQuant] = useState(0);
@@ -207,15 +207,6 @@ const TableClasses = () => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   //console.log(classes)

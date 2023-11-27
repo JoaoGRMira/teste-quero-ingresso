@@ -68,7 +68,7 @@ export default function TableCancelados() {
   const [orderBy, setOrderBy] = useState('data'); // Defina a coluna padrão para ordenar
   const [order, setOrder] = useState('desc'); // Defina a ordem padrão para ordenar
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint
   const [searchQuery, setSearchQuery] = useState(''); // Busca

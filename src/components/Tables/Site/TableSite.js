@@ -70,7 +70,7 @@ export default function TableSite() {
   const [orderBy, setOrderBy] = useState('data'); // Defina a coluna padrão para ordenar
   const [order, setOrder] = useState('desc'); // Defina a ordem padrão para ordenar
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint
   const [dataLoadedStatus, setDataLoadedStatus] = React.useState(false); //estado para controlar se os dados foram carregados ou não
@@ -218,15 +218,6 @@ export default function TableSite() {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, site.length - page * rowsPerPage);

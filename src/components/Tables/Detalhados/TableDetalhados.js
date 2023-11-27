@@ -24,7 +24,7 @@ export default function TableDetalhados() {
   const [orderBy, setOrderBy] = useState('data_compra');
   const [order, setOrder] = useState('desc');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [dataLoadedFiltros, setDataLoadedFiltros] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [detalhes, setDetalhes] = useState([]); //estado para salvar os dados retornados pelo endpoint
@@ -179,15 +179,6 @@ export default function TableDetalhados() {
     setSearchQuery(searchQuery);
     setPage(0);
     setDataLoaded(false);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   const handlePdvFilterChange = (value) => {
