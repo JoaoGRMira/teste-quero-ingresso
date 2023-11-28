@@ -19,6 +19,7 @@ import SearchBar from '../../Outros/SearchBar';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { format } from 'date-fns';
 import Pagination from '@mui/material/Pagination';
+import ExportExcel from '../../Buttons/ExportExcel';
 
 export default function TableDetalhados() {
   const [orderBy, setOrderBy] = useState('data_compra');
@@ -202,6 +203,7 @@ export default function TableDetalhados() {
   };
 
   //console.log(detalhes)
+  console.log(situacaoFilter)
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, detalhes.length - page * rowsPerPage);
 
@@ -413,6 +415,9 @@ export default function TableDetalhados() {
                     showLastButton
                     style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
                   />
+                </Grid>
+                <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
+                  <ExportExcel data={detalhes}/>
                 </Grid>
               </Grid>
             </div>
