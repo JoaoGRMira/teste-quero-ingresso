@@ -19,7 +19,7 @@ import SearchBar from '../../Outros/SearchBar';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { format } from 'date-fns';
 import Pagination from '@mui/material/Pagination';
-import ExportExcel from '../../Buttons/ExportExcel';
+import ExportExcelDetalhados from '../../Buttons/ExportExcelDetalhados';
 
 export default function TableDetalhados() {
   const [orderBy, setOrderBy] = useState('data_compra');
@@ -102,6 +102,20 @@ export default function TableDetalhados() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
+  const columnHeaders = [
+    'Data da Compra',
+    'PDV',
+    'POS',
+    'Número do Pedido',
+    'Código de Barras',
+    'Situação',
+    'Ingresso',
+    'Ingresso Numerado',
+    'Valor',
+    'Forma de Pagamento',
+    'Cód. da Transação',
+  ];
 
   //requisição dos dados detalhados
   useEffect(() => {
@@ -417,7 +431,7 @@ export default function TableDetalhados() {
                   />
                 </Grid>
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
-                  <ExportExcel data={detalhes}/>
+                  <ExportExcelDetalhados data={detalhes} columnHeaders={columnHeaders}/>
                 </Grid>
               </Grid>
             </div>

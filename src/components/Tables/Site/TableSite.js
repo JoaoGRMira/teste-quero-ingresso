@@ -17,6 +17,7 @@ import FilterButtonStatus from '../../Buttons/FilterButtonStatus';
 import FilterButtonIngresso from '../../Buttons/FilterButtonIngresso';
 import DownloadButton from '../../Buttons/DownloadButton';
 import Pagination from '@mui/material/Pagination';
+import ExportExcelSite from '../../Buttons/ExportExcelSite';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -90,6 +91,19 @@ export default function TableSite() {
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+
+  const columnHeaders = [
+    'Pedido',
+    'Data',
+    'Status',
+    'Comprador',
+    'Nominado',
+    'E-mail',
+    'Telefone',
+    'Quantidade',
+    'Ingresso',
+    'Valor'
+  ];
 
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
@@ -416,7 +430,10 @@ export default function TableSite() {
               showFirstButton
               showLastButton
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
-            />
+          />
+            <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
+              <ExportExcelSite data={site} columnHeaders={columnHeaders}/>
+            </Grid>
       </Grid>
     </Container>
   );
