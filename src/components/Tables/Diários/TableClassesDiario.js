@@ -8,10 +8,15 @@ import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import Pagination from '@mui/material/Pagination';
 
-const TableClassesDiario = () => {
+const TablePDVsDiario = () => {
   const [diarios, setDiarios] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const [currentPage, setCurrentPage] = useState(1);
+  const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
+  const [order, setOrder] = useState('desc');
+  const [orderBy, setOrderBy] = useState('data');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePagination = (event, value) => {
     setCurrentPage(value);
@@ -34,7 +39,7 @@ const TableClassesDiario = () => {
         try {
           const response = await conn.get(
             'eventos/diarios?evento=' +
-            selectedEventCode.eve_cod + '&filtro=classes',
+            selectedEventCode.eve_cod + '&filtro=pdvs',
             {
               headers: {
                 'token': localStorage.getItem('token')
@@ -60,14 +65,61 @@ const TableClassesDiario = () => {
 
   // Funções de ordenação
   function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
+    if (orderBy === 'data') {
+      // Ordenação de datas
+      const dateA = parseDateString(a[orderBy]);
+      const dateB = parseDateString(b[orderBy]);
+
+      if (dateB < dateA) {
+        return -1;
+      }
+      if (dateB > dateA) {
+        return 1;
+      }
+      return 0;
+    } else if (orderBy === 'prazo') {
+      // Ordenação do prazo
+      const prazoA = parsePrazoString(a[orderBy]);
+      const prazoB = parsePrazoString(b[orderBy]);
+
+      if (prazoB < prazoA) {
+        return -1;
+      }
+      if (prazoB > prazoA) {
+        return 1;
+      }
+      return 0;
+    } else {
+      // Outras ordenações
+      if (b[orderBy] < a[orderBy]) {
+        return -1;
+      }
+      if (b[orderBy] > a[orderBy]) {
+        return 1;
+      }
+      return 0;
     }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
   }
+
+  function parseDateString(dateString) {
+    // Extrai a parte da data da string
+    const datePart = dateString.split(' ')[0];
+
+    // Divide os componentes da data
+    const [day, month, year] = datePart.split('/');
+
+    // Cria um objeto Date
+    return new Date(`${year}-${month}-${day}`);
+  }
+
+  function parsePrazoString(prazoString) {
+    // Usa uma expressão regular para extrair o número da string
+    const match = prazoString.match(/\d+/);
+
+    // Se encontrou um número, retorna como um número, senão, retorna 0
+    return match ? parseInt(match[0], 10) : 0;
+  }
+
 
   function getComparator(order, orderBy) {
     return order === 'desc'
@@ -147,18 +199,22 @@ const TableClassesDiario = () => {
         >
           {label}
           {order !== false ? (
-            <span style={visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
+            <span style={visuallyHidden}>
+              {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+            </span>
           ) : null}
         </TableSortLabel>
       </TableCell>
     );
   };
 
-  const [linhaSelecionada, setLinhaSelecionada] = useState(-1);
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('data');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  function formatDate(dateString) {
+    const [date, dayOfWeek] = dateString.split(' - ');
+    const [day, month, year] = date.split('/');
+
+    // Você pode ajustar a formatação conforme necessário
+    return `${day}/${month}/${year} - ${dayOfWeek}`;
+  }
 
   const expandirLinha = (data) => {
     setLinhaSelecionada(data === linhaSelecionada ? -1 : data);
@@ -197,7 +253,7 @@ const TableClassesDiario = () => {
                             {item.data === linhaSelecionada ? '-' : '+'}
                           </button>
                         </td>
-                        <td className="diario-celula-left">{item.data}</td>
+                        <td className="diario-celula-left">{formatDate(item.data)}</td>
                         <td className="diario-celula">{item.prazo}</td>
                         <td className="diario-celula">{item.vendidos}</td>
                         <td className="diario-celula">{item.cortesias}</td>
@@ -214,7 +270,7 @@ const TableClassesDiario = () => {
                             <td className="diario-linha-azul-left">Total Vendidos</td>
                           </tr>
                           {item.vendas.map((row) => (
-                            <tr>
+                            <tr key={row.nome}>
                               <td className="diario-conteudo-expandido"></td>
                               <td className="diario-conteudo-expandido-left">{row.nome}</td>
                               <td className="diario-conteudo-expandido"></td>
@@ -249,4 +305,4 @@ const TableClassesDiario = () => {
   );
 };
 
-export default TableClassesDiario;
+export default TablePDVsDiario;
