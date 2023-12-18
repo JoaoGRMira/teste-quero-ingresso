@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default function Connection() {
-    const url = 'https://api-promo-server.onrender.com/';
+    const url = 'http://ec2-3-144-131-74.us-east-2.compute.amazonaws.com/';
 	//const url = 'http://localhost:3000/';
 
     const conn = axios.create({
