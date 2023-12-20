@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default function Connection() {
-    const url = process.env.REACT_APP_API_URL;
+    const url = 'https://api-promo-server.onrender.com/';
 
     const conn = axios.create({
         baseURL: url
