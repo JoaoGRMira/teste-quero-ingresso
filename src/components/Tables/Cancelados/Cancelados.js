@@ -94,7 +94,7 @@ export default function TableCancelados() {
             {
               cat: selectedEventCode.categoria, //passa a categoria do evento
               filtros: {
-                status: 'Cancelado',
+                status: 'Cancelado pela operadora',
                 ingresso: ''
               },
               busca: searchQuery
