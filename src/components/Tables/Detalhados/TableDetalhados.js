@@ -10,7 +10,6 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import { CircularProgress, Container, Divider, Grid } from '@mui/material';
-import DownloadButton from '../../Buttons/DownloadButton';
 import FilterButtonTipo from '../../Buttons/FilterButtonTipo';
 import FilterButtonSituacao from '../../Buttons/FilterButtonSituacao';
 import FilterButtonPos from '../../Buttons/FilterButtonPos';
@@ -243,7 +242,7 @@ export default function TableDetalhados() {
                 <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
                   <SearchBar label="Buscar PDV ou POS" onSearch={handleSearch} />
                 </Grid>
-                <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexWrap: 'wrap' }}>
+                <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                   <FilterButtonPdv
                     pdvOptions={filtros.pdv.map((filtro) => ({
                       value: filtro,
@@ -276,7 +275,6 @@ export default function TableDetalhados() {
                     selectedTipo={tipoFilter}
                     onTipoFilterChange={handleTipoFilterChange}
                   />
-                  <DownloadButton />
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />

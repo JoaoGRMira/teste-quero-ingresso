@@ -15,7 +15,6 @@ import { format } from 'date-fns';
 import SearchBar from '../../Outros/SearchBar';
 import FilterButtonStatus from '../../Buttons/FilterButtonStatus';
 import FilterButtonIngresso from '../../Buttons/FilterButtonIngresso';
-import DownloadButton from '../../Buttons/DownloadButton';
 import Pagination from '@mui/material/Pagination';
 import ExportExcelSite from '../../Buttons/ExportExcelSite';
 
@@ -254,7 +253,7 @@ export default function TableSite() {
         <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
           <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
         </Grid>
-        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
           <FilterButtonStatus
             statusOptions={filtroStatus.map((filtro) => ({
               value: filtro,
@@ -271,7 +270,6 @@ export default function TableSite() {
             selectedIngresso={ingressoFilter}
             onIngressoFilterChange={handleIngressoFilterChange}
           />
-          <DownloadButton />
         </Grid>
       </Grid>
       <Grid item xs={12}>
