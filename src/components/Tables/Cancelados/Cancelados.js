@@ -7,13 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
-import { Container, Divider, Grid } from '@mui/material';
+import { CircularProgress, Container, Divider, Grid } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Connection from '../../../model';
 import { format } from 'date-fns';
 import SearchBar from '../../Outros/SearchBar';
-import Pagination from '@mui/material/Pagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -66,66 +64,106 @@ const StyledTableBodyRow = styled(TableRow)(({ theme, index }) => ({
 export default function TableCancelados() {
   const [orderBy, setOrderBy] = useState('data'); // Defina a coluna padrão para ordenar
   const [order, setOrder] = useState('desc'); // Defina a ordem padrão para ordenar
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [data, setData] = useState();
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
-  const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [cancelados, setCancelados] = useState([]); //estado para salvar os dados retornados pelo endpoint
   const [searchQuery, setSearchQuery] = useState(''); // Busca
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handleChangePagination = (event, value) => {
-    setCurrentPage(value);
-    setPage(value - 1);
-  };
 
   //recupera e salva os dados do localStorage para preencher dados salvos no login
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON);
 
+  const conn = Connection(); //conecta com o servidor backend
+  const fetchCancelados = async (page) => {
+    try {
+      const response = await conn.get(
+        `eventos/cancelados?evento=${selectedEventCode.eve_code}&l=${10}&p=${page}&busca=${searchQuery}`, //faz a requisição na rota especificada
+        {
+          headers: {
+            'token': localStorage.getItem('token')
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setCancelados(response.data.data);
+        setData(response.data)
+        setTotalPages(response.data.total)
+        setDataLoaded(true);
+      } else {
+        console.log('Erro na resposta da API:', response);
+      }
+    } catch (error) {
+      console.error('Erro na solicitação POST:', error);
+    }
+  };
+
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
-      const conn = Connection(); //conecta com o servidor backend
-
-      const fetchSite = async () => {
-        try {
-          const response = await conn.post(
-            'eventos/site', //faz a requisição na rota especificada
-            {
-              cat: selectedEventCode.categoria, //passa a categoria do evento
-              filtros: {
-                status: 'Cancelado pela operadora',
-                ingresso: ''
-              },
-              busca: searchQuery
-            },
-            {
-              headers: {
-                'token': localStorage.getItem('token')
-              }
-            }
-          );
-
-          if (response.status === 200) {
-            setSite(response.data.ingressos);
-            setDataLoaded(true);
-          } else {
-            console.log('Erro na resposta da API:', response);
-          }
-        } catch (error) {
-          console.error('Erro na solicitação POST:', error);
-        }
-      };
-      fetchSite();
+      fetchCancelados(page);
     }
-  }, [selectedEventCode, dataLoaded, searchQuery]);
+  }, [selectedEventCode, dataLoaded]);
+
 
   //console.log(selectedEventCode.categoria)
-  //console.log(site)
+  //console.log(cancelados)
+  console.log(data)
+
+  const handleIncrement = () => {
+    const newPage = page + 1
+    setPage(newPage)
+    fetchCancelados(newPage)
+  }
+
+  const handleDecrement = () => {
+    const newPage = page - 1
+    if (newPage >= 1) {
+      setPage(newPage);
+      fetchCancelados(newPage);
+    }
+  }
+
+  const handleGoToPage = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setPage(pageNumber);
+      fetchCancelados(pageNumber);
+    }
+  };
+
+  const renderPageNumbers = () => {
+    const currentPage = page;
+    let startPage = 1;
+    const maxPages = Math.min(currentPage + 2, totalPages);
+
+    if (currentPage > totalPages - 2) {
+      startPage = totalPages - 2;
+    } else {
+      startPage = currentPage;
+    }
+
+    const pageNumbers = [];
+    for (let i = startPage; i <= maxPages; i++) {
+      if (i >= 1) {
+        pageNumbers.push(
+          <button
+            key={i}
+            onClick={() => handleGoToPage(i)}
+            className={`pagination-number ${page === i ? 'active' : ''}`}
+          >
+            {i}
+          </button>
+        );
+      }
+    }
+    return pageNumbers;
+  };
 
   const handleSearch = (query) => {
     const searchQuery = query.trim() === '' ? '' : query;
     setSearchQuery(searchQuery);
-    setPage(0);
+    setPage(1);
     setDataLoaded(false);
   };
 
@@ -134,17 +172,6 @@ export default function TableCancelados() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  /*const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };*/
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, site.length - page * rowsPerPage);
 
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -160,169 +187,193 @@ export default function TableCancelados() {
 
   return (
     <Container>
-      <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
-        <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-          <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
-      </Grid>
-      <Grid item xs={12}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'pedido'}
-                    direction={orderBy === 'pedido' ? order : 'asc'}
-                    onClick={handleRequestSort('pedido')}
+      <div>
+        {dataLoaded ? (
+          <div>
+            <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
+              <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
+                <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider sx={{ my: 1, mx: -2, backgroundColor: 'var(--grey-shadow)' }} />
+            </Grid>
+            <Grid item xs={12}>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'pedido'}
+                          direction={orderBy === 'pedido' ? order : 'asc'}
+                          onClick={handleRequestSort('pedido')}
+                        >
+                          <strong>Pedido</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'data'}
+                          direction={orderBy === 'data' ? order : 'asc'}
+                          onClick={handleRequestSort('data')}
+                        >
+                          <strong>Data</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'status'}
+                          direction={orderBy === 'status' ? order : 'asc'}
+                          onClick={handleRequestSort('status')}
+                        >
+                          <strong>Status</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'comprador'}
+                          direction={orderBy === 'comprador' ? order : 'asc'}
+                          onClick={handleRequestSort('comprador')}
+                        >
+                          <strong>Comprador</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'nominado'}
+                          direction={orderBy === 'nominado' ? order : 'asc'}
+                          onClick={handleRequestSort('nominado')}
+                        >
+                          <strong>Nominado</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'email'}
+                          direction={orderBy === 'email' ? order : 'asc'}
+                          onClick={handleRequestSort('email')}
+                        >
+                          <strong>Email</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'telefone'}
+                          direction={orderBy === 'telefone' ? order : 'asc'}
+                          onClick={handleRequestSort('telefone')}
+                        >
+                          <strong>Telefone</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'quant'}
+                          direction={orderBy === 'quant' ? order : 'asc'}
+                          onClick={handleRequestSort('quant')}
+                        >
+                          <strong>Qtde</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'ingressos'}
+                          direction={orderBy === 'ingressos' ? order : 'asc'}
+                          onClick={handleRequestSort('ingressos')}
+                        >
+                          <strong>Ingresso</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'valor'}
+                          direction={orderBy === 'valor' ? order : 'asc'}
+                          onClick={handleRequestSort('valor')}
+                        >
+                          <strong>Valor</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {stableSort(cancelados, (a, b) => {
+                      const isAsc = order === 'asc';
+                      return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : b[orderBy] > a[orderBy] ? 1 : -1;
+                    }).map((row, index) => (
+                      <StyledTableBodyRow key={row.tipo} index={index}>
+                        <StyledTableCell component="th" scope="row">
+                          {row.pedido}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.status}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.comprador}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.nominado}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.email}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.telefone}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.quant}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.ingressos}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.valor}
+                        </StyledTableCell>
+                      </StyledTableBodyRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              {data && data.total && (
+                <div className="pagination-container">
+                  <button onClick={handleDecrement} className="pagination-button" disabled={page === 1}>
+                    {"<"}
+                  </button>
+                  <button
+                    onClick={() => handleGoToPage(1)}
+                    className="pagination-button"
+                    style={{ display: page === 1 ? 'none' : 'inline-block' }}
                   >
-                    <strong>Pedido</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'data'}
-                    direction={orderBy === 'data' ? order : 'asc'}
-                    onClick={handleRequestSort('data')}
-                  >
-                    <strong>Data</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'status'}
-                    direction={orderBy === 'status' ? order : 'asc'}
-                    onClick={handleRequestSort('status')}
-                  >
-                    <strong>Status</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'comprador'}
-                    direction={orderBy === 'comprador' ? order : 'asc'}
-                    onClick={handleRequestSort('comprador')}
-                  >
-                    <strong>Comprador</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'nominado'}
-                    direction={orderBy === 'nominado' ? order : 'asc'}
-                    onClick={handleRequestSort('nominado')}
-                  >
-                    <strong>Nominado</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'email'}
-                    direction={orderBy === 'email' ? order : 'asc'}
-                    onClick={handleRequestSort('email')}
-                  >
-                    <strong>Email</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'telefone'}
-                    direction={orderBy === 'telefone' ? order : 'asc'}
-                    onClick={handleRequestSort('telefone')}
-                  >
-                    <strong>Telefone</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'quant'}
-                    direction={orderBy === 'quant' ? order : 'asc'}
-                    onClick={handleRequestSort('quant')}
-                  >
-                    <strong>Qtde</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'ingressos'}
-                    direction={orderBy === 'ingressos' ? order : 'asc'}
-                    onClick={handleRequestSort('ingressos')}
-                  >
-                    <strong>Ingresso</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TableSortLabel
-                    active={orderBy === 'valor'}
-                    direction={orderBy === 'valor' ? order : 'asc'}
-                    onClick={handleRequestSort('valor')}
-                  >
-                    <strong>Valor</strong>
-                  </TableSortLabel>
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-                ? stableSort(site, (a, b) => {
-                  const isAsc = order === 'asc';
-                  return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : (b[orderBy] > a[orderBy] ? 1 : -1);
-                }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : site
-              ).map((row, index) => (
-                <StyledTableBodyRow key={row.tipo} index={index}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.pedido}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.status}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.comprador}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.nominado}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.email}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.telefone}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.quant}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.ingressos}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.valor}
-                  </StyledTableCell>
-                </StyledTableBodyRow>
-              ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <StyledTableCell colSpan={12} />
-                </TableRow>
+                    {"1"}
+                  </button>
+                  <span style={{ display: (page === 1 || page === 2) ? 'none' : 'inline-block', marginLeft: '5px' }}>
+                    ...
+                  </span>
+                  <span className="pagination-numbers">
+                    {renderPageNumbers()}
+                  </span>
+                  <span style={{ display: (page === totalPages) ? 'none' : 'inline-block', marginRight: '5px', marginLeft: '5px' }}>
+                    ...
+                  </span>
+                  <button onClick={() => handleGoToPage(totalPages)} className="pagination-button" style={{ display: (page === totalPages) ? 'none' : 'inline-block' }}>
+                    {totalPages}
+                  </button>
+                  <button onClick={handleIncrement} className="pagination-button" disabled={page === data.total}>
+                    {">"}
+                  </button>
+                </div>
               )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Pagination
-          count={Math.ceil(site.length / rowsPerPage)} // Calcula o número total de páginas
-          page={currentPage}
-          onChange={handleChangePagination}
-          showFirstButton
-          showLastButton
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}
-        />
-      </Grid>
+            </Grid>
+          </div>
+        ) : (
+          // Renderizar um indicador de carregamento enquanto os dados são buscados
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <CircularProgress />
+          </div>
+        )}
+      </div>
     </Container>
   );
 }
