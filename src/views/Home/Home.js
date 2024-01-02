@@ -388,6 +388,7 @@ export default function Home() {
                                   <th colSpan="1" />
                                   <th style={{ padding: '4px', textAlign: 'center' }}>WEB</th>
                                   <th style={{ padding: '4px', textAlign: 'center' }}>PDV</th>
+                                  <th style={{ padding: '4px', textAlign: 'center' }}>VENDAS</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -398,6 +399,7 @@ export default function Home() {
                                   </th>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.dinheiro}</td>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.dinheiro}</td>
+                                  <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.vendas.dinheiro}</td>
                                 </tr>
                                 <tr>
                                   <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
@@ -406,6 +408,7 @@ export default function Home() {
                                   </th>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.credito}</td>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.credito}</td>
+                                  <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.vendas.credito}</td>
                                 </tr>
                                 <tr>
                                   <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
@@ -414,6 +417,7 @@ export default function Home() {
                                   </th>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.debito}</td>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.debito}</td>
+                                  <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.vendas.debito}</td>
                                 </tr>
                                 <tr>
                                   <th style={{ padding: '4px', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
@@ -422,6 +426,7 @@ export default function Home() {
                                   </th>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.site.pix}</td>
                                   <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.pdv.pix}</td>
+                                  <td align="center" style={{ padding: '4px', textAlign: 'center' }}>{infos.faturamentos.vendas.pix}</td>
                                 </tr>
                                 <tr>
                                   <th style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'left', display: 'flex', alignItems: 'center' }}>
@@ -430,6 +435,7 @@ export default function Home() {
                                   </th>
                                   <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.faturamentos.site.total}</td>
                                   <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.faturamentos.pdv.total}</td>
+                                  <td align="center" style={{ padding: '4px', borderTop: '1px solid var(--grey-shadow)', color: 'var(--blue)', textAlign: 'center' }}>{infos.faturamentos.vendas.total}</td>
                                 </tr>
                               </tbody>
                             </table>
