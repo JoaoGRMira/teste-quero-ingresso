@@ -12,6 +12,7 @@ import Pagination from '@mui/material/Pagination';
 
 const TablePDV = () => {
   const [pdvs, setPdvs] = useState([]); // Estado para armazenar dados da rota
+  const [total, setTotal] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('pdv');
@@ -44,12 +45,12 @@ const TablePDV = () => {
       );
 
       if (response.status === 200) {
-        const filteredPdvs = response.data.filter((item) => {
-          return item.pdv.toLowerCase().includes(searchQuery.toLowerCase());
-        });
-        setPdvs(filteredPdvs);
+        const { pdvs, total } = response.data; // Extrai os pdvs e o objeto total da resposta
+  
+        setPdvs(pdvs);
+        setTotal(total); // Atualiza o estado do total com os dados recebidos
+  
         setDataLoaded(true);
-
       } else {
         console.log('Erro na resposta da API (Tipo Ingresso):', response);
       }
@@ -304,6 +305,49 @@ const TablePDV = () => {
                       )}
                     </React.Fragment>
                   ))}
+                  {pdvs.length > 0 && Object.keys(total).length > 0 && (
+                    <tr>
+                      <td className="classes-rodape"></td>
+                      <td className="classes-rodape-left">Total</td>
+                      <td className="classes-rodape">{total.quant_hoje}</td>
+                      <td className="classes-rodape">
+                        {parseFloat(total.valor_hoje).toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}
+                      </td>
+                      <td className="classes-rodape">{total.quant_total}</td>
+                      <td className="classes-rodape">
+                        {parseFloat(total.valor_total).toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}
+                      </td>
+                      <td className="classes-rodape">{total.cortesias}</td>
+                      <td className="classes-rodape">
+                        <span className="pdv-celula-span">DIN </span>
+                        {parseFloat(total.meios_pgto.dinheiro).toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}<br />
+                        <span className="pdv-celula-span">CCR </span>
+                        {parseFloat(total.meios_pgto.credito).toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}<br />
+                        <span className="pdv-celula-span">DEB </span>
+                        {parseFloat(total.meios_pgto.debito).toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}<br />
+                        <span className="pdv-celula-span">PIX </span>
+                        {parseFloat(total.meios_pgto.pix).toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}
+                      </td>
+                    </tr>
+                  )}
               </tbody>
             </table>
             <Pagination
