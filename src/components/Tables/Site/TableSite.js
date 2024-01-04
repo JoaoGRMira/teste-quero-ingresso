@@ -72,6 +72,8 @@ export default function TableSite() {
   const [data, setData] = useState();
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [excel, setExcel] = useState([]); //estado para salvar os dados retornados pelo endpoint
+  const [dataLoadedExcel, setDataLoadedExcel] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [dataLoadedStatus, setDataLoadedStatus] = React.useState(false); //estado para controlar se os dados foram carregados ou não
   const [dataLoadedIngresso, setDataLoadedIngresso] = React.useState(false); //estado para controlar se os dados foram carregados ou não
   const [filtroStatus, setFiltroStatus] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
@@ -140,6 +142,45 @@ export default function TableSite() {
 
   //console.log(selectedEventCode.categoria)
   //console.log(site)
+
+  //requisição dos dados excel
+  const fetchExcel = async () => {
+    try {
+      const response = await conn.post(
+        `eventos/site`, //faz a requisição na rota especificada
+        {
+          cat: selectedEventCode.categoria, //passa a categoria do evento
+          filtros: {
+            status: statusFilter,
+            ingresso: ingressoFilter
+          },
+          busca: searchQuery,
+        },
+        {
+          headers: {
+            'token': localStorage.getItem('token')
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setExcel(response.data.ingressos);
+        setDataLoadedExcel(true);
+      } else {
+        console.log('Erro na resposta da API:', response);
+      }
+    } catch (error) {
+      console.error('Erro na solicitação GET:', error);
+    }
+  };
+
+  console.log(excel)
+
+  useEffect(() => {
+    if (selectedEventCode && !dataLoadedExcel) {
+      fetchExcel();
+    }
+  }, [selectedEventCode,dataLoadedExcel, statusFilter, ingressoFilter]);
 
   //requisição get dos filtros de status
   React.useEffect(() => {
@@ -490,7 +531,7 @@ export default function TableSite() {
                 </div>
               )}
               <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
-                <ExportExcelSite data={site} columnHeaders={columnHeaders} />
+                <ExportExcelSite data={excel} columnHeaders={columnHeaders} />
               </Grid>
             </Grid>
           </div>
