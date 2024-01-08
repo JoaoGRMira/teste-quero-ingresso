@@ -79,7 +79,7 @@ export default function TableCancelados() {
   const fetchCancelados = async (page) => {
     try {
       const response = await conn.get(
-        `eventos/cancelados?evento=${selectedEventCode.eve_code}&l=${10}&p=${page}&busca=${searchQuery}`, //faz a requisição na rota especificada
+        `eventos/cancelados?evento=${selectedEventCode.eve_cod}&l=${10}&p=${page}&busca=${searchQuery}`, //faz a requisição na rota especificada
         {
           headers: {
             'token': localStorage.getItem('token')
@@ -192,7 +192,7 @@ export default function TableCancelados() {
           <div>
             <Grid container spacing={3} sx={{ py: 2, flexWrap: 'wrap' }}>
               <Grid item xs={12} md={6} lg={6} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap' }}>
-                <SearchBar label="Buscar por RG ou Pedido" onSearch={handleSearch} />
+                <SearchBar label="Buscar por Pedido" onSearch={handleSearch} />
               </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -205,6 +205,33 @@ export default function TableCancelados() {
                     <TableRow>
                       <StyledTableCell>
                         <TableSortLabel
+                          active={orderBy === 'data_compra'}
+                          direction={orderBy === 'data_compra' ? order : 'asc'}
+                          onClick={handleRequestSort('data_compra')}
+                        >
+                          <strong>Data</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'pdv'}
+                          direction={orderBy === 'pdv' ? order : 'asc'}
+                          onClick={handleRequestSort('pdv')}
+                        >
+                          <strong>Pdv</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'pos'}
+                          direction={orderBy === 'pos' ? order : 'asc'}
+                          onClick={handleRequestSort('pos')}
+                        >
+                          <strong>Pos</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
                           active={orderBy === 'pedido'}
                           direction={orderBy === 'pedido' ? order : 'asc'}
                           onClick={handleRequestSort('pedido')}
@@ -214,74 +241,38 @@ export default function TableCancelados() {
                       </StyledTableCell>
                       <StyledTableCell>
                         <TableSortLabel
-                          active={orderBy === 'data'}
-                          direction={orderBy === 'data' ? order : 'asc'}
-                          onClick={handleRequestSort('data')}
+                          active={orderBy === 'cod_barras'}
+                          direction={orderBy === 'cod_barras' ? order : 'asc'}
+                          onClick={handleRequestSort('cod_barras')}
                         >
-                          <strong>Data</strong>
+                          <strong>Cód. de Barras</strong>
                         </TableSortLabel>
                       </StyledTableCell>
                       <StyledTableCell>
                         <TableSortLabel
-                          active={orderBy === 'status'}
-                          direction={orderBy === 'status' ? order : 'asc'}
-                          onClick={handleRequestSort('status')}
+                          active={orderBy === 'situacao'}
+                          direction={orderBy === 'situacao' ? order : 'asc'}
+                          onClick={handleRequestSort('situacao')}
                         >
-                          <strong>Status</strong>
+                          <strong>Situação</strong>
                         </TableSortLabel>
                       </StyledTableCell>
                       <StyledTableCell>
                         <TableSortLabel
-                          active={orderBy === 'comprador'}
-                          direction={orderBy === 'comprador' ? order : 'asc'}
-                          onClick={handleRequestSort('comprador')}
-                        >
-                          <strong>Comprador</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'nominado'}
-                          direction={orderBy === 'nominado' ? order : 'asc'}
-                          onClick={handleRequestSort('nominado')}
-                        >
-                          <strong>Nominado</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'email'}
-                          direction={orderBy === 'email' ? order : 'asc'}
-                          onClick={handleRequestSort('email')}
-                        >
-                          <strong>Email</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'telefone'}
-                          direction={orderBy === 'telefone' ? order : 'asc'}
-                          onClick={handleRequestSort('telefone')}
-                        >
-                          <strong>Telefone</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'quant'}
-                          direction={orderBy === 'quant' ? order : 'asc'}
-                          onClick={handleRequestSort('quant')}
-                        >
-                          <strong>Qtde</strong>
-                        </TableSortLabel>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <TableSortLabel
-                          active={orderBy === 'ingressos'}
-                          direction={orderBy === 'ingressos' ? order : 'asc'}
-                          onClick={handleRequestSort('ingressos')}
+                          active={orderBy === 'ing'}
+                          direction={orderBy === 'ing' ? order : 'asc'}
+                          onClick={handleRequestSort('ing')}
                         >
                           <strong>Ingresso</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'ing_num'}
+                          direction={orderBy === 'ing_num' ? order : 'asc'}
+                          onClick={handleRequestSort('ing_num')}
+                        >
+                          <strong>Número Ingresso</strong>
                         </TableSortLabel>
                       </StyledTableCell>
                       <StyledTableCell>
@@ -293,6 +284,24 @@ export default function TableCancelados() {
                           <strong>Valor</strong>
                         </TableSortLabel>
                       </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'pagamento'}
+                          direction={orderBy === 'pagamento' ? order : 'asc'}
+                          onClick={handleRequestSort('pagamento')}
+                        >
+                          <strong>Pagamento</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'cod_pagseguro'}
+                          direction={orderBy === 'cod_pagseguro' ? order : 'asc'}
+                          onClick={handleRequestSort('pagamenatcod_pagseguro')}
+                        >
+                          <strong>Código PagSeguro</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -302,34 +311,37 @@ export default function TableCancelados() {
                     }).map((row, index) => (
                       <StyledTableBodyRow key={row.tipo} index={index}>
                         <StyledTableCell component="th" scope="row">
+                          {format(new Date(row.data_compra), 'dd/MM/yyyy HH:mm')}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.pdv}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.pos}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
                           {row.pedido}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
+                          {row.cod_barras}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {row.status}
+                          {row.situacao}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {row.comprador}
+                          {row.ing}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {row.nominado}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.email}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.telefone}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.quant}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.ingressos}
+                          {row.ing_num}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
                           {row.valor}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.pagamento}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.cod_pagseguro}
                         </StyledTableCell>
                       </StyledTableBodyRow>
                     ))}
