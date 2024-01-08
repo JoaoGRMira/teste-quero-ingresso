@@ -6,9 +6,7 @@ import Connection from '../../model';
 const VpTChart = ({ data }) => {
     const [tipoIngressoMetrics, setTipoIngressoMetrics] = useState([]); // Estado para armazenar dados da rota
     const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
-
-    // Recupera o objeto do evento selecionado do localStorage
-    const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+    const selectedEventCodeJSON = localStorage.getItem("selectedEvent"); // Recupera o objeto do evento selecionado do localStorage
     const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
     //console.log(selectedEventCode);
@@ -17,7 +15,6 @@ const VpTChart = ({ data }) => {
     useEffect(() => {
         if (selectedEventCode && !dataLoaded) {
             const conn = Connection();
-
             // Acessa o endpoint de tipo de ingresso
             const fetchTipoIngressoMetrics = async () => {
                 try {
@@ -30,7 +27,6 @@ const VpTChart = ({ data }) => {
                             }
                         }
                     );
-
                     // Se der certo, salva os dados no estado de tipo de ingresso
                     if (response.status === 200) {
                         setTipoIngressoMetrics(response.data);
@@ -42,7 +38,6 @@ const VpTChart = ({ data }) => {
                     console.error('Erro na solicitação GET (Tipo Ingresso):', error);
                 }
             };
-
             fetchTipoIngressoMetrics();
         }
     }, [selectedEventCode, dataLoaded]);
@@ -53,7 +48,8 @@ const VpTChart = ({ data }) => {
         { tipo: 'Vendas', quantidade: tipoIngressoMetrics.vendas },
         { tipo: 'Cortesias', quantidade: tipoIngressoMetrics.cortesias },
     ];
-    const COLORS = ['#8884d8', 'var(--blue)'];
+
+    //const COLORS = ['#8884d8', 'var(--blue)'];
 
     return (
         <React.Fragment>
@@ -70,7 +66,6 @@ const VpTChart = ({ data }) => {
                         itemStyle={{ fontSize: 14 }}
                     />
                     {dataVendas.length > 0 && Object.keys(dataVendas[0]).map((quantidade, index) => (
-
                         <Bar key={index} dataKey={quantidade} fill={`#FA6384`} />
                     ))}
                 </BarChart>

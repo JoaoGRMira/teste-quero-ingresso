@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove'; 
 import PropTypes from 'prop-types';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 
 function ExpandableButton(props) {
-  const [expanded, setExpanded] = useState(false); //estado para controlar a expansão do botão
+  const [expanded, setExpanded] = useState(false); // Estado para controlar a expansão do botão
 
-  //função que expande o botão
+  // Função que expande o botão
   const handleExpand = () => {
     setExpanded(!expanded);
   };
@@ -16,7 +15,7 @@ function ExpandableButton(props) {
     <Accordion expanded={expanded} onChange={handleExpand} sx={{ backgroundColor: "transparent" }} elevation={0}>
       <AccordionSummary aria-controls="content" id="header" sx={{ mx: -4 }}>
         <Button variant="contained" sx={{ backgroundColor: 'var(--blue)', height: 40 }}>
-        {expanded ? <RemoveIcon /> : <AddIcon />}
+          {expanded ? <RemoveIcon /> : <AddIcon />}
         </Button>
         <Typography component='h2' variant="subtitle1" sx={{ p: 1 }} align='center' fontWeight="bold" fontFamily="'Century Gothic', Futura, sans-serif" gutterBottom fontSize='16px'>
           {props.title}
@@ -34,6 +33,6 @@ function ExpandableButton(props) {
 ExpandableButton.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
-}; //define as props
+}; // Define as props
 
 export default ExpandableButton;

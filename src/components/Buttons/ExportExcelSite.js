@@ -1,12 +1,61 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import * as XLSX from 'xlsx';
 import DescriptionIcon from '@mui/icons-material/Description';
+import Connection from '../../model';
 
-const ExportExcelSite = ({ data, columnHeaders }) => {
+const ExportExcelSite = ({ columnHeaders }) => {
+  const [excel, setExcel] = useState([]);
+  const [dataLoadedExcel, setDataLoadedExcel] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+  
+  const conn = Connection();
+
+    //requisição dos dados excel
+    const fetchExcel = async () => {
+      try {
+        const response = await conn.post(
+          `eventos/site`, //faz a requisição na rota especificada
+          {
+            cat: selectedEventCode.categoria, //passa a categoria do evento
+          },
+          {
+            headers: {
+              'token': localStorage.getItem('token')
+            }
+          }
+        );
+  
+        if (response.status === 200) {
+          setExcel(response.data.ingressos);
+          setDataLoadedExcel(true);
+          setIsButtonDisabled(false);
+        } else {
+          console.log('Erro na resposta da API:', response);
+        }
+      } catch (error) {
+        console.error('Erro na solicitação POST:', error);
+      }
+    };
+  
+    //console.log(excel)
+  
+    useEffect(() => {
+      if (selectedEventCode && !dataLoadedExcel) {
+        fetchExcel();
+      }
+    }, [selectedEventCode,dataLoadedExcel]);
+
   const handleDownload = () => {
+    if (!dataLoadedExcel) {
+      return;
+    }
+  
     // Formatando os dados para a planilha Excel
-    const formattedData = data.map(row => [
+    const formattedData = excel.map(row => [
       row.pedido,
       row.data,
       row.status,
@@ -44,10 +93,17 @@ const ExportExcelSite = ({ data, columnHeaders }) => {
 
     // Salvando a planilha como um arquivo Excel
     XLSX.writeFile(wb, 'site_detalhados.xlsx');
-  };
+  }
 
   return (
-    <Button component="label" variant="contained" color='success' onClick={handleDownload} startIcon={<DescriptionIcon />}>
+    <Button
+      component="label"
+      variant="contained"
+      color="success"
+      onClick={handleDownload}
+      startIcon={<DescriptionIcon />}
+      disabled={isButtonDisabled}
+    >
       Exportar Excel
     </Button>
   );

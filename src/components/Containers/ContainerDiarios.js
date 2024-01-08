@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Box, Button, Typography, Grid } from '@mui/material';
 
 const ContainerDiarios = ({ button1Content, button2Content }) => {
     const [activeButton, setActiveButton] = useState(1);
@@ -28,7 +25,7 @@ const ContainerDiarios = ({ button1Content, button2Content }) => {
                 }}>
                     PDVs
                 </Button>
-                <Box sx={{ backgroundColor: 'white'}}>
+                <Box sx={{ backgroundColor: 'white' }}>
                     <Typography variant="body" component="div" mt={2} p={2}>
                         {activeButton === 1 ? (
                             <div>{button1Content}</div>

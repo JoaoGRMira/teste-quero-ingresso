@@ -6,9 +6,7 @@ import Connection from '../../model';
 const TimeChart = ({ data }) => {
   const [horarioMetrics, setHorarioMetrics] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
-
-  // Recupera o objeto do evento selecionado do localStorage
-  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent"); // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
   //console.log(selectedEventCode);
@@ -17,7 +15,6 @@ const TimeChart = ({ data }) => {
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
-
       // Acessa o endpoint de horário de vendas
       const fetchHorarioMetrics = async () => {
         try {
@@ -30,7 +27,6 @@ const TimeChart = ({ data }) => {
               }
             }
           );
-
           // Se der certo, salva os dados no estado de horário
           if (response.status === 200) {
             setHorarioMetrics(response.data);
@@ -42,7 +38,6 @@ const TimeChart = ({ data }) => {
           console.error('Erro na solicitação GET (Horário):', error);
         }
       };
-
       fetchHorarioMetrics();
     }
   }, [selectedEventCode, dataLoaded]);

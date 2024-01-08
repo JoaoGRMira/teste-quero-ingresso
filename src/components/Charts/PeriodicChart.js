@@ -6,9 +6,7 @@ import Connection from '../../model';
 const PeriodicChart = () => {
   const [periodoMetrics, setPeriodoMetrics] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
-
-  // Recupera o objeto do evento selecionado do localStorage
-  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent"); // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
   //console.log(selectedEventCode);
@@ -17,7 +15,6 @@ const PeriodicChart = () => {
   useEffect(() => {
     if (selectedEventCode && !dataLoaded) {
       const conn = Connection();
-
       // Acessa o endpoint de períodos
       const fetchPeriodoMetrics = async () => {
         try {
@@ -30,7 +27,6 @@ const PeriodicChart = () => {
               }
             }
           );
-
           // Se der certo, salva os dados no estado de períodos
           if (response.status === 200) {
             setPeriodoMetrics(response.data);
@@ -42,7 +38,6 @@ const PeriodicChart = () => {
           console.error('Erro na solicitação GET (Período):', error);
         }
       };
-
       fetchPeriodoMetrics();
     }
   }, [selectedEventCode, dataLoaded]);

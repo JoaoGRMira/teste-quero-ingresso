@@ -27,8 +27,6 @@ export default function TableDetalhados() {
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [dataLoadedFiltros, setDataLoadedFiltros] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [detalhes, setDetalhes] = useState([]); //estado para salvar os dados retornados pelo endpoint
-  const [excel, setExcel] = useState([]); //estado para salvar os dados retornados pelo endpoint
-  const [dataLoadedExcel, setDataLoadedExcel] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [filtros, setFiltros] = useState([]); //estado para salvar os dados retornados pelo endpoint
   const [pdvFilter, setPdvFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonPdv
   const [posFilter, setPosFilter] = useState(''); // Estado para armazenar o valor selecionado no FilterButtonPos
@@ -145,7 +143,7 @@ export default function TableDetalhados() {
         console.log('Erro na resposta da API:', response);
       }
     } catch (error) {
-      console.error('Erro na solicitação GET:', error);
+      console.error('Erro na solicitação POST:', error);
     }
   };
 
@@ -155,47 +153,6 @@ export default function TableDetalhados() {
       fetchDetalhes(page);
     }
   }, [selectedEventCode, dataLoaded, pdvFilter, posFilter, situacaoFilter, tipoFilter]);
-
-  const fetchExcel = async () => {
-    try {
-      const response = await conn.post(
-        `eventos/detalhados`, //faz a requisição na rota especificada
-        {
-          evento: selectedEventCode.eve_cod, //passa o id do evento
-          filtros: {
-            pdv: pdvFilter,
-            pos: posFilter,
-            situacao: situacaoFilter,
-            tipo: tipoFilter
-          },
-          busca: searchQuery
-        },
-        {
-          headers: {
-            'token': localStorage.getItem('token')
-          }
-        }
-      );
-
-      if (response.status === 200) {
-        setExcel(response.data.data);
-        setDataLoadedExcel(true)
-      } else {
-        console.log('Erro na resposta da API:', response);
-      }
-    } catch (error) {
-      console.error('Erro na solicitação GET:', error);
-    }
-  };
-
-  //requisição dos dados detalhados
-  useEffect(() => {
-    if (selectedEventCode && !dataLoadedExcel) {
-      fetchExcel();
-    }
-  }, [selectedEventCode, dataLoadedExcel, pdvFilter, posFilter, situacaoFilter, tipoFilter]);
-
-  console.log(excel)
 
   //requisição dos filtros
   useEffect(() => {
@@ -220,7 +177,7 @@ export default function TableDetalhados() {
             console.log('Erro na resposta da API:', response);
           }
         } catch (error) {
-          console.error('Erro na solicitação GET:', error);
+          console.error('Erro na solicitação GET (Filtros):', error);
         }
       };
       fetchFiltros();
@@ -530,7 +487,7 @@ export default function TableDetalhados() {
                   )}
                 </Grid>
                 <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
-                  <ExportExcelDetalhados data={excel} columnHeaders={columnHeaders} />
+                  <ExportExcelDetalhados columnHeaders={columnHeaders} />
                 </Grid>
               </Grid>
             </div>

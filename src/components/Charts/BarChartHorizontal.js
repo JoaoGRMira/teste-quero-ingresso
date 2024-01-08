@@ -6,9 +6,7 @@ import Connection from '../../model';
 const BarChartHorizontal = () => {
     const [classes, setClasses] = React.useState([]); //estado para armazenar dados da rota
     const [dataLoaded, setDataLoaded] = React.useState(false); //estado para controlar se os dados foram carregados
-
-    // Recupera o objeto do evento selecionado do localStorage
-    const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+    const selectedEventCodeJSON = localStorage.getItem("selectedEvent"); // Recupera o objeto do evento selecionado do localStorage
     const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
     //console.log(selectedEventCode);
@@ -17,7 +15,6 @@ const BarChartHorizontal = () => {
     React.useEffect(() => {
         if (selectedEventCode && !dataLoaded) {
             const conn = Connection();
-
             // Acessa o endpoint de tipo de ingresso
             const fetchClasses = async () => {
                 try {
@@ -30,7 +27,6 @@ const BarChartHorizontal = () => {
                             }
                         }
                     );
-
                     // Se der certo, salva os dados no estado de tipo de ingresso
                     if (response.status === 200) {
                         setClasses(response.data);
@@ -42,7 +38,6 @@ const BarChartHorizontal = () => {
                     console.error('Erro na solicitação GET (Tipo Ingresso):', error);
                 }
             };
-
             fetchClasses();
         }
     }, [selectedEventCode, dataLoaded]);
@@ -53,11 +48,6 @@ const BarChartHorizontal = () => {
         tipo: item.tipo,
         quantidade: item.total
     }))
-
-    /*const tipoIngressos = [
-        { tipo: 'Camarote', Camarote: 100 },
-        { tipo: 'Pista', Pista: 50 },
-    ];*/
 
     return (
         <React.Fragment>
@@ -74,7 +64,6 @@ const BarChartHorizontal = () => {
                         itemStyle={{ fontSize: 12 }}
                     />
                     {classeIngressos.length > 0 && Object.keys(classeIngressos[0]).map((tipo, index) => (
-
                         <Bar key={index} dataKey={tipo} fill={`var(--blue)`} />
                     ))}
                 </BarChart>

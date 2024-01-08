@@ -1,15 +1,11 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 export default function FilterButtonSituacao({ situacaoOptions, selectedSituacao, onSituacaoFilterChange }) {
 
-  const handleChange = (event) => { //função de selecionar filtro
-    const selectedValue = event.target.value; //define o valor da variável como a opção atual
-    onSituacaoFilterChange(selectedValue); //passa variável como parâmetro da função
+  const handleChange = (event) => { // Função de selecionar filtro
+    const selectedValue = event.target.value; // Define o valor da variável como a opção atual
+    onSituacaoFilterChange(selectedValue); // Passa variável como parâmetro da função
   };
 
   return (
@@ -19,15 +15,15 @@ export default function FilterButtonSituacao({ situacaoOptions, selectedSituacao
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={selectedSituacao} //define o valor como o filtro selecionado
+          value={selectedSituacao} // Define o valor como o filtro selecionado
           label="Situacao"
-          onChange={handleChange} //função de seleção
+          onChange={handleChange} // Função de seleção
           sx={{ height: '39px' }}
         >
           <MenuItem>Selecione...</MenuItem>
-          {situacaoOptions.map((option) => ( //mapeamento das opções
-            <MenuItem key={option.value} value={option.value}> {/* define os valores das opções */}
-              {option.label} {/* define o texto da opção */}
+          {situacaoOptions.map((option) => ( // Mapeamento das opções
+            <MenuItem key={option.value} value={option.value}> {/* Define os valores das opções */}
+              {option.label} {/* Define o texto da opção */}
             </MenuItem>
           ))}
         </Select>

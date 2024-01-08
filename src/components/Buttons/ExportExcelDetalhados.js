@@ -1,12 +1,60 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import * as XLSX from 'xlsx';
 import DescriptionIcon from '@mui/icons-material/Description';
+import Connection from '../../model';
 
-const ExportExcelDetalhados = ({ data, columnHeaders }) => {
+const ExportExcelDetalhados = ({ columnHeaders }) => {
+  const [excel, setExcel] = useState([]);
+  const [dataLoadedExcel, setDataLoadedExcel] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCode = JSON.parse(selectedEventCodeJSON);
+  
+  const conn = Connection();
+
+  const fetchExcel = async () => {
+    try {
+      const response = await conn.post(
+        'eventos/detalhados',
+        {
+          evento: selectedEventCode.eve_cod,
+        },
+        {
+          headers: {
+            'token': localStorage.getItem('token')
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setExcel(response.data.data);
+        setDataLoadedExcel(true);
+        setIsButtonDisabled(false);
+      } else {
+        console.log('Erro na resposta da API:', response);
+      }
+    } catch (error) {
+      console.error('Erro na solicitação POST (Excel):', error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedEventCode && !dataLoadedExcel) {
+      fetchExcel();
+    }
+  }, [selectedEventCode, dataLoadedExcel]);
+
+  //console.log(excel)
+
   const handleDownload = () => {
+    if (!dataLoadedExcel) {
+      return;
+    }
+  
     // Formatando os dados para a planilha Excel
-    const formattedData = data.map(row => [
+    const formattedData = excel.map(row => [
       row.data_compra,
       row.pdv,
       row.pos,
@@ -35,10 +83,17 @@ const ExportExcelDetalhados = ({ data, columnHeaders }) => {
 
     // Salvando a planilha como um arquivo Excel
     XLSX.writeFile(wb, 'detalhados.xlsx');
-  };
+  }
 
   return (
-    <Button component="label" variant="contained" color='success' onClick={handleDownload} startIcon={<DescriptionIcon />}>
+    <Button
+      component="label"
+      variant="contained"
+      color="success"
+      onClick={handleDownload}
+      startIcon={<DescriptionIcon />}
+      disabled={isButtonDisabled}
+    >
       Exportar Excel
     </Button>
   );

@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Box, Button, Typography, Grid } from '@mui/material';
 
 const ContainerCharts = ({ button1Content }) => {
     const [activeButton, setActiveButton] = useState(1);
@@ -23,7 +20,7 @@ const ContainerCharts = ({ button1Content }) => {
                 </Button>
                 <Box sx={{ backgroundColor: 'white', borderTop: '1px solid var(--grey-shadow)', boxShadow: 2 }}>
                     <Typography variant="h6" component="div" mt={2} p={2}>
-                            <div>{button1Content}</div>
+                        <div>{button1Content}</div>
                     </Typography>
                 </Box>
                 <style jsx>{`

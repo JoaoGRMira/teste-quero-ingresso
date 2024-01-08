@@ -143,45 +143,6 @@ export default function TableSite() {
   //console.log(selectedEventCode.categoria)
   //console.log(site)
 
-  //requisição dos dados excel
-  const fetchExcel = async () => {
-    try {
-      const response = await conn.post(
-        `eventos/site`, //faz a requisição na rota especificada
-        {
-          cat: selectedEventCode.categoria, //passa a categoria do evento
-          filtros: {
-            status: statusFilter,
-            ingresso: ingressoFilter
-          },
-          busca: searchQuery,
-        },
-        {
-          headers: {
-            'token': localStorage.getItem('token')
-          }
-        }
-      );
-
-      if (response.status === 200) {
-        setExcel(response.data.ingressos);
-        setDataLoadedExcel(true);
-      } else {
-        console.log('Erro na resposta da API:', response);
-      }
-    } catch (error) {
-      console.error('Erro na solicitação GET:', error);
-    }
-  };
-
-  console.log(excel)
-
-  useEffect(() => {
-    if (selectedEventCode && !dataLoadedExcel) {
-      fetchExcel();
-    }
-  }, [selectedEventCode,dataLoadedExcel, statusFilter, ingressoFilter]);
-
   //requisição get dos filtros de status
   React.useEffect(() => {
     if (selectedEventCode && !dataLoadedStatus) {

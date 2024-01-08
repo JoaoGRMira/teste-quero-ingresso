@@ -1,15 +1,11 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 export default function FilterButtonStatus({ statusOptions, selectedStatus, onStatusFilterChange }) {
 
-  const handleChange = (event) => { //função de selecionar filtro
-    const selectedValue = event.target.value; //define o valor da variável como a opção atual
-    onStatusFilterChange(selectedValue); //passa variável como parâmetro da função
+  const handleChange = (event) => { // Função de selecionar filtro
+    const selectedValue = event.target.value; // Define o valor da variável como a opção atual
+    onStatusFilterChange(selectedValue); // Passa variável como parâmetro da função
   };
 
   return (
@@ -19,15 +15,15 @@ export default function FilterButtonStatus({ statusOptions, selectedStatus, onSt
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={selectedStatus} //define o valor como o filtro selecionado
+          value={selectedStatus} // Define o valor como o filtro selecionado
           label="Status"
-          onChange={handleChange} //função de seleção
+          onChange={handleChange} // Função de seleção
           sx={{ height: '39px' }}
         >
           <MenuItem>Selecione...</MenuItem>
-          {statusOptions.map((option) => ( //mapeamento das opções
-            <MenuItem key={option.value} value={option.value}> {/* define os valores das opções */}
-              {option.label} {/* define o texto da opção */}
+          {statusOptions.map((option) => ( // Mapeamento das opções
+            <MenuItem key={option.value} value={option.value}> {/* Define os valores das opções */}
+              {option.label} {/* Define o texto da opção */}
             </MenuItem>
           ))}
         </Select>

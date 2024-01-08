@@ -6,9 +6,7 @@ import Connection from '../../model';
 const FaturamentoChart = () => {
     const [pagamentoMetrics, setPagamentoMetrics] = useState([]); // Estado para armazenar dados da rota
     const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
-
-    // Recupera o objeto do evento selecionado do localStorage
-    const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+    const selectedEventCodeJSON = localStorage.getItem("selectedEvent"); // Recupera o objeto do evento selecionado do localStorage
     const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
     //console.log(selectedEventCode);
@@ -17,7 +15,6 @@ const FaturamentoChart = () => {
     useEffect(() => {
         if (selectedEventCode && !dataLoaded) {
             const conn = Connection();
-
             // Acessa o endpoint de pagamento
             const fetchPagamentoMetrics = async () => {
                 try {
@@ -30,7 +27,6 @@ const FaturamentoChart = () => {
                             }
                         }
                     );
-
                     // Se der certo, salva os dados no estado de pagamento
                     if (response.status === 200) {
                         setPagamentoMetrics(response.data);
@@ -42,7 +38,6 @@ const FaturamentoChart = () => {
                     console.error('Erro na solicitação GET (Pagamento):', error);
                 }
             };
-
             fetchPagamentoMetrics();
         }
     }, [selectedEventCode, dataLoaded]);
