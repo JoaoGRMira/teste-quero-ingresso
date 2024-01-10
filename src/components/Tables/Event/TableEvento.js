@@ -7,7 +7,7 @@ import FilterEventos from '../../Buttons/FilterEventos';
 import Grid from '@mui/material/Grid';
 import { CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
+//import { useTheme } from '@mui/material/styles';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -20,6 +20,7 @@ const EventTable = () => {
   const [eventos, setEventos] = useState([]);
   const [data, setData] = useState();
   const [page, setPage] = useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [selectedEventCode, setSelectedEventCode] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,6 +54,7 @@ const EventTable = () => {
       fetchEventos(page);
       console.log('fetch evento')
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, dataLoaded]);
 
   const handleEventClick = (eventCode) => {
@@ -127,7 +129,7 @@ const EventTable = () => {
     setDataLoaded(false);
   };
 
-  const theme = useTheme();
+  //const theme = useTheme();
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
@@ -217,7 +219,7 @@ const EventTable = () => {
                         {evento.receitas_total}
                       </TableCell>
                       <TableCell className="taxa">
-                        {evento.taxas_total}
+                      {evento.taxas_total ? evento.taxas_total : "-"}
                       </TableCell>
                       </StyledTableRow>
                     ))}

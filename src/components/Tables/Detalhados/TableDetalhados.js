@@ -70,6 +70,9 @@ export default function TableDetalhados() {
       '&:nth-of-type(11)': {
         minWidth: '200px',
       },
+      '&:nth-of-type(12)': {
+        minWidth: '200px',
+      },
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -107,6 +110,7 @@ export default function TableDetalhados() {
     'Valor',
     'Forma de Pagamento',
     'Cód. da Transação',
+    'Taxas'
   ];
 
   const conn = Connection(); //conecta com o servidor backend
@@ -152,6 +156,7 @@ export default function TableDetalhados() {
     if (selectedEventCode && !dataLoaded) {
       fetchDetalhes(page);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEventCode, dataLoaded, pdvFilter, posFilter, situacaoFilter, tipoFilter]);
 
   //requisição dos filtros
@@ -429,6 +434,15 @@ export default function TableDetalhados() {
                               <strong>Cód. da Transação</strong>
                             </TableSortLabel>
                           </StyledTableHeaderCell>
+                          <StyledTableHeaderCell align='center'>
+                            <TableSortLabel
+                              active={orderBy === 'taxa'}
+                              direction={orderBy === 'taxa' ? order : 'asc'}
+                              onClick={handleRequestSort('taxa')}
+                            >
+                              <strong>Taxa</strong>
+                            </TableSortLabel>
+                          </StyledTableHeaderCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -451,6 +465,7 @@ export default function TableDetalhados() {
                             <TableCell align='left'>{row.valor}</TableCell>
                             <TableCell align='center'>{row.pagamento}</TableCell>
                             <TableCell align='center'>{row.cod_pagseguro}</TableCell>
+                            <TableCell align='center'>{row.taxa ? row.taxa : "-"}</TableCell>
                           </StyledTableBodyRow>
                         ))}
                       </TableBody>

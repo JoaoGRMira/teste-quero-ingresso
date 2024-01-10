@@ -4,7 +4,6 @@ import { CircularProgress, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import Pagination from '@mui/material/Pagination';
 
@@ -16,7 +15,8 @@ const TablePDVsDiario = () => {
   const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('data');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const rowsPerPage = 10;
 
   const handleChangePagination = (event, value) => {
     setCurrentPage(value);

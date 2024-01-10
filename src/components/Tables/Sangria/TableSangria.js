@@ -145,6 +145,7 @@ const TableSangria = () => {
     if (!dataLoaded) {
       fetchSangria();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataLoaded, searchQuery]);
 
   const handleSearch = (query) => {

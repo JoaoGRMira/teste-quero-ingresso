@@ -18,16 +18,16 @@ export default function Login() {
   localStorage.clear();
 
   const checkVazio = () => {
-        let isVazio = false
-        if (document.getElementById('Login').value === '') {
-            isVazio = true
-            return isVazio
-        }
-        if (document.getElementById('Password').value === '') {
-            isVazio = true
-            return isVazio
-        }
+    let isVazio = false
+    if (document.getElementById('Login').value === '') {
+      isVazio = true
+      return isVazio
     }
+    if (document.getElementById('Password').value === '') {
+      isVazio = true
+      return isVazio
+    }
+  }
 
   const handleLoginChange = (event) => {
     setLoginData({ ...loginData, login: event.target.value });
@@ -39,16 +39,16 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     if (checkVazio()) {
       setError('Preencha suas credenciais.');
       return;
     }
-  
+
     try {
       const conn = Connection();
       const response = await conn.post('/user/login', loginData);
-  
+
       if (response.status === 200) {
         setToken(response.data.token);
         localStorage.setItem('token', response.data.token)

@@ -4,7 +4,6 @@ import { CircularProgress, TableContainer } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import TablePagination from '@mui/material/TablePagination';
 import SearchBar from '../../Outros/SearchBar';
 import Grid from '@mui/material/Grid';
 import Connection from '../../../model';
@@ -113,13 +112,14 @@ const TableClasses = () => {
   const [order, setOrder] = useState('asc'); // Ordenação da tabela (crescente ou decrescente)
   const [orderBy, setOrderBy] = useState('categoria'); // Tipo de ordenação
   const [page, setPage] = useState(0); // Paginação
-  const [rowsPerPage, setRowsPerPage] = useState(10); // Número de linhas por página
   const [searchQuery, setSearchQuery] = useState(''); // Busca
   const [totalVendasQuant, setTotalVendasQuant] = useState(0);
   const [totalCortesiasQuant, setTotalCortesiasQuant] = useState(0);
   const [totalTotalQuant, setTotalTotalQuant] = useState(0);
   const [totalValorTotal, setTotalValorTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const rowsPerPage = 10; // Número de linhas por página
 
   const handleChangePagination = (event, value) => {
     setCurrentPage(value);
@@ -181,10 +181,12 @@ const TableClasses = () => {
 
   useEffect(() => {
     fetchClasses();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEventCode, dataLoaded, searchQuery]);
 
   useEffect(() => {
     calculateTotalValues();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classes]);
 
   const handleSearch = (query) => {

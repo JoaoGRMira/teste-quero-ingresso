@@ -72,8 +72,6 @@ export default function TableSite() {
   const [data, setData] = useState();
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [site, setSite] = useState([]); //estado para salvar os dados retornados pelo endpoint
-  const [excel, setExcel] = useState([]); //estado para salvar os dados retornados pelo endpoint
-  const [dataLoadedExcel, setDataLoadedExcel] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [dataLoadedStatus, setDataLoadedStatus] = React.useState(false); //estado para controlar se os dados foram carregados ou não
   const [dataLoadedIngresso, setDataLoadedIngresso] = React.useState(false); //estado para controlar se os dados foram carregados ou não
   const [filtroStatus, setFiltroStatus] = React.useState([]); //estado para salvar os dados retornados pelo endpoint
@@ -96,7 +94,8 @@ export default function TableSite() {
     'Telefone',
     'Quantidade',
     'Ingresso',
-    'Valor'
+    'Valor',
+    'Taxa'
   ];
 
   const conn = Connection(); //conecta com o servidor backend
@@ -138,6 +137,7 @@ export default function TableSite() {
     if (selectedEventCode && !dataLoaded) {
       fetchSite(page);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEventCode, dataLoaded, statusFilter, ingressoFilter]);
 
   //console.log(selectedEventCode.categoria)
@@ -419,6 +419,15 @@ export default function TableSite() {
                           <strong>Valor</strong>
                         </TableSortLabel>
                       </StyledTableCell>
+                      <StyledTableCell>
+                        <TableSortLabel
+                          active={orderBy === 'taxa'}
+                          direction={orderBy === 'taxa' ? order : 'asc'}
+                          onClick={handleRequestSort('taxa')}
+                        >
+                          <strong>Taxa</strong>
+                        </TableSortLabel>
+                      </StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -457,6 +466,9 @@ export default function TableSite() {
                         <StyledTableCell component="th" scope="row">
                           {row.valor}
                         </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.taxa ? row.taxa : "-"}
+                        </StyledTableCell>
                       </StyledTableBodyRow>
                     ))}
                   </TableBody>
@@ -492,7 +504,7 @@ export default function TableSite() {
                 </div>
               )}
               <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
-                <ExportExcelSite data={excel} columnHeaders={columnHeaders} />
+                <ExportExcelSite columnHeaders={columnHeaders} />
               </Grid>
             </Grid>
           </div>

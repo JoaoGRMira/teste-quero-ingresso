@@ -1,23 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
+import { styled, createTheme, ThemeProvider, CssBaseline, Drawer as MuiDrawer, AppBar as MuiAppBar, Box, Toolbar, Typography, IconButton, List, Divider, Container, Grid, Link } from '@mui/material';
+import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
+import { mainListItems, quaternaryListItems, secondaryListItems } from '../../components/NavigationSideBar/SideBar';
 import Title from '../../components/Outros/Title';
 import EventoAtual from '../../components/Outros/EventoAtual';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import TableCancelados from '../../components/Tables/Cancelados/Cancelados';
 
 function Copyright(props) {
@@ -83,16 +70,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Cancelados() {
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
-  const [open, setOpen] = React.useState(false); // inicia o menu fechado
+  const [open, setOpen] = React.useState(false); // Inicia o menu fechado
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  // Recupera o objeto do evento selecionado do localStorage
-  const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
+  const selectedEventCodeJSON = localStorage.getItem("selectedEvent"); // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
-  console.log(selectedEventCode.categoria);
+  //console.log(selectedEventCode.categoria);
   //console.log(selectedEventCode.eve_cod);
 
   return (
@@ -102,7 +88,7 @@ export default function Cancelados() {
         <AppBar position="absolute" open={open} sx={{ backgroundColor: 'white', height: 72 }} elevation={2}>
           <Toolbar
             sx={{
-              pr: '24px', // mantém o padding direito quando o drawer é fechado
+              pr: '24px', // Mantém o padding direito quando o drawer é fechado
             }}
           >
             <IconButton

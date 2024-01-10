@@ -6,7 +6,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
 import Connection from '../../../model';
 import { Box, Typography } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
@@ -16,10 +15,11 @@ export default function Ranking() {
   const [orderBy, setOrderBy] = useState('nome');
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dataLoaded, setDataLoaded] = useState(false); //estado para controlar se os dados foram carregados ou não
   const [rankingMetrics, setRanking] = useState([]); //estado para salvar os dados retornados pelo endpoint 
   const [currentPage, setCurrentPage] = useState(1);
+
+  const rowsPerPage = 10;
 
   const handleChangePagination = (event, value) => {
     setCurrentPage(value);

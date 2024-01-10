@@ -1,20 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import FilterEventos from '../../components/Buttons/FilterEventos';
-import SearchBar from '../../components/Outros/SearchBar';
+import { styled, createTheme, ThemeProvider, CssBaseline, Box, AppBar as MuiAppBar, Toolbar, Typography, IconButton, Container, Grid, Link } from '@mui/material';
 import TableEvento from "../../components/Tables/Event/TableEvento";
-import Title from '../../components/Outros/Title';
-//import { useLogin } from '../../model/loginContext';
 
 const defaultTheme = createTheme();
 

@@ -1,26 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, quaternaryListItems, quinaryListItems, secondaryListItems, tertiaryListItems } from '../../components/NavigationSideBar/SideBar';
+import { styled, createTheme, ThemeProvider, CssBaseline, Drawer as MuiDrawer, AppBar as MuiAppBar, Box, Toolbar, Typography, IconButton, List, Divider, Container, Grid, Link } from '@mui/material';
+import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
+import { mainListItems, quaternaryListItems, secondaryListItems } from '../../components/NavigationSideBar/SideBar';
 import Title from '../../components/Outros/Title';
 import EventoAtual from '../../components/Outros/EventoAtual';
 import ContainerDiarios from '../../components/Containers/ContainerDiarios';
 import TableClassesDiario from '../../components/Tables/Diários/TableClassesDiario';
 import TablePDVsDiario from '../../components/Tables/Diários/TablePDVsDiario';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 
 function Copyright(props) {
   return (

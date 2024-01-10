@@ -4,8 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import Connection from '../../model';
 
 const BarChartHorizontal = () => {
-    const [classes, setClasses] = React.useState([]); //estado para armazenar dados da rota
-    const [dataLoaded, setDataLoaded] = React.useState(false); //estado para controlar se os dados foram carregados
+    const [classes, setClasses] = React.useState([]); // Estado para armazenar dados da rota
+    const [dataLoaded, setDataLoaded] = React.useState(false); // Estado para controlar se os dados foram carregados
     const selectedEventCodeJSON = localStorage.getItem("selectedEvent"); // Recupera o objeto do evento selecionado do localStorage
     const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
 
@@ -44,6 +44,7 @@ const BarChartHorizontal = () => {
 
     //console.log('Classes: ' + classes)
 
+    // Cria a variável que irá mapear os dados retornados pelo endpoint
     const classeIngressos = classes.map(item => ({
         tipo: item.tipo,
         quantidade: item.total
@@ -57,15 +58,15 @@ const BarChartHorizontal = () => {
             <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={classeIngressos} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" tick={{ fontSize: 10 }} />
-                    <YAxis dataKey="tipo" type="category" tick={{ fontSize: 8 }} />
+                    <XAxis type="number" tick={{ fontSize: 10 }} /> {/* Eixo x do gráfico (valores) */}
+                    <YAxis dataKey="tipo" type="category" tick={{ fontSize: 8 }} /> {/* Eixo y do gráfico (tipos) */}
                     <Tooltip
                         labelStyle={{ fontSize: 12 }}
                         itemStyle={{ fontSize: 12 }}
                     />
                     {classeIngressos.length > 0 && Object.keys(classeIngressos[0]).map((tipo, index) => (
                         <Bar key={index} dataKey={tipo} fill={`var(--blue)`} />
-                    ))}
+                    ))} {/* Gera as barras do gráfico de acordo com os dados */}
                 </BarChart>
             </ResponsiveContainer>
         </React.Fragment>
