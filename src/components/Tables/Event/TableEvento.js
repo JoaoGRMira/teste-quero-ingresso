@@ -24,7 +24,7 @@ const EventTable = () => {
   const [selectedEventCode, setSelectedEventCode] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [eventFilter, setEventFilter] = useState('1');
+  const [eventFilter, setEventFilter] = useState('0');
   const [totalPages, setTotalPages] = useState(0);
 
   const conn = Connection();

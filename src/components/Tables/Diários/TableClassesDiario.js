@@ -7,7 +7,7 @@ import { visuallyHidden } from '@mui/utils';
 import Connection from '../../../model';
 import Pagination from '@mui/material/Pagination';
 
-const TablePDVsDiario = () => {
+const TableClassesDiario = () => {
   const [diarios, setDiarios] = useState([]); // Estado para armazenar dados da rota
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +39,7 @@ const TablePDVsDiario = () => {
         try {
           const response = await conn.get(
             'eventos/diarios?evento=' +
-            selectedEventCode.eve_cod + '&filtro=pdvs',
+            selectedEventCode.eve_cod + '&filtro=classes',
             {
               headers: {
                 'token': localStorage.getItem('token')
@@ -146,7 +146,7 @@ const TablePDVsDiario = () => {
       onRequestSort(event, property);
     };
 
-    //console.log(diarios)
+    console.log(diarios)
 
     return (
       <thead>
@@ -305,4 +305,4 @@ const TablePDVsDiario = () => {
   );
 };
 
-export default TablePDVsDiario;
+export default TableClassesDiario;

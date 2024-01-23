@@ -267,7 +267,7 @@ export default function TableDetalhados() {
     setDataLoaded(false);
   };
 
-  console.log(detalhes)
+  //console.log(detalhes)
   //console.log(situacaoFilter)
 
   function stableSort(array, comparator) {
