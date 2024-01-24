@@ -94,9 +94,24 @@ export default function TableDetalhados() {
 
   const handleRequestSort = (property) => () => {
     const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const newOrder = isAsc ? 'desc' : 'asc';
+    setOrder(newOrder);
     setOrderBy(property);
   };
+  
+
+  function parseDate(dateString) {
+    const timestamp = Date.parse(dateString);
+  
+    if (!isNaN(timestamp)) {
+      return new Date(timestamp);
+    } else {
+      // Trate o caso em que a string de data não é válida.
+      console.error('Data inválida:', dateString);
+      return null;
+    }
+  }
+  
 
   const columnHeaders = [
     'Data da Compra',
@@ -156,7 +171,7 @@ export default function TableDetalhados() {
     if (selectedEventCode && !dataLoaded) {
       fetchDetalhes(page);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEventCode, dataLoaded, pdvFilter, posFilter, situacaoFilter, tipoFilter]);
 
   //requisição dos filtros
@@ -273,14 +288,20 @@ export default function TableDetalhados() {
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
+      const dateA = parseDate(a[0]);
+      const dateB = parseDate(b[0]);
+  
+      if (dateA && dateB) {
+        const order = comparator(dateA, dateB);
+        if (order !== 0) {
+          return order;
+        }
       }
+  
       return a[1] - b[1];
     });
     return stabilizedThis.map((el) => el[0]);
-  }
+  }  
 
   function formatValor(valor) {
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
