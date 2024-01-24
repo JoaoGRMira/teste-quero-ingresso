@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../images/quero_ingresso_logo.png';
 import { styled, createTheme, ThemeProvider, CssBaseline, Drawer as MuiDrawer, AppBar as MuiAppBar, Box, Toolbar, Typography, IconButton, List, Divider, Container, Grid, Link } from '@mui/material';
 import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
@@ -8,6 +8,8 @@ import EventoAtual from '../../components/Outros/EventoAtual';
 import ContainerDiarios from '../../components/Containers/ContainerDiarios';
 import TableClassesDiario from '../../components/Tables/Diários/TableClassesDiario';
 import TablePDVsDiario from '../../components/Tables/Diários/TablePDVsDiario';
+import { CircularProgress } from '@mui/material';
+import Connection from '../../model';
 
 function Copyright(props) {
   return (
@@ -71,8 +73,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Diarios() {
+  const [diario, setDiario] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
+  const [evento, setevento] = useState(0);
+  const [data, setdata] = useState(0);
+  const [local, setlocal] = useState(0);
+  const [cidade, setcidade] = useState(0);
+  const [valor, setvalor] = useState(0);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -80,6 +90,40 @@ export default function Diarios() {
   // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");
   const selectedEventCode = JSON.parse(selectedEventCodeJSON); // Converte a string JSON em um objeto
+
+  const fetchDiario = async () => {
+    if (selectedEventCode && !dataLoaded) {
+      const conn = Connection();
+  
+      try {
+        const response = await conn.get(
+          `eventos/cabecalho?evento=${selectedEventCode.eve_cod}`,
+          {
+            headers: {
+              'token': localStorage.getItem('token')
+            }
+          }
+        );
+  
+        // Atualizar as variáveis de estado com os dados da resposta
+        setevento(response.data.evento);
+        setdata(response.data.data);
+        setlocal(response.data.local);
+        setcidade(response.data.cidade);
+        setvalor(response.data.valor);
+  
+        // Atualizar o estado indicando que os dados foram carregados
+        setDataLoaded(true);
+      } catch (error) {
+        console.error('Erro na solicitação GET (Tipo Ingresso):', error);
+      }
+    }
+  };
+  
+  useEffect(() => {
+    fetchDiario();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEventCode, dataLoaded]);  
 
   //console.log(selectedEventCode);
   //console.log(selectedEventCode.eve_cod);
@@ -200,21 +244,22 @@ export default function Diarios() {
           }}
         >
           <Toolbar />
+          {dataLoaded ? (
           <Container maxWidth="lg" sx={{ mt: 4, backgroundColor: 'var(--body-background)' }}>
             <Grid container spacing={3}>
               {/* Evento Atual */}
               <Grid item xs={12} md={10} lg={10}>
                 <Title>Relatório Diário</Title>
-                <EventoAtual nomeEvento={selectedEventCode.eve_nome}
-                  dataEvento={selectedEventCode.eve_data}
-                  localEvento={selectedEventCode.local}
-                  cidadeEvento={selectedEventCode.cidade} />
+                <EventoAtual nomeEvento={evento}
+                  dataEvento={data}
+                  localEvento={local}
+                  cidadeEvento={cidade} />
               </Grid>
 
               <Grid item xs={12} md={2} lg={2} sx={{ display: 'flex', justifyContent: 'flex-center', alignItems: 'center' }}>
                 <div>
                   <Typography component="span" variant="subtitle1" color="var(--green)" fontFamily="'Century Gothic', Futura, sans-serif" fontWeight="bold">
-                    {selectedEventCode.receitas_total}
+                    {valor}
                   </Typography>
                   <br />
                   <Typography component="span" variant="subtitle1" color="text.secondary" fontFamily="'Century Gothic', Futura, sans-serif">
@@ -241,6 +286,12 @@ export default function Diarios() {
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
+          ) : (
+            // Renderizar um indicador de carregamento enquanto os dados são buscados
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              <CircularProgress />
+            </div>
+          )}
         </Box>
       </Box>
     </ThemeProvider>

@@ -293,6 +293,10 @@ export default function TableSite() {
     return stabilizedThis.map((el) => el[0]);
   }
 
+  function formatValor(valor) {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+  
   return (
     <Container>
       <div>
@@ -440,7 +444,7 @@ export default function TableSite() {
                           {row.pedido}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {format(new Date(row.data), 'dd/MM/yyyy HH:mm')}
+                          {row.data}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
                           {row.status}
@@ -464,10 +468,10 @@ export default function TableSite() {
                           {row.ingressos}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {row.valor}
+                          {formatValor(row.valor)}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {row.taxa ? row.taxa : "-"}
+                          {row.taxa ? formatValor(row.taxa) : "-"}
                         </StyledTableCell>
                       </StyledTableBodyRow>
                     ))}
