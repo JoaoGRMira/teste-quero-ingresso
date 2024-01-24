@@ -35,24 +35,24 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       minWidth: '200px',
     },
     '&:nth-of-type(9)': {
-      minWidth: '150px',
+      minWidth: '100px',
       textAlign: 'left'
     },
     '&:nth-of-type(10)': {
       minWidth: '100px',
-      textAlign: 'left'
+      textAlign: 'center'
     },
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     textAlign: 'center',
     '&:nth-of-type(9)': {
-      minWidth: '200px',
+      minWidth: '100px',
       textAlign: 'left'
     },
     '&:nth-of-type(10)': {
       minWidth: '100px',
-      textAlign: 'left'
+      textAlign: 'center'
     },
   },
 }));
@@ -205,111 +205,112 @@ export default function TableCancelados() {
                   <TableHead>
                     <TableRow>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'data_compra'}
                           direction={orderBy === 'data_compra' ? order : 'asc'}
                           onClick={handleRequestSort('data_compra')}
-                        >
+                        >*/}
                           <strong>Data</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'pdv'}
                           direction={orderBy === 'pdv' ? order : 'asc'}
                           onClick={handleRequestSort('pdv')}
-                        >
+                        >*/}
                           <strong>Pdv</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'pos'}
                           direction={orderBy === 'pos' ? order : 'asc'}
                           onClick={handleRequestSort('pos')}
-                        >
+                        >*/}
                           <strong>Pos</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'pedido'}
                           direction={orderBy === 'pedido' ? order : 'asc'}
                           onClick={handleRequestSort('pedido')}
-                        >
+                        >*/}
                           <strong>Pedido</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'cod_barras'}
                           direction={orderBy === 'cod_barras' ? order : 'asc'}
                           onClick={handleRequestSort('cod_barras')}
-                        >
+                        >*/}
                           <strong>Cód. de Barras</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'situacao'}
                           direction={orderBy === 'situacao' ? order : 'asc'}
                           onClick={handleRequestSort('situacao')}
-                        >
+                        >*/}
                           <strong>Situação</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'ing'}
                           direction={orderBy === 'ing' ? order : 'asc'}
                           onClick={handleRequestSort('ing')}
-                        >
+                        >*/}
                           <strong>Ingresso</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'ing_num'}
                           direction={orderBy === 'ing_num' ? order : 'asc'}
                           onClick={handleRequestSort('ing_num')}
-                        >
+                        >*/}
                           <strong>Número Ingresso</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'valor'}
                           direction={orderBy === 'valor' ? order : 'asc'}
                           onClick={handleRequestSort('valor')}
-                        >
+                        >*/}
                           <strong>Valor</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'pagamento'}
                           direction={orderBy === 'pagamento' ? order : 'asc'}
                           onClick={handleRequestSort('pagamento')}
-                        >
+                        >*/}
                           <strong>Pagamento</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <TableSortLabel
+                        {/*<TableSortLabel
                           active={orderBy === 'cod_pagseguro'}
                           direction={orderBy === 'cod_pagseguro' ? order : 'asc'}
                           onClick={handleRequestSort('pagamenatcod_pagseguro')}
-                        >
+                        >*/}
                           <strong>Código PagSeguro</strong>
-                        </TableSortLabel>
+                        {/*</TableSortLabel>*/}
                       </StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {stableSort(cancelados, (a, b) => {
+                    {/* {stableSort(cancelados, (a, b) => {
                       const isAsc = order === 'asc';
                       return isAsc ? (a[orderBy] > b[orderBy] ? 1 : -1) : b[orderBy] > a[orderBy] ? 1 : -1;
-                    }).map((row, index) => (
+                    }).map((row, index) => ( */}
+                    {cancelados.map((row, index) => (
                       <StyledTableBodyRow key={row.tipo} index={index}>
                         <StyledTableCell component="th" scope="row">
                           {format(new Date(row.data_compra), 'dd/MM/yyyy HH:mm')}
