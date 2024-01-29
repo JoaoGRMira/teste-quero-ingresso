@@ -8,9 +8,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { CircularProgress, Container, Divider, Grid } from '@mui/material';
-import TableSortLabel from '@mui/material/TableSortLabel';
+//import TableSortLabel from '@mui/material/TableSortLabel';
 import Connection from '../../../model';
-import { format } from 'date-fns';
+//import { format } from 'date-fns';
 import SearchBar from '../../Outros/SearchBar';
 import FilterButtonStatus from '../../Buttons/FilterButtonStatus';
 import FilterButtonIngresso from '../../Buttons/FilterButtonIngresso';
@@ -65,8 +65,8 @@ const StyledTableBodyRow = styled(TableRow)(({ theme, index }) => ({
 }));
 
 export default function TableSite() {
-  const [orderBy, setOrderBy] = useState('data'); // Defina a coluna padrão para ordenar
-  const [order, setOrder] = useState('desc'); // Defina a ordem padrão para ordenar
+  // const [orderBy, setOrderBy] = useState('data'); // Defina a coluna padrão para ordenar
+  // const [order, setOrder] = useState('desc'); // Defina a ordem padrão para ordenar
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [data, setData] = useState();
@@ -275,23 +275,23 @@ export default function TableSite() {
     setDataLoaded(false);
   };
 
-  const handleRequestSort = (property) => () => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  // const handleRequestSort = (property) => () => {
+  //   const isAsc = orderBy === property && order === 'asc';
+  //   setOrder(isAsc ? 'desc' : 'asc');
+  //   setOrderBy(property);
+  // };
 
-  function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
+  // function stableSort(array, comparator) {
+  //   const stabilizedThis = array.map((el, index) => [el, index]);
+  //   stabilizedThis.sort((a, b) => {
+  //     const order = comparator(a[0], b[0]);
+  //     if (order !== 0) {
+  //       return order;
+  //     }
+  //     return a[1] - b[1];
+  //   });
+  //   return stabilizedThis.map((el) => el[0]);
+  // }
 
   function formatValor(valor) {
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });

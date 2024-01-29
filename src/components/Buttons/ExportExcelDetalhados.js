@@ -62,21 +62,26 @@ const ExportExcelDetalhados = ({ columnHeaders }) => {
       row.situacao,
       row.ing,
       row.ing_num,
-      row.valor,
+      // Configurando a coluna "valor" como formato de moeda
+      { v: row.valor, t: 'n', z: 'R$#,##0.00' },
       row.pagamento,
-      row.cod_pagseguro
+      row.cod_pagseguro,
+      row.taxa
     ]);
-
+    
     const ws = XLSX.utils.aoa_to_sheet([columnHeaders, ...formattedData]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Detalhados');
-
+  
+    // Define a largura mínima desejada para cada coluna
+    const minColumnWidths = [14, 5, 5, 16, 15, 8, 8, 17, 5, 18, 16, 6];
+  
     const columnWidths = formattedData[0].map((col, i) => ({
-      wch: Math.max(...formattedData.map(row => row[i]?.toString().length || 0)) + 2,
+      wch: Math.max(minColumnWidths[i], Math.max(...formattedData.map(row => (row[i] ? row[i].toString().length : 0))) + 2),
     }));
-
+  
     ws['!cols'] = columnWidths;
-
+  
     XLSX.writeFile(wb, 'detalhados.xlsx');
   };
 

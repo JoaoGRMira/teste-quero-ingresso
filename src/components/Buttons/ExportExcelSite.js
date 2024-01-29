@@ -62,17 +62,22 @@ const ExportExcelSite = ({ columnHeaders }) => {
       row.telefone,
       row.quant,
       row.ingressos,
-      row.valor
+      // Configurando a coluna "valor" como formato de moeda
+      { v: row.valor, t: 'n', z: 'R$#,##0.00' },
+      row.taxa
     ]);
 
     const ws = XLSX.utils.aoa_to_sheet([columnHeaders, ...formattedData]);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Site');
-
+    XLSX.utils.book_append_sheet(wb, ws, 'Detalhados');
+  
+    // Define a largura mínima desejada para cada coluna
+    const minColumnWidths = [7, 5, 6, 10, 9, 6, 8, 10, 8, 5, 6];
+  
     const columnWidths = formattedData[0].map((col, i) => ({
-      wch: Math.max(...formattedData.map(row => row[i]?.toString().length || 0)) + 2,
+      wch: Math.max(minColumnWidths[i], Math.max(...formattedData.map(row => (row[i] ? row[i].toString().length : 0))) + 2),
     }));
-
+  
     ws['!cols'] = columnWidths;
 
     XLSX.writeFile(wb, 'site_detalhados.xlsx');
