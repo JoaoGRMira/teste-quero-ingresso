@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default function Connection() {
-    const url = 'http://apiserverqi.mfhosting.com.br:3000/';
+    const url = 'https://api-promo-server.onrender.com/';
 
     const conn = axios.create({
         baseURL: url
