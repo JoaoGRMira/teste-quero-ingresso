@@ -84,7 +84,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sangria() {
-  const [sangria, setSangria] = useState([]);
+  // const [sangria, setSangria] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado

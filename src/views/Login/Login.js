@@ -62,24 +62,6 @@ export default function Login() {
     }
   }
 
-  /*const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const conn = Connection();
-      const response = await conn.post('/user/login', loginData);
-
-      if (response.status === 200) {
-        setToken(response.data.token);
-        navigate('/eventos');
-      } else {
-        setError('Credenciais inválidas. Por favor, tente novamente.');
-      }
-    } catch (error) {
-      setError('Ocorreu um erro ao fazer login. Por favor, tente novamente.');
-    }
-  };*/
-
   return (
     <div className="App">
       <div className="auth-wrapper">

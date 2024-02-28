@@ -18,6 +18,7 @@ export default function NavigationTopBar() {
             <a className="nav-link active" aria-current="page" href="/eventos">Home</a>
           </div>
           <div className="navbar-nav">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="nav-link" href="#">{username}</a>
             <a className="nav-link" href="/">Sair</a>
           </div>

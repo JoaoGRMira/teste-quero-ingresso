@@ -84,7 +84,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Site() {
-  const [site, setSite] = useState([]);
+  // const [site, setSite] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado
@@ -142,7 +142,7 @@ export default function Site() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEventCode, dataLoaded]);  
 
-  console.log(selectedEventCode.categoria);
+  //console.log(selectedEventCode.categoria);
   //console.log(selectedEventCode.eve_cod);
 
   return (

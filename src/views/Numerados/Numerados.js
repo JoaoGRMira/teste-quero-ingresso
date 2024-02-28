@@ -84,7 +84,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Numerados() {
-  const [classe, setClasse] = useState([]);
+  // const [classe, setClasse] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   // Recupera o objeto do evento selecionado do localStorage
   const selectedEventCodeJSON = localStorage.getItem("selectedEvent");

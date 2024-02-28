@@ -110,7 +110,7 @@ export default function TableCancelados() {
 
   //console.log(selectedEventCode.categoria)
   //console.log(cancelados)
-  console.log(data)
+  //console.log(data)
 
   const handleIncrement = () => {
     const newPage = page + 1

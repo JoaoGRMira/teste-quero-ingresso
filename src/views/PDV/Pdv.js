@@ -84,7 +84,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Pdv() {
-  const [pdv, setPdv] = useState([]);
+  // const [pdv, setPdv] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar se os dados foram carregados
   const usuario = localStorage.getItem('login'); // Define o usuário pelo dado salvo no localStorage
   const [open, setOpen] = React.useState(false); // inicia o menu fechado

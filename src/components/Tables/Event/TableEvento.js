@@ -52,7 +52,7 @@ const EventTable = () => {
   useEffect(() => {
     if (!dataLoaded) {
       fetchEventos(page);
-      console.log('fetch evento')
+      //console.log('fetch evento')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, dataLoaded]);

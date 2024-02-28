@@ -146,7 +146,7 @@ const TableClassesDiario = () => {
       onRequestSort(event, property);
     };
 
-    console.log(diarios)
+    //console.log(diarios)
 
     return (
       <thead>

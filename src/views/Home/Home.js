@@ -168,6 +168,8 @@ export default function Home() {
   }, [selectedEventCode, dataLoaded]);
 
   //console.log(selectedEventCode);
+  //console.log(selectedEventCode.eve_cod);
+  //console.log(selectedEventCode.categoria);
   //console.log(infos)
   //console.log(token)
 
